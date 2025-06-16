@@ -15,6 +15,7 @@ class SemesterModel extends Model
 
     protected $allowedFields    = [
         'name',
+        'in_session',
         'active',
         'academic_year_id',
         'start_date',

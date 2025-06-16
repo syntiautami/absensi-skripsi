@@ -15,6 +15,7 @@ class AcademicYearModel extends Model
 
     protected $allowedFields = [
         'name',
+        'in_session',
         'active',
         'start_date',
         'end_date',
