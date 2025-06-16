@@ -29,13 +29,12 @@ class Auth extends BaseController
             $userRoleModel = new UserRoleModel();
             $user_roles = $userRoleModel->getByUserId($user['id']);
             
-            session()->set('role', 'admin');
             session()->set([
                 'user' => $user,
                 'logged_in' => true,
-                'role' => 'admin',
+                'role' => 'teacher',
             ]);
-            return redirect()->to('/admin'); // ganti sesuai kebutuhan
+            return redirect()->to('/teacher'); // ganti sesuai kebutuhan
         }
 
         return redirect()->back()->with('error', 'Username/email atau password salah');
