@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">
   <!-- AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.min.css') ?>">
-
+  
+  <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
   <?= $this->renderSection('styles') ?>
 </head>
 <body class="hold-transition sidebar-mini">
