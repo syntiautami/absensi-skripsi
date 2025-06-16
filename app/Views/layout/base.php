@@ -17,20 +17,21 @@
   <?= $this->renderSection('styles') ?>
 </head>
 <body class="hold-transition sidebar-mini">
-  <div class="wrapper">
     <!-- Navbar -->
-    <?= $this->renderSection('navbar') ?>
+    <?= $this->include('layouts/partials/navbar') ?>
 
     <!-- Sidebar -->
-    <?= $this->renderSection('sidebar') ?>
+    <?= $this->include('layouts/partials/' . (session('role') ?? 'teacher') . '/sidebar') ?>
 
-    <!-- Content -->
-    <div class="content-wrapper p-3">
-      <?= $this->renderSection('content') ?>
+    <!-- Main content -->
+    <div class="content-wrapper pt-4">
+        <div class="container-fluid">
+        <?= $this->renderSection('content') ?>
+        </div>
     </div>
 
     <!-- Footer -->
-    <?= $this->renderSection('footer') ?>
+    <?= $this->include('layouts/partials/footer') ?>
   </div>
 
   <!-- jQuery -->
