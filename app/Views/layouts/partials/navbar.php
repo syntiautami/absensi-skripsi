@@ -1,4 +1,24 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <!-- Left navbar links -->
+  <ul class="navbar-nav">
+    <!-- Select Role -->
+    <li class="nav-item d-flex align-items-center">
+      <?php
+      $currentRole = session('role') ?? '';
+      $roles = session('roles') ?? []
+      ?>
+
+      <?php if (count($roles) > 1): ?>
+        <select class="form-control form-control-sm ml-2" style="min-width: 120px;" onchange="location.href='<?= base_url('role/') ?>' + this.value;">
+          <?php foreach ($roles as $role): ?>
+            <option value="<?= $role ?>" <?= $currentRole == $role ? 'selected' : '' ?>>
+              <?= ucfirst($role) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      <?php endif; ?>
+    </li>
+  </ul>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto mr-3">
     <li class="nav-item dropdown">

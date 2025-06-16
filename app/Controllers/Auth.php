@@ -30,6 +30,7 @@ class Auth extends BaseController
             $user_roles = $userRoleModel->getByUserId($user['id']);
             session()->set([
                 'user' => $user,
+                'roles' => array_column($user_roles, 'name'),
             ]);
 
             if (count($user_roles) > 1){
@@ -57,8 +58,12 @@ class Auth extends BaseController
 
     public function setRole($role)
     {
-        session()->set('role', $role);
-        return redirect()->to($role . '/');
+        $roles = session('roles') ?? [];
+        if (in_array($role, $roles)) {
+            session()->set('role', $role);
+            return redirect()->to(base_url($role));
+        }
+        return redirect()->to('/')->with('error', 'Role tidak valid.');
     }
 
     public function logout()
