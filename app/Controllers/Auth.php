@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use App\Models\User;
+use App\Models\UserModel;
+use App\Models\UserRoleModel;
+use CodeIgniter\Controller;
 
 class Auth extends BaseController
 {
@@ -12,21 +13,32 @@ class Auth extends BaseController
         return view('auth/login');
     }
 
-    public function doLogin()
+    public function attemptLogin()
     {
-        $username = $this->request->getPost('username');
+        $userModel = new UserModel();
+        $login = $this->request->getPost('login'); // username atau email
         $password = $this->request->getPost('password');
 
-        $userModel = new User();
-        $user = $userModel->where('username', $username)->first();
+        $user = $userModel
+            ->where('username', $login)
+            ->orWhere('email', $login)
+            ->first();
 
+            
         if ($user && password_verify($password, $user['password'])) {
-            session()->set('logged_in', true);
-            session()->set('username', $user['username']);
-            return redirect()->to('/dashboard');
+            $userRoleModel = new UserRoleModel();
+            $user_roles = $userRoleModel->getByUserId($user['id']);
+            
+            session()->set('role', 'admin');
+            session()->set([
+                'user' => $user,
+                'logged_in' => true,
+                'role' => 'admin',
+            ]);
+            return redirect()->to('/admin'); // ganti sesuai kebutuhan
         }
 
-        return redirect()->back()->with('error', 'Username atau password salah.');
+        return redirect()->back()->with('error', 'Username/email atau password salah');
     }
 
     public function logout()

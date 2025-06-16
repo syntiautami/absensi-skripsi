@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8762c7397614f4efe8dcfb2a2ae81c6c",
+    "content-hash": "3359aaf6b928155a452b64c0fc65527e",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
-            "version": "v4.0.0-beta3",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ColorlibHQ/AdminLTE.git",
-                "reference": "7f31eacc792da7c4c23439287c443d1ed6ba0f16"
+                "reference": "bd4d9c72931f1dd28601b6bfb387554a381ad540"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColorlibHQ/AdminLTE/zipball/7f31eacc792da7c4c23439287c443d1ed6ba0f16",
-                "reference": "7f31eacc792da7c4c23439287c443d1ed6ba0f16",
+                "url": "https://api.github.com/repos/ColorlibHQ/AdminLTE/zipball/bd4d9c72931f1dd28601b6bfb387554a381ad540",
+                "reference": "bd4d9c72931f1dd28601b6bfb387554a381ad540",
                 "shasum": ""
             },
             "type": "library",
@@ -45,19 +45,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ColorlibHQ/AdminLTE/issues",
-                "source": "https://github.com/ColorlibHQ/AdminLTE/tree/v4.0.0-beta3"
+                "source": "https://github.com/ColorlibHQ/AdminLTE/tree/v3.2.0"
             },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/daniel007in",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/danny007in",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-12-24T07:49:11+00:00"
+            "time": "2022-02-07T20:33:09+00:00"
         },
         {
             "name": "codeigniter4/framework",
