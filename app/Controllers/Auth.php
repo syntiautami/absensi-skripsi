@@ -61,7 +61,7 @@ class Auth extends BaseController
         $roles = session('roles') ?? [];
         if (in_array($role, $roles)) {
             session()->set('role', $role);
-            return redirect()->to(base_url($role));
+            return redirect()->to(base_url($role . '/'));
         }
         return redirect()->to('/')->with('error', 'Role tidak valid.');
     }
