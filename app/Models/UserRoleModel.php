@@ -25,7 +25,7 @@ class UserRoleModel extends Model
 
     public function getByUserId($userId)
     {
-        return $this->select('role.name, profile.user_id')
+        return $this->select('role.name')
             ->join('profile', 'profile.id = user_role.profile_id')
             ->join('role', 'role.id = user_role.role_id')
             ->where('profile.user_id', $userId)

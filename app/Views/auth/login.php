@@ -13,7 +13,7 @@ Login
     <div class="col-md-6">
       <div class="card shadow rounded p-4">
         <h3 class="text-center mb-4"><b>Login</b></h3>
-        <form action="<?= base_url('login') ?>" method="post">
+        <form action="<?= base_url('') ?>" method="post">
           <div class="mb-3">
             <input type="text" name="login" class="form-control" placeholder="Username/Email" required>
           </div>

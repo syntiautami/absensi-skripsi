@@ -28,21 +28,42 @@ class Auth extends BaseController
         if ($user && password_verify($password, $user['password'])) {
             $userRoleModel = new UserRoleModel();
             $user_roles = $userRoleModel->getByUserId($user['id']);
-            
             session()->set([
                 'user' => $user,
-                'logged_in' => true,
-                'role' => 'teacher',
             ]);
-            return redirect()->to('/teacher'); // ganti sesuai kebutuhan
+
+            if (count($user_roles) > 1){
+                return redirect()->to('role/');
+            }
+            $role = $user_roles[0];
+            session()->set('role', $role);
+            return redirect()->to($role.'/');
         }
 
         return redirect()->back()->with('error', 'Username/email atau password salah');
     }
 
+    public function chooseRole()
+    {
+        $user = session()->get('user');
+        $userRoleModel = new UserRoleModel();
+        $roles = $userRoleModel->getByUserId($user['id']); // pastikan ini mengembalikan array list role
+
+        $data = [
+            'roles' => $roles,
+        ];
+        return view('auth/role', $data);
+    }
+
+    public function setRole($role)
+    {
+        session()->set('role', $role);
+        return redirect()->to($role . '/');
+    }
+
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/login');
+        return redirect()->to('/');
     }
 }
