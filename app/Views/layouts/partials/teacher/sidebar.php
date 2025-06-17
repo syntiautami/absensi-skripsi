@@ -11,7 +11,13 @@
   <div class="sidebar">
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-        
+        <li class="nav-item">
+          <a href="<?= base_url('teacher/') ?>" class="nav-link <?= ($viewing ?? '') === 'dashboard' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+
         <!-- Absensi with Submenu -->
         <li class="nav-item has-treeview <?= in_array($viewing ?? '', ['attendance', 'attendance-subject']) ? 'menu-open' : '' ?>">
           <a href="#" class="nav-link <?= in_array($viewing ?? '', ['attendance', 'attendance-subject']) ? 'active' : '' ?>">

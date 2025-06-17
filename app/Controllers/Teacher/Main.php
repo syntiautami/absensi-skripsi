@@ -9,9 +9,8 @@ class Main extends BaseController
 {
     public function index()
     {
-        $data = [
+        return view('teacher/home', [
             'viewing' => 'dashboard'
-        ];
-        return view('admin/home', $data);
+        ]);
     }
 }

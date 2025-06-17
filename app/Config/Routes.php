@@ -43,9 +43,9 @@ $routes->get('admin/report/attendance-subject/', 'Admin\Report\Subject::index', 
 // teacher
 $routes->get('teacher/', 'Teacher\Main::index', $auth_filters);
 $routes->get('teacher/attendance/', 'Teacher\Attendance\Main::index', $auth_filters);
-$routes->get('teacher/attendance/subject/', 'Teacher\Attendance\Main::index', $auth_filters);
+$routes->get('teacher/attendance/subject/', 'Teacher\Attendance\Subject::index', $auth_filters);
 
 // teacher attendance report
-$routes->get('teacher/report/attendance/', 'Teacher\Attendance\Report\Main::index', $auth_filters);
-$routes->get('teacher/report/attendance-subject/', 'Teacher\Attendance\Report\Subject::index', $auth_filters);
+$routes->get('teacher/report/attendance/', 'Teacher\Report\Main::index', $auth_filters);
+$routes->get('teacher/report/attendance-subject/', 'Teacher\Report\Subject::index', $auth_filters);
 

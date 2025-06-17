@@ -9,6 +9,8 @@ class Subject extends BaseController
 {
     public function index()
     {
-        //
+        return view('teacher/attendance/subject/index', [
+            'viewing' => 'attendance-subject'
+        ]);
     }
 }
