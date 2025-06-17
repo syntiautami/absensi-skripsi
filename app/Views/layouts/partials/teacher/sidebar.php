@@ -35,7 +35,7 @@
             </li>
             <li class="nav-item">
               <a href="<?= base_url('teacher/attendance/subject/') ?>" class="nav-link <?= ($viewing ?? '') === 'attendance-subject' ? 'active' : '' ?>">
-                <p>Absensi Subject</p>
+                <p>Absensi Mata Pelajaran</p>
               </a>
             </li>
           </ul>
@@ -59,7 +59,7 @@
             </li>
             <li class="nav-item">
               <a href="<?= base_url('teacher/report/attendance-subject/') ?>" class="nav-link <?= ($viewing ?? '') === 'report-subject' ? 'active' : '' ?>">
-                <p>Absensi Subject</p>
+                <p>Absensi Mata Pelajaran</p>
               </a>
             </li>
           </ul>
