@@ -45,15 +45,38 @@ class TeacherClassSemesterHomeroomModel extends Model
     /**
      * Join ke class_semester dan semester
      */
-    public function withClassSemester()
+    public function getFromClassSemesterIds($ids)
     {
         return $this->select('
-                teacher_class_semester_homeroom.*,
-                class_semester.name AS class_name,
-                semester.name AS semester_name
+                teacher_class_semester_homeroom.id,
+                teacher_class_semester_homeroom.class_semester_id,
+                user.first_name,
+                user.last_name,
+                profile.profile_photo,
             ')
             ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
-            ->join('semester', 'semester.id = class_semester.semester_id', 'left');
+            ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')
+            ->join('profile', 'profile.id = teacher.profile_id', 'left')
+            ->join('user', 'user.id = profile.user_id', 'left')
+            ->whereIn('class_semester_id',$ids)
+            ->findAll();
+    }
+
+    public function getFromClassSemesterId($id)
+    {
+        return $this->select('
+                teacher_class_semester_homeroom.id,
+                teacher_class_semester_homeroom.class_semester_id,
+                user.first_name,
+                user.last_name,
+                profile.profile_photo,
+            ')
+            ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
+            ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')
+            ->join('profile', 'profile.id = teacher.profile_id', 'left')
+            ->join('user', 'user.id = profile.user_id', 'left')
+            ->where('class_semester_id',$id)
+            ->findAll();
     }
 
     /**

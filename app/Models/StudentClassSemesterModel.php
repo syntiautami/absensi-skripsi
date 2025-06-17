@@ -72,4 +72,8 @@ class StudentClassSemesterModel extends Model
             ->join('user', 'user.id = profile.user_id', 'left')
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left');
     }
+
+    public function getCountByClassSemesterId($id){
+        return $this->where('class_semester_id',$id)->countAllResults();
+    }
 }

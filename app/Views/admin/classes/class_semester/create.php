@@ -60,18 +60,3 @@
     </section>
 
 <?= $this->endSection() ?>
-
-<?= $this->section('scripts') ?>
-<script>
-    $(function () {
-        $('#class_semester_table').DataTable({
-            "responsive": true,
-            "autoWidth": false,
-            "searching" : false,
-            "lengthChange" : false,
-            "paging": false,
-            "info" : false
-        });
-    });
-</script>
-<?= $this->endSection() ?>

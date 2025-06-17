@@ -49,6 +49,13 @@ $routes->group('admin/classes', function($routes) {
     $routes->get('academic-year/(:num)/semester/(:num)/class/(:num)/', 'Admin\Classes\ClassSemester::detail/$1/$2/$3');
     $routes->get('academic-year/(:num)/semester/(:num)/class/(:num)/edit/', 'Admin\Classes\ClassSemester::edit/$1/$2/$3');
     $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/edit/', 'Admin\Classes\ClassSemester::edit/$1/$2/$3');
+    
+    // class student
+    $routes->get('academic-year/(:num)/semester/(:num)/class/(:num)/students/', 'Admin\Classes\ClassSemester::students/$1/$2/$3');
+    $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/students/', 'Admin\Classes\ClassSemester::students/$1/$2/$3');
+
+    $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2/$3');
+    $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2/$3');
 });
 
 // admin subject

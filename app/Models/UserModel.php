@@ -33,4 +33,14 @@ class UserModel extends Model
     ];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    public function getLoginData($data){
+        return $this
+            ->select('user.*,profile.profile_photo')
+            ->where('username', $data)
+            ->orWhere('email', $data)
+            ->join('profile','profile.user_id=user.id')
+            ->first();
+
+    }
 }

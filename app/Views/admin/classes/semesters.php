@@ -22,7 +22,7 @@
     <section class="content">
         <div class="card">
             <div class="card-body">
-                <table id="academicYearTable" class="table table-bordered table-striped">
+                <table id="semesterTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">Semester</th>
@@ -57,7 +57,7 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#academicYearTable').DataTable({
+        $('#semesterTable').DataTable({
             "responsive": true,
             "autoWidth": false,
             "searching" : false,

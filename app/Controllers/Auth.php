@@ -19,11 +19,7 @@ class Auth extends BaseController
         $login = $this->request->getPost('login'); // username atau email
         $password = $this->request->getPost('password');
 
-        $user = $userModel
-            ->where('username', $login)
-            ->orWhere('email', $login)
-            ->first();
-
+        $user = $userModel->getLoginData($login);
             
         if ($user && password_verify($password, $user['password'])) {
             $userRoleModel = new UserRoleModel();
