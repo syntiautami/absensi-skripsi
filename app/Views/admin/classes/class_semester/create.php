@@ -17,7 +17,7 @@
                 <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/') ?>">Semester<?= esc($semester['name']) ?></a>
+                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Buat Kelas</li>
         </ol>
@@ -27,37 +27,35 @@
 <?= $this->section('content') ?>
     <section class="content">
         <div class="card">
-            <div class="card-body">
-                <table id="class_semester_table" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Kelas</th>
-                            <th class="text-center">Wali Kelas</th>
-                            <th class="text-center">Total Siswa</th>
-                            <th class="text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1; foreach ($class_semesters as $item): ?>
-                            <tr href="<?= base_url('admin/classes/') ?>">
-                                <td class="text-center"><?= $no++ ?></td>
-                                <td class="text-center"><?= esc($item['name']) ?></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/'.$item['id']) ?>" class="btn btn-sm btn-success">Lihat</a>
-                                </td>
-                            </tr>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-end mt-3">
-                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/create/') ?>" class="btn btn-primary">
-                        Buat Kelas
-                    </a>
+            <form action="" method="post">
+                <?= csrf_field() ?>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="col-form-label">Kelas</label>
+                                <select name="grade_id" class="form-control">
+                                    <?php foreach ($grades as $item): ?>
+                                        <option value="<?= $item['id'] ?>"><?= $item['section_name'] ?> <?= $item['name'] ?></option>
+                                        <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" row">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Nama</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="card-footer">
+                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
         </div>
     </section>
 

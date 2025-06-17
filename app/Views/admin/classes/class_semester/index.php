@@ -37,7 +37,7 @@
                     <tbody>
                         <?php $no = 1; foreach ($class_semesters as $item): ?>
                             <tr href="<?= base_url('admin/classes/') ?>">
-                                <td class="text-center"><?= esc($item['name']) ?></td>
+                                <td class="text-center"><?= esc("{$item['section_name']} {$item['grade_name']} {$item['name']}") ?></td>
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
                                 <td class="text-center">

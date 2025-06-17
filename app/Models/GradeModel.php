@@ -35,7 +35,9 @@ class GradeModel extends Model
      */
     public function withSection()
     {
-        return $this->select('grade.*, section.name AS section_name')
-                    ->join('section', 'section.id = grade.section_id', 'left');
+        return $this->select('grade.id, grade.name, grade.section_id, section.name AS section_name')
+                    ->join('section', 'section.id = grade.section_id', 'left')
+                    ->orderBy('section.name asc, grade.order asc')
+                    ->findAll();
     }
 }

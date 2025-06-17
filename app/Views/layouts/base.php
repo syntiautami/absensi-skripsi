@@ -32,6 +32,8 @@
 
 <!-- jQuery -->
 <script src="<?= base_url('assets/adminlte/plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('assets/adminlte/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('assets/adminlte/plugins/jquery-validation/additional-methods.min.js') ?>"></script>
 <!-- Bootstrap -->
 <script src="<?= base_url('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <!-- AdminLTE -->
@@ -67,5 +69,21 @@
     </script>
   <?php endif; ?>
 <?= $this->renderSection('scripts') ?>
+
+<script>
+  $('form').validate({
+      errorElement: 'div',
+      errorPlacement: function (error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+      },
+      highlight: function (element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+      }
+  });
+</script>
 </body>
 </html>
