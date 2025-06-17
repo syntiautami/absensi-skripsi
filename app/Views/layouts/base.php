@@ -11,11 +11,6 @@
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>">
   
   <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
-  <style>
-    .dataTables_empty {
-        text-align: center !important;
-    }
-  </style>
   <?= $this->renderSection('styles') ?>
 </head>
 <body class="hold-transition sidebar-mini">
