@@ -31,8 +31,8 @@
           </a>
         </li>
         <!-- Mata Pelajaran -->
-        <li class="nav-item has-treeview <?= in_array($viewing ?? '', ['subject', 'teacher-subject']) ? 'menu-open' : '' ?>">
-          <a href="#" class="nav-link <?= in_array($viewing ?? '', ['subject', 'teacher-subject']) ? 'active' : '' ?>">
+        <li class="nav-item has-treeview <?= in_array($viewing ?? '', ['subject', 'teacher-subject','class-subject']) ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= in_array($viewing ?? '', ['subject', 'teacher-subject','class-subject']) ? 'active' : '' ?>">
             <i class="nav-icon fas fa-book"></i>
             <p>
               Mata Pelajaran
@@ -47,7 +47,12 @@
             </li>
             <li class="nav-item">
               <a href="<?= base_url('admin/subject/teacher/') ?>" class="nav-link <?= ($viewing ?? '') === 'teacher-subject' ? 'active' : '' ?>">
-                <p>Guru Mata Pelajaran</p>
+                <p>Mata Pelajaran Guru</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('admin/subject/class/') ?>" class="nav-link <?= ($viewing ?? '') === 'class-subject' ? 'active' : '' ?>">
+                <p>Mata Pelajaran Kelas</p>
               </a>
             </li>
           </ul>

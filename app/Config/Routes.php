@@ -32,6 +32,7 @@ $routes->get('admin/classes/', 'Admin\Classes\Main::index', $auth_filters);
 
 // admin subject
 $routes->get('admin/subject/', 'Admin\Subject\Main::index', $auth_filters);
+$routes->get('admin/subject/class/', 'Admin\Subject\Classes::index', $auth_filters);
 $routes->get('admin/subject/teacher/', 'Admin\Subject\Teacher::index', $auth_filters);
 
 // admin report attendance
