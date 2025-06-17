@@ -38,7 +38,18 @@ $routes->get('admin/academic-year/(:num)/semester/edit/', 'Admin\AcademicYear\se
 $routes->post('admin/academic-year/(:num)/semester/edit/', 'Admin\AcademicYear\semester::edit/$1', $auth_filters);
 
 // admin class
-$routes->get('admin/classes/', 'Admin\Classes\Main::index', $auth_filters);
+$routes->group('admin/classes', function($routes) {
+    // Pilih Academic Year → auto redirect pakai GET param
+    $routes->get('/', 'Admin\Classes\Main::index');
+    $routes->get('academic-year/(:num)/', 'Admin\Classes\Main::class_academic_year/$1');
+    
+    $routes->get('academic-year/(:num)/semester/(:num)/class/', 'Admin\Classes\ClassSemester::index/$1/$2');
+    $routes->get('academic-year/(:num)/semester/(:num)/class/create/', 'Admin\Classes\ClassSemester::create/$1/$2');
+    $routes->post('academic-year/(:num)/semester/(:num)/class/create/', 'Admin\Classes\ClassSemester::create/$1/$2');
+    $routes->get('academic-year/(:num)/semester/(:num)/class/(:num)/', 'Admin\Classes\ClassSemester::detail/$1/$2/$3');
+    $routes->get('academic-year/(:num)/semester/(:num)/class/(:num)/edit/', 'Admin\Classes\ClassSemester::edit/$1/$2/$3');
+    $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/edit/', 'Admin\Classes\ClassSemester::edit/$1/$2/$3');
+});
 
 // admin subject
 $routes->get('admin/subject/', 'Admin\Subject\Main::index', $auth_filters);

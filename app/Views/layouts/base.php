@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><?= $this->renderSection('title') ?></title>
+  <title>SMA IT Alia</title>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.css') ?>">
@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>">
   
   <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
+  <style>
+    .dataTables_empty {
+        text-align: center !important;
+    }
+  </style>
   <?= $this->renderSection('styles') ?>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -42,6 +47,7 @@
 
 <script src="<?= base_url('assets/adminlte/plugins/moment/moment.min.js') ?>"></script>
 <script src="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <?php if (session()->getFlashdata('success')): ?>
     <script>
@@ -62,7 +68,6 @@
             title: 'Error',
             text: '<?= session()->getFlashdata('error') ?>',
             timer: 3000,
-            showConfirmButton: false
         });
     </script>
   <?php endif; ?>

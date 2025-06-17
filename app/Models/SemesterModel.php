@@ -32,7 +32,7 @@ class SemesterModel extends Model
     protected $updatedField  = 'updated_at';
 
     /**
-     * Join ke tabel academic_year untuk ambil data tahun ajaran
+     * Join ke tabel academic_year untuk ambil data Tahun Pelajaran
      *
      * @return \CodeIgniter\Database\BaseBuilder
      */
@@ -43,5 +43,8 @@ class SemesterModel extends Model
 
     public function getSemesters_from_academic_year_id($id){
         return $this->where('academic_year_id',$id)->orderBy('start_date','ASC')->findAll();
+    }
+    public function getSemesterById($id){
+        return $this->where('id',$id)->first();
     }
 }

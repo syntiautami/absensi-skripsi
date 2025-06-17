@@ -26,4 +26,11 @@ class AcademicYearModel extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+    public function orderedAcademicYear(){
+        return $this->orderBy('start_date','DESC')->findAll();
+    }
+    public function getAcademicYearById($id){
+        return $this->where('id',$id)->first();
+    }
 }

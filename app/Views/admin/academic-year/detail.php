@@ -11,7 +11,7 @@
                 <a href="<?= base_url('admin/') ?>">Home</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url('admin/academic-year/') ?>">Tahun Ajaran</a>
+                <a href="<?= base_url('admin/academic-year/') ?>">Tahun Pelajaran</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page"><?= esc($academic_year['name']) ?></li>
         </ol>

@@ -10,7 +10,10 @@
             <li class="breadcrumb-item">
                 <a href="<?= base_url('admin/') ?>">Home</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Tahun Pelajaran</li>
+            <li class="breadcrumb-item">
+                <a href="<?= base_url('admin/classes') ?>">Kelas</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page"><?= esc($academic_year['name']) ?></li>
         </ol>
     </nav>
 <?= $this->endSection() ?>
@@ -23,24 +26,16 @@
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
-                            <th class="text-center">Tahun Pelajaran</th>
-                            <th class="text-center">Tanggal Mulai</th>
-                            <th class="text-center">Tanggal Akhir</th>
+                            <th class="text-center">Semester</th>
                             <th class="text-center">Sedang Berjalan</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; foreach ($academic_years as $item): ?>
-                        <tr>
+                        <?php $no = 1; foreach ($semesters as $item): ?>
+                        <tr href="<?= base_url('admin/classes/') ?>">
                             <td class="text-center"><?= $no++ ?></td>
                             <td class="text-center"><?= esc($item['name']) ?></td>
-                            <td class="text-center">
-                                <?= (new DateTime($item['start_date']))->format('d-m-Y') ?>
-                            </td>
-                            <td class="text-center">
-                                <?= (new DateTime($item['end_date']))->format('d-m-Y') ?>
-                            </td>
                             <td class="text-center">
                                 <?php if ($item['in_session']): ?>
                                     <i class="fas fa-check text-success"></i>
@@ -49,19 +44,12 @@
                                 <?php endif; ?>
                             </td>
                             <td class="text-center">
-                                <!-- tombol edit / hapus -->
-                                <a href="<?= base_url('admin/academic-year/'.$item['id'].'/') ?>" class="btn btn-sm btn-success">Lihat</a>
-                                <a href="<?= base_url('admin/academic-year/'.$item['id'].'/edit/') ?>" class="btn btn-sm btn-primary">Ubah</a>
+                                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$item['id'].'/class/') ?>" class="btn btn-sm btn-success">Lihat</a>
                             </td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-end mt-3">
-                    <a href="<?= base_url('admin/academic-year/create/') ?>" class="btn btn-primary">
-                        Buat Tahun Pelajaran
-                    </a>
-                </div>
             </div>
         </div>
     </section>

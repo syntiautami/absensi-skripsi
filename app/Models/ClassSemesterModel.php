@@ -42,4 +42,7 @@ class ClassSemesterModel extends Model
                     ->join('grade', 'grade.id = class_semester.grade_id', 'left')
                     ->join('semester', 'semester.id = class_semester.semester_id', 'left');
     }
+    public function getClassSemesterBySemesterId($id){
+        return $this->where('semester_id',$id)->findAll();
+    }
 }

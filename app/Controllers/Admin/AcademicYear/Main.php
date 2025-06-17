@@ -12,7 +12,7 @@ class Main extends BaseController
     public function index()
     {
         $model = new AcademicYearModel();
-        $academicYears = $model->orderBy('start_date','DESC')->findAll();
+        $academicYears = $model->orderedAcademicYear();
         return view('admin/academic-year/index', [
             'academic_years' => $academicYears,
             'viewing' => 'academic-year',
@@ -64,7 +64,7 @@ class Main extends BaseController
                     ],
                 ]);
 
-                return redirect()->to('admin/academic-year/')->with('success', 'Data tahun akademik berhasil ditambahkan.');
+                return redirect()->to('admin/academic-year/')->with('success', 'Data Tahun Pelajaran berhasil ditambahkan.');
             }
         }
 
@@ -75,7 +75,7 @@ class Main extends BaseController
     {
         $academicYearModel = new AcademicYearModel();
         $semesterModel = new SemesterModel();
-        $academicYear = $academicYearModel ->where('id',$id)->first();
+        $academicYear = $academicYearModel ->getAcademicYearById($id);
         if (!$academicYear) {
             return redirect()->to(base_url('admin/academic-year/'))->with('error', 'Data tidak ditemukan.');
         }
