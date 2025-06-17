@@ -33,10 +33,10 @@
                         <?php $no = 1; foreach ($academic_years as $item): ?>
                         <tr>
                             <td class="text-center"><?= esc($item['name']) ?></td>
-                            <td class="text-center">
+                            <td class="text-center" data-order="<?= (new DateTime($item['start_date']))->format('Y-m-d') ?>">
                                 <?= (new DateTime($item['start_date']))->format('d-m-Y') ?>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" data-order="<?= (new DateTime($item['end_date']))->format('Y-m-d') ?>">
                                 <?= (new DateTime($item['end_date']))->format('d-m-Y') ?>
                             </td>
                             <td class="text-center">
@@ -75,7 +75,8 @@
             "searching" : false,
             "lengthChange" : false,
             "paging": false,
-            "info" : false
+            "info" : false,
+            "order" : [['1', 'desc']]
         });
     });
 </script>
