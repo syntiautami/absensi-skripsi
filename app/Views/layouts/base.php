@@ -20,7 +20,9 @@
 
   <div class="content-wrapper pt-3">
     <div class="container-fluid">
-      <?= $this->renderSection('content') ?>
+        <?= $this->renderSection('header') ?>
+        <?= $this->renderSection('breadcrumb') ?>
+        <?= $this->renderSection('content') ?>
     </div>
   </div>
 
@@ -33,6 +35,9 @@
 <script src="<?= base_url('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <!-- AdminLTE -->
 <script src="<?= base_url('assets/adminlte/js/adminlte.min.js') ?>"></script>
+<!-- DataTable -->
+<script src="<?= base_url('assets/adminlte/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?= base_url('assets/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
 
 <?= $this->renderSection('scripts') ?>
 </body>
