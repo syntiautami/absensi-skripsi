@@ -74,9 +74,15 @@ class Main extends BaseController
     public function detail($id)
     {
         $academicYearModel = new AcademicYearModel();
+        $semesterModel = new SemesterModel();
         $academicYear = $academicYearModel ->where('id',$id)->first();
+        if (!$academicYear) {
+            return redirect()->to(base_url('admin/academic-year/'))->with('error', 'Data tidak ditemukan.');
+        }
+        $semesters = $semesterModel -> getSemesters_from_academic_year_id($academicYear['id']);
         return view('admin/academic-year/detail', [
             'academic_year' => $academicYear,
+            'semesters' => $semesters,
             'viewing' => 'academic-year',
         ]);
     }
@@ -131,7 +137,7 @@ class Main extends BaseController
             ]);
             return redirect()->to(base_url('admin/academic-year/'))->with('success', 'Data berhasil diupdate.');
         }
-        $semesters = $semesterModel->where('academic_year_id',$id)->findAll();
+        $semesters = $semesterModel->getSemesters_from_academic_year_id($academicYear['id']);
         return view('admin/academic-year/edit', [
             'academic_year' => $academicYear,
             'semesters' => $semesters,

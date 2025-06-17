@@ -40,4 +40,8 @@ class SemesterModel extends Model
     {
         return $this->select('semester.*, academic_year.name AS academic_year_name')->join('academic_year', 'academic_year.id = semester.academic_year_id', 'left');
     }
+
+    public function getSemesters_from_academic_year_id($id){
+        return $this->where('academic_year_id',$id)->orderBy('start_date','ASC')->findAll();
+    }
 }

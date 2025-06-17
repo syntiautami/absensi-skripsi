@@ -43,6 +43,29 @@
 <script src="<?= base_url('assets/adminlte/plugins/moment/moment.min.js') ?>"></script>
 <script src="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"></script>
 
+  <?php if (session()->getFlashdata('success')): ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukses',
+            text: '<?= session()->getFlashdata('success') ?>',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    </script>
+  <?php endif; ?>
+
+  <?php if (session()->getFlashdata('error')): ?>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '<?= session()->getFlashdata('error') ?>',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    </script>
+  <?php endif; ?>
 <?= $this->renderSection('scripts') ?>
 </body>
 </html>

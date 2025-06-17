@@ -21,26 +21,121 @@
 <?= $this->section('content') ?>
     <section class="content">
         <div class="card">
-            <div class="card-body">
-                <dl class="row">
-                    <dt class="col-sm-4">Nama Tahun Akademik</dt>
-                    <dd class="col-sm-8"><?= esc($academicYear['name']) ?></dd>
-
-                    <dt class="col-sm-4">Tanggal Mulai</dt>
-                    <dd class="col-sm-8"><?= date('d-m-Y', strtotime($academicYear['start_date'])) ?></dd>
-
-                    <dt class="col-sm-4">Tanggal Akhir</dt>
-                    <dd class="col-sm-8"><?= date('d-m-Y', strtotime($academicYear['end_date'])) ?></dd>
-
-                    <dt class="col-sm-4">Sedang Berjalan</dt>
-                    <dd class="col-sm-8">
-                        <?= $academicYear['in_session'] ? '<span class="badge bg-success">Ya</span>' : '<span class="badge bg-secondary">Tidak</span>' ?>
-                    </dd>
-                </dl>
+            <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#tab-detail" data-toggle="tab">Detail</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-semester" data-toggle="tab">Info Semester</a>
+                    </li>
+                </ul>
             </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="tab-detail">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <p class="form-control-plaintext"><?= esc($academic_year['name']) ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tanggal Mulai</label>
+                                    <p class="form-control-plaintext"><?= date('d-m-Y', strtotime($academic_year['start_date'])) ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tanggal Akhir</label>
+                                    <p class="form-control-plaintext"><?= date('d-m-Y', strtotime($academic_year['end_date'])) ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Sedang Berjalan</label>
+                                    <p class="form-control-plaintext">
+                                        <?php if ($academic_year['in_session']): ?>
+                                            <i class="fas fa-check text-success"></i>
+                                        <?php else: ?>
+                                            <i class="fas fa-times text-danger"></i>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="card-footer">
-                <a href="<?= site_url('admin/academic-year/') ?>" class="btn btn-secondary">Kembali</a>
+                    <div class="tab-pane" id="tab-semester">
+                        <?php $no = 1; foreach ($semesters as $item): ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>
+                                        Semester
+                                        <?php 
+                                            if ($no == 1) {
+                                                echo 'Pertama';
+                                            } elseif ($no == 2) {
+                                                echo 'Kedua';
+                                            } else {
+                                                echo $no;
+                                            }
+                                        ?>
+                                        <?php $no++; ?>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nama</label>
+                                        <p class="form-control-plaintext"><?= esc($item['name']) ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Tanggal Mulai</label>
+                                        <p class="form-control-plaintext"><?= date('d-m-Y', strtotime($item['start_date'])) ?></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Tanggal Akhir</label>
+                                        <p class="form-control-plaintext"><?= date('d-m-Y', strtotime($item['end_date'])) ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Sedang Berjalan</label>
+                                        <p class="form-control-plaintext">
+                                            <?php if ($item['in_session']): ?>
+                                                <i class="fas fa-check text-success"></i>
+                                            <?php else: ?>
+                                                <i class="fas fa-times text-danger"></i>
+                                            <?php endif; ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach ?>
+                        <hr>
+                        <div class="d-flex justify-content-end mt-3">
+                            <a href="<?= base_url('admin/academic-year/'.$academic_year['id'].'/semester/edit/') ?>" class="btn btn-primary">
+                                Ubah Semester
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

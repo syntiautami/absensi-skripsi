@@ -22,9 +22,10 @@
     <section class="content">
         <div class="card">
             <form action="<?= base_url('admin/academic-year/create/') ?>" method="post">
+                <?= csrf_field() ?>
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-8">
                             <label for="name" class="col-form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
@@ -40,8 +41,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
                         <div class="col-sm-4">
                             <label for="end_date" class="col-form-label">Tanggal Akhir</label>
                             <div class="input-group date" id="end_date_picker" data-target-input="nearest">
@@ -53,11 +52,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="in_session" name="in_session">
-                        <label class="form-check-label" for="in_session">Sedang Berjalan</label>
-                    </div>
                     <div class="form-group row">
+                        <div class="col-md-4">
+                            <label for="" class="col-form-label">Sedang Berjalan</label>
+                            <input type="checkbox" class="form-control" id="in_session" name="in_session" style="width: auto;">
+                        </div>
                         <div class="col-sm-4">
                             <label class="col-form-label">Semester yang sedang berjalan</label>
                             <select name="active_semester_id" class="form-control">
