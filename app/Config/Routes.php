@@ -34,6 +34,9 @@ $routes->post('admin/academic-year/create/', 'Admin\AcademicYear\Main::create', 
 $routes->get('admin/academic-year/(:num)/', 'Admin\AcademicYear\Main::detail/$1', $auth_filters);
 $routes->get('admin/academic-year/(:num)/edit/', 'Admin\AcademicYear\Main::edit/$1', $auth_filters);
 $routes->post('admin/academic-year/(:num)/edit/', 'Admin\AcademicYear\Main::edit/$1', $auth_filters);
+$routes->get('admin/academic-year/(:num)/semester/', 'Admin\AcademicYear\Main::detail/$1', $auth_filters);
+$routes->get('admin/academic-year/(:num)/semester/(:num)/', 'Admin\AcademicYear\Main::detail/$1/$2', $auth_filters);
+$routes->post('admin/academic-year/(:num)/semester/(:num)/', 'Admin\AcademicYear\Main::detail/$1/$2', $auth_filters);
 
 // admin class
 $routes->get('admin/classes/', 'Admin\Classes\Main::index', $auth_filters);

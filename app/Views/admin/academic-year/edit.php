@@ -56,12 +56,20 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="in_session" name="in_session"
                             <?= $academic_year['in_session'] ? 'checked' : '' ?>>
                         <label class="form-check-label" for="in_session">Sedang Berjalan</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label class="col-form-label">Semester yang sedang berjalan</label>
+                            <select name="active_semester_id" class="form-control">
+                                <?php $no = 1; foreach ($semesters as $item): ?>
+                                    <option value="<?= $item['id'] ?>" <?= ($item['in_session']) ? 'selected' : '' ?>>Semester <?= esc($item['name']) ?></option>
+                                    <?php endforeach ?>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
