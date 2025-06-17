@@ -34,11 +34,11 @@ class Auth extends BaseController
             ]);
 
             if (count($user_roles) > 1){
-                return redirect()->to('role/');
+                return redirect()->to(base_url('role/'));
             }
             $role = $user_roles[0];
             session()->set('role', $role);
-            return redirect()->to($role.'/');
+            return redirect()->to(base_url($role . '/'));
         }
 
         return redirect()->back()->with('error', 'Username/email atau password salah');
@@ -69,6 +69,6 @@ class Auth extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to(base_url('/'));
     }
 }
