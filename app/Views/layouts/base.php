@@ -5,7 +5,7 @@
   <title><?= $this->renderSection('title') ?></title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.css') ?>">
   <!-- AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.min.css') ?>">
   

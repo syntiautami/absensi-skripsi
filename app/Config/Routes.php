@@ -28,6 +28,9 @@ $routes->get('admin/', 'Admin\Main::index', $auth_filters);
 $routes->get('admin/users/', 'Admin\User\Main::index', $auth_filters);
 
 // admin class
+$routes->get('admin/academic-year/', 'Admin\AcademicYear\Main::index', $auth_filters);
+
+// admin class
 $routes->get('admin/classes/', 'Admin\Classes\Main::index', $auth_filters);
 
 // admin subject
