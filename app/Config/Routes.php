@@ -54,7 +54,7 @@ $routes->group('admin/classes', function($routes) {
     $routes->get('academic-year/(:num)/semester/(:num)/class/(:num)/students/', 'Admin\Classes\ClassSemester::students/$1/$2/$3');
     $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/students/', 'Admin\Classes\ClassSemester::students/$1/$2/$3');
 
-    $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2/$3');
+    $routes->get('academic-year/(:num)/semester/(:num)/class/(:num)/class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2/$3');
     $routes->post('academic-year/(:num)/semester/(:num)/class/(:num)/class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2/$3');
 });
 
