@@ -25,16 +25,14 @@
                 <table id="academicYearTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">No</th>
                             <th class="text-center">Semester</th>
-                            <th class="text-center">Sedang Berjalan</th>
-                            <th class="text-center">Aksi</th>
+                            <th class="text-center" style="width: 200px;">Sedang Berjalan</th>
+                            <th class="text-center" style="width: 100px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 1; foreach ($semesters as $item): ?>
                         <tr href="<?= base_url('admin/classes/') ?>">
-                            <td class="text-center"><?= $no++ ?></td>
                             <td class="text-center"><?= esc($item['name']) ?></td>
                             <td class="text-center">
                                 <?php if ($item['in_session']): ?>

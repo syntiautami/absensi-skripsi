@@ -16,7 +16,10 @@
             <li class="breadcrumb-item">
                 <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Semester <?= esc($semester['name']) ?></li>
+            <li class="breadcrumb-item">
+                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/') ?>">Semester<?= esc($semester['name']) ?></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Buat Kelas</li>
         </ol>
     </nav>
 <?= $this->endSection() ?>
@@ -28,15 +31,17 @@
                 <table id="class_semester_table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th class="text-center">No</th>
                             <th class="text-center">Kelas</th>
                             <th class="text-center">Wali Kelas</th>
-                            <th class="text-center" style="width: 150px;">Total Siswa</th>
+                            <th class="text-center">Total Siswa</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 1; foreach ($class_semesters as $item): ?>
                             <tr href="<?= base_url('admin/classes/') ?>">
+                                <td class="text-center"><?= $no++ ?></td>
                                 <td class="text-center"><?= esc($item['name']) ?></td>
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>

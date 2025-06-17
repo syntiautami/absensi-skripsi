@@ -22,18 +22,16 @@
                 <table id="academicYearTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">No</th>
                             <th class="text-center">Tahun Pelajaran</th>
-                            <th class="text-center">Tanggal Mulai</th>
-                            <th class="text-center">Tanggal Akhir</th>
-                            <th class="text-center">Sedang Berjalan</th>
-                            <th class="text-center">Aksi</th>
+                            <th class="text-center" style="width: 200px;">Tanggal Mulai</th>
+                            <th class="text-center" style="width: 200px;">Tanggal Akhir</th>
+                            <th class="text-center" style="width: 200px;">Sedang Berjalan</th>
+                            <th class="text-center" style="width: 100px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 1; foreach ($academic_years as $item): ?>
                         <tr href="<?= base_url('admin/classes/') ?>">
-                            <td class="text-center"><?= $no++ ?></td>
                             <td class="text-center"><?= esc($item['name']) ?></td>
                             <td class="text-center">
                                 <?= (new DateTime($item['start_date']))->format('d-m-Y') ?>
