@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Controllers\Admin\Classes;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class User extends BaseController
+class Teacher extends BaseController
 {
     public function index()
     {

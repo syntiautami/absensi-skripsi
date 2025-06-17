@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin\Subject;
+namespace App\Controllers\Admin\User;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -9,8 +9,8 @@ class Main extends BaseController
 {
     public function index()
     {
-        return view('admin/subject/index', [
-            'viewing' => 'subject',
+        return view('admin/user/index', [
+            'viewing' => 'user',
         ]);
     }
 }

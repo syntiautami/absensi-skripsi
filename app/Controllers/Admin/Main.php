@@ -14,6 +14,9 @@ class Main extends BaseController
         // foreach ($user_roles as $user_role){
         // }
         // dd($user_roles);
-        return view('admin/home');
+        
+        return view('admin/home', [
+            'viewing' => 'dashboard',
+        ]);
     }
 }

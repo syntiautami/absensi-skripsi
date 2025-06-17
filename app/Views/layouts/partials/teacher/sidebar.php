@@ -47,12 +47,12 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?= base_url('teacher/attendance/report/') ?>" class="nav-link <?= ($viewing ?? '') === 'report' ? 'active' : '' ?>">
+              <a href="<?= base_url('teacher/report/attendance/') ?>" class="nav-link <?= ($viewing ?? '') === 'report' ? 'active' : '' ?>">
                 <p>Absensi Harian</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('teacher/attendance/report/subject/') ?>" class="nav-link <?= ($viewing ?? '') === 'report-subject' ? 'active' : '' ?>">
+              <a href="<?= base_url('teacher/report/attendance-subject/') ?>" class="nav-link <?= ($viewing ?? '') === 'report-subject' ? 'active' : '' ?>">
                 <p>Absensi Subject</p>
               </a>
             </li>
