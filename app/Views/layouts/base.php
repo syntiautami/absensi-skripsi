@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.css') ?>">
   <!-- AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>">
   
   <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
   <?= $this->renderSection('styles') ?>
@@ -38,6 +39,9 @@
 <!-- DataTable -->
 <script src="<?= base_url('assets/adminlte/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
+
+<script src="<?= base_url('assets/adminlte/plugins/moment/moment.min.js') ?>"></script>
+<script src="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"></script>
 
 <?= $this->renderSection('scripts') ?>
 </body>

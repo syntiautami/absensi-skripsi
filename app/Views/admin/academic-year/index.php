@@ -1,21 +1,7 @@
 <?= $this->extend('layouts/base') ?>
 
-<?= $this->section('title') ?>
-Admin Academic Year
-<?= $this->endSection() ?>
-
 <?= $this->section('header') ?>
-    <header class="navbar navbar-expand navbar-white navbar-light">
-        <div class="d-flex align-items-center p-2">
-            <div class="mr-3">
-                <img src="<?= base_url('assets/img/logo.png') ?>" alt="Logo Sekolah" style="width: 50px; height: 50px; object-fit: cover;">
-            </div>
-            <div>
-                <div class="font-weight-bold">Nama Sekolah</div>
-                <div class="text-muted">admin</div>
-            </div>
-        </div>
-    </header>
+    <?= view('components/header', ['role' => 'Admin']) ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('breadcrumb') ?>
@@ -49,8 +35,12 @@ Admin Academic Year
                         <tr>
                             <td class="text-center"><?= $no++ ?></td>
                             <td class="text-center"><?= esc($item['name']) ?></td>
-                            <td class="text-center"><?= date('d-m-Y', strtotime($item['start_date'])) ?></td>
-                            <td class="text-center"><?= date('d-m-Y', strtotime($item['end_date'])) ?></td>
+                            <td class="text-center">
+                                <?= (new DateTime($item['start_date']))->format('d-m-Y') ?>
+                            </td>
+                            <td class="text-center">
+                                <?= (new DateTime($item['end_date']))->format('d-m-Y') ?>
+                            </td>
                             <td class="text-center">
                                 <?php if ($item['in_session']): ?>
                                     <i class="fas fa-check text-success"></i>
@@ -60,14 +50,15 @@ Admin Academic Year
                             </td>
                             <td class="text-center">
                                 <!-- tombol edit / hapus -->
-                                <a href="<?= base_url('admin/academic-year/edit/'.$item['id']) ?>" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="<?= base_url('admin/academic-year/'.$item['id'].'/') ?>" class="btn btn-sm btn-success">Lihat</a>
+                                <a href="<?= base_url('admin/academic-year/'.$item['id'].'/edit/') ?>" class="btn btn-sm btn-primary">Ubah</a>
                             </td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?= base_url('admin/academic-year/create') ?>" class="btn btn-primary">
+                    <a href="<?= base_url('admin/academic-year/create/') ?>" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Buat Tahun Ajaran
                     </a>
                 </div>
