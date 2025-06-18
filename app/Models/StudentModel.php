@@ -26,27 +26,32 @@ class StudentModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
-    /**
-     * Join ke tabel profile
-     */
-    public function withProfile()
-    {
-        return $this->select('
-                    student.*,
-                    profile.first_name,
-                    profile.last_name,
-                    profile.nisn
-                ')
-                ->join('profile', 'profile.id = student.profile_id', 'left');
+    public function getAllData(){
+        return $this
+            ->select(
+                'student.id, 
+                student.profile_id, 
+                profile.user_id, 
+                user.first_name, 
+                user.last_name'
+            )
+            ->join('profile','profile.id = student.profile_id')
+            ->join('user','user.id = profile.user_id')
+            ->findAll();
     }
 
-    /**
-     * Ambil semua data student aktif + data profil
-     */
-    public function getActiveWithProfile()
-    {
-        return $this->withProfile()
-                    ->where('student.active', true)
-                    ->findAll();
+    public function excludeStudentsIds($ids){
+        return $this
+            ->select(
+                'student.id, 
+                student.profile_id, 
+                profile.user_id, 
+                user.first_name, 
+                user.last_name'
+            )
+            ->join('profile','profile.id = student.profile_id')
+            ->join('user','user.id = profile.user_id')
+            ->whereNotIn('student.id', $ids)
+            ->findAll();
     }
 }

@@ -10,22 +10,47 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
-                'first_name' => 'Syntia',
-                'last_name'  => 'Tri Utami',
-                'email'      => 'syntia@mailinator.com',
-                'username'   => 'syntia',
+                'first_name' => 'Budi',
+                'last_name'  => 'Santoso',
+                'email'      => 'budi@mailinator.com',
+                'username'   => 'budi',
                 'password'   => password_hash('123', PASSWORD_DEFAULT),
                 'created_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'first_name' => 'Admin',
-                'last_name'  => 'User',
-                'email'      => 'admin@example.com',
-                'username'   => 'admin',
+                'first_name' => 'Rina',
+                'last_name'  => 'Kusuma',
+                'email'      => 'rina@mailinator.com',
+                'username'   => 'rina',
+                'password'   => password_hash('123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'first_name' => 'Agus',
+                'last_name'  => 'Prasetyo',
+                'email'      => 'agus@mailinator.com',
+                'username'   => 'agus',
+                'password'   => password_hash('123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'first_name' => 'Dewi',
+                'last_name'  => 'Sari',
+                'email'      => 'dewi@mailinator.com',
+                'username'   => 'dewi',
+                'password'   => password_hash('123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'first_name' => 'Andi',
+                'last_name'  => 'Wijaya',
+                'email'      => 'andi@mailinator.com',
+                'username'   => 'andi',
                 'password'   => password_hash('123', PASSWORD_DEFAULT),
                 'created_at' => date('Y-m-d H:i:s'),
             ],
         ];
+
 
         $this->db->table('user')->insertBatch($data);
     }

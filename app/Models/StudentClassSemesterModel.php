@@ -14,7 +14,7 @@ class StudentClassSemesterModel extends Model
     protected $useSoftDeletes   = false;
 
     protected $allowedFields    = [
-        'profile_id',
+        'student_id',
         'class_semester_id',
         'active',
         'created_by_id',
@@ -30,16 +30,21 @@ class StudentClassSemesterModel extends Model
     /**
      * Join dengan data profile + user (siswa)
      */
-    public function withProfile()
+    public function getByClassSemesterId($id)
     {
-        return $this->select('
-                student_class_semester.*,
-                profile.nisn,
+        return $this
+            ->select('
+                student_class_semester.id,
+                student_class_semester.student_id,
+                profile.barcode_number,
                 user.first_name,
                 user.last_name
             ')
-            ->join('profile', 'profile.id = student_class_semester.profile_id', 'left')
-            ->join('user', 'user.id = profile.user_id', 'left');
+            ->join('student', 'student.id = student_class_semester.student_id', 'left')
+            ->join('profile', 'profile.id = student.profile_id', 'left')
+            ->join('user', 'user.id = profile.user_id', 'left')
+            ->where('class_semester_id',$id)
+            ->findAll();
     }
 
     /**
@@ -68,7 +73,7 @@ class StudentClassSemesterModel extends Model
                 class_semester.name AS class_name,
                 class_semester.semester_id
             ')
-            ->join('profile', 'profile.id = student_class_semester.profile_id', 'left')
+            ->join('student', 'student.id = student_class_semester.student_id', 'left')
             ->join('user', 'user.id = profile.user_id', 'left')
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left');
     }
