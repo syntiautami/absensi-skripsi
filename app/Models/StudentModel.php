@@ -31,7 +31,8 @@ class StudentModel extends Model
             ->select(
                 'student.id, 
                 student.profile_id, 
-                profile.user_id, 
+                profile.user_id,
+                profile.barcode_number, 
                 user.first_name, 
                 user.last_name'
             )
@@ -45,7 +46,8 @@ class StudentModel extends Model
             ->select(
                 'student.id, 
                 student.profile_id, 
-                profile.user_id, 
+                profile.user_id,
+                profile.barcode_number, 
                 user.first_name, 
                 user.last_name'
             )

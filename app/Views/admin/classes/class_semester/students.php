@@ -61,46 +61,44 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
-            </form>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="modalTambahSiswa" tabindex="-1" role="dialog" aria-labelledby="modalTambahSiswaLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <form method="post" action="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/students/add/') ?>">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalTambahSiswaLabel">Pilih Siswa</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <table id="studentsTable-2" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 30px;"><input type="checkbox" id="checkAll"></th>
-                                        <th>Nama Siswa</th>
-                                        <th>NIS</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach($students as $student): ?>
-                                    <tr>
-                                        <td><input type="checkbox" name="siswa_ids[]" value="<?= $student['id']; ?>"></td>
-                                        <td><?= esc("{$student['first_name']} {$student['last_name']}"); ?></td>
-                                        <td><?= esc($student['user_id']); ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-    
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Tambah</button>
+                <!-- Modal -->
+                <div class="modal fade" id="modalTambahSiswa" tabindex="-1" role="dialog" aria-labelledby="modalTambahSiswaLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTambahSiswaLabel">Pilih Siswa</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table id="studentsTable-2" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 30px;"><input type="checkbox" id="checkAll"></th>
+                                            <th>Nama Siswa</th>
+                                            <th>Nomor Barcode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($students as $student): ?>
+                                        <tr>
+                                            <td><input type="checkbox" name="students[]" value="<?= $student['id']; ?>"></td>
+                                            <td><?= esc("{$student['first_name']} {$student['last_name']}"); ?></td>
+                                            <td><?= esc($student['barcode_number']); ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Tambah</button>
+                            </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -116,7 +114,6 @@
             "lengthChange" : false,
             "paging": false,
             "info" : false,
-            "order": [[ 1, "desc" ]]
         });
         document.getElementById('checkAll').addEventListener('click', function(){
             const checkboxes = document.querySelectorAll('input[name="siswa_ids[]"]');
