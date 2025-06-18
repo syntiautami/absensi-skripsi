@@ -36,6 +36,7 @@ class StudentClassSemesterModel extends Model
             ->select('
                 student_class_semester.id,
                 student_class_semester.student_id,
+                student.profile_id,
                 profile.barcode_number,
                 user.first_name,
                 user.last_name
@@ -43,6 +44,7 @@ class StudentClassSemesterModel extends Model
             ->join('student', 'student.id = student_class_semester.student_id', 'left')
             ->join('profile', 'profile.id = student.profile_id', 'left')
             ->join('user', 'user.id = profile.user_id', 'left')
+            ->where('student_class_semester.active',1)
             ->where('class_semester_id',$id)
             ->findAll();
     }

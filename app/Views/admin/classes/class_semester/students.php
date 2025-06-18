@@ -28,39 +28,40 @@
     <section class="content">
         <div class="card">
             <?= $this->include('admin/classes/class_semester/components/tabs') ?>
-            <div class="card-body">
-                <table id="studentsTable" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="width: 30px;">No</th>
-                            <th class="text-center">Nama</th>
-                            <th class="text-center" style="width: 200px;">Nomor Barcode</th>
-                            <th class="text-center" style="width: 200px;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1; foreach ($student_class_semesters as $student): ?>
-                        <tr href="<?= base_url('admin/classes/') ?>">
-                            <td class="text-center"><?= $no++ ?></td>
-                            <td class="text-center"><?= esc("{$student['first_name']} {$student['last_name']}") ?></td>
-                            <td class="text-center">
-                                <input type="text" name="barcode_number[<?= $student['id'] ?>]" 
-                                value="<?= esc($student['barcode_number'] ?? '') ?>" 
-                                class="form-control" />
-                            </td>
-                            <td class="text-center">
-                                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/students/delete/') ?>" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-end mt-3">
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalTambahSiswa">
-                        Tambah Siswa
-                    </button>
+            <form action="" method="post">
+                <div class="card-body">
+                    <table id="studentsTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 30px;">No</th>
+                                <th class="text-center">Nama</th>
+                                <th class="text-center" style="width: 200px;">Nomor Barcode</th>
+                                <th class="text-center" style="width: 200px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1; foreach ($student_class_semesters as $student): ?>
+                            <tr href="<?= base_url('admin/classes/') ?>">
+                                <td class="text-center"><?= $no++ ?></td>
+                                <td class="text-center"><?= esc("{$student['first_name']} {$student['last_name']}") ?></td>
+                                <td class="text-center">
+                                    <input type="text" name="barcode_number[<?= $student['profile_id'] ?>]" 
+                                    value="<?= esc($student['barcode_number'] ?? '') ?>"
+                                    class="form-control" />
+                                </td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/students/'.$student['id'].'/delete/') ?>" class="btn btn-sm btn-danger">Hapus</a>
+                                </td>
+                            </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end mt-3">
+                        <a class="btn btn-success mr-3" data-toggle="modal" data-target="#modalTambahSiswa">Tambah Siswa</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="modalTambahSiswa" tabindex="-1" role="dialog" aria-labelledby="modalTambahSiswaLabel" aria-hidden="true">
