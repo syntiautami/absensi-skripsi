@@ -91,18 +91,18 @@ class ClassSemester extends BaseController
         $model = new AcademicYearModel();
         $academic_year = $model->getAcademicYearById($academic_year_id);
         if (!$academic_year) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/'))->with('error', 'Data tidak ditemukan.');
         }
         $semesterModel = new SemesterModel();
         $semester = $semesterModel ->getSemesterById($semester_id);
         if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/'))->with('error', 'Data tidak ditemukan.');
         }
         
         $classSemesterModel = new ClassSemesterModel();
         $classSemester = $classSemesterModel->getClassSemesterById($id);
         if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/'))->with('error', 'Data tidak ditemukan.');
         }
 
         $homeroomModel = new TeacherClassSemesterHomeroomModel();
@@ -125,16 +125,16 @@ class ClassSemester extends BaseController
 
         $academic_year = $model->getAcademicYearById($academic_year_id);
         if (!$academic_year) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/students/'))->with('error', 'Data tidak ditemukan.');
         }
         $semester = $semesterModel ->getSemesterById($semester_id);
         if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/students/'))->with('error', 'Data tidak ditemukan.');
         }
         
         $classSemester = $classSemesterModel->getClassSemesterById($id);
         if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/students/'))->with('error', 'Data tidak ditemukan.');
         }
         
         if ($this->request->getMethod() === 'POST'){
@@ -204,18 +204,18 @@ class ClassSemester extends BaseController
         $model = new AcademicYearModel();
         $academic_year = $model->getAcademicYearById($academic_year_id);
         if (!$academic_year) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/class-hour/'))->with('error', 'Data tidak ditemukan.');
         }
         $semesterModel = new SemesterModel();
         $semester = $semesterModel ->getSemesterById($semester_id);
         if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/class-hour/'))->with('error', 'Data tidak ditemukan.');
         }
         
         $classSemesterModel = new ClassSemesterModel();
         $classSemester = $classSemesterModel->getClassSemesterById($id);
         if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$id.'/class-hour/'))->with('error', 'Data tidak ditemukan.');
         }
         
         if ($this->request->getMethod() === 'POST'){
@@ -242,50 +242,38 @@ class ClassSemester extends BaseController
     // post
     public function delete($academic_year_id, $semester_id, $class_semester_id, $id){
         $model = new AcademicYearModel();
+        $classSemesterModel = new ClassSemesterModel();
+        $scsModel = new StudentClassSemesterModel();
+        $studentModel = new StudentModel();
+        $semesterModel = new SemesterModel();
+
         $academic_year = $model->getAcademicYearById($academic_year_id);
         if (!$academic_year) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$class_semester_id.'/students/'))->with('error', 'Data tidak ditemukan.');
         }
-        $semesterModel = new SemesterModel();
         $semester = $semesterModel ->getSemesterById($semester_id);
         if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$class_semester_id.'/students/'))->with('error', 'Data tidak ditemukan.');
         }
         
-        $classSemesterModel = new ClassSemesterModel();
-        $classSemester = $classSemesterModel->getClassSemesterById($id);
+        $classSemester = $classSemesterModel->getClassSemesterById($class_semester_id);
         if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$class_semester_id.'/students/'))->with('error', 'Data tidak ditemukan.');
         }
-        
-        if ($this->request->getMethod() === 'POST'){
-            $data = $this->request->getPost();
 
-            $classSemesterModel ->update($id,[
-                'barcode' => $data['grace_period'],
+        $studentClassSemester = $scsModel -> getByClassSemesterId($id);
+        if (!$studentClassSemester) {
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id,'/semester/'.$semester_id.'/class/'.$class_semester_id.'/students/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        $scsModel -> update(
+            $id,
+            [
+                'active' => 0,
                 'updated_by_id' => session()->get('user')['id'],
-            ]);
-            
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/class/'.$id.'/students/'))->with('success', 'Data berhasil diupdate.');
-        }
-        $scsModel = new StudentClassSemesterModel();
-        $scs_list = $scsModel -> getByClassSemesterId($id);
-        $studentIds = array_column($scs_list, 'student_id');
-
-        $studentModel = new StudentModel();
-        if (!empty($studentIds)) {
-            $students = $studentModel->excludeStudentsIds($studentIds);
-        } else {
-            $students = $studentModel->getAllData();
-        }
-
-        return view('admin/classes/class_semester/students', [
-            'academic_year' => $academic_year,
-            'class_semester' => $classSemester,
-            'semester' => $semester,
-            'students' => $students,
-            'student_class_semesters' => $scs_list,
-            'viewing' => 'classes',
-        ]);
+            ]
+        );
+        
+        return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/class/'.$id.'/students/'))->with('success', 'Data berhasil diupdate.');
     }
 }

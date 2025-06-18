@@ -49,6 +49,25 @@ class StudentClassSemesterModel extends Model
             ->orderBy('first_name, last_name')
             ->findAll();
     }
+    public function getById($id)
+    {
+        return $this
+            ->select('
+                student_class_semester.id,
+                student_class_semester.student_id,
+                student.profile_id,
+                profile.barcode_number,
+                user.first_name,
+                user.last_name
+            ')
+            ->join('student', 'student.id = student_class_semester.student_id', 'left')
+            ->join('profile', 'profile.id = student.profile_id', 'left')
+            ->join('user', 'user.id = profile.user_id', 'left')
+            ->where('student_class_semester.active',1)
+            ->where('student_class_semester.id',$id)
+            ->orderBy('first_name, last_name')
+            ->first();
+    }
 
     /**
      * Join dengan data class_semester
