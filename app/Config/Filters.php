@@ -14,6 +14,7 @@ use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use \App\Filters\AuthFilter;
 use \App\Filters\TrailingSlashRedirect;
+use \App\Filters\RoleFilter;
 
 class Filters extends BaseFilters
 {
@@ -38,6 +39,7 @@ class Filters extends BaseFilters
         'performance'       => PerformanceMetrics::class,
         'auth'              => AuthFilter::class,
         'trailing-slash'    => TrailingSlashRedirect::class,
+        'auto-role'         => RoleFilter::class,
     ];
 
     /**
@@ -77,6 +79,7 @@ class Filters extends BaseFilters
             // 'csrf',
             // 'invalidchars',
             // 'trailing-slash',
+            'auto-role',
         ],
         'after' => [
             // 'honeypot',

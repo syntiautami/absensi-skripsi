@@ -34,4 +34,18 @@ class ProfileModel extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+    public function getByBarcodeNumber($id){
+        return $this
+            ->select("
+                student.id as student_id,
+                profile.profile_photo,
+                user.last_name,
+                user.first_name
+            ")
+            ->join('user','user.id=profile.user_id')
+            ->join('student','profile.id=student.profile_id')
+            ->where('barcode_number',$id)
+            ->first();
+    }
 }

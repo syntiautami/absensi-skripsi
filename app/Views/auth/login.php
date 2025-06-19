@@ -1,7 +1,4 @@
 <?= $this->extend('layouts/auth/base') ?>
-<?= $this->section('title') ?>
-Login
-<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
   <div class="row w-100">

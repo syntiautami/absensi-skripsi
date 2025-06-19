@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><?= $this->renderSection('title') ?? 'Login' ?></title>
+  <title>SMA IT Alia</title>
 
   <!-- Bootstrap & AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">

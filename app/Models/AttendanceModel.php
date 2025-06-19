@@ -27,6 +27,11 @@ class AttendanceModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
+    public function getTodayAttendance($id){
+        $this->where('student_class_semester_id', $id)
+        ->where('DATE(date)', date('Y-m-d'))
+        ->first();
+    }
     /**
      * Join dengan attendance_type
      */

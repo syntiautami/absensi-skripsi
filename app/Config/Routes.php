@@ -20,6 +20,7 @@ $routes->get('logout/', 'Auth::logout');
 
 // attendance
 $routes->get('attendance/', 'Attendance\Main::index', $auth_filters);
+$routes->post('attendance/tapping/', 'Attendance\Main::tapping', $auth_filters);
 
 // admin
 $routes->get('admin/', 'Admin\Main::index', $auth_filters);

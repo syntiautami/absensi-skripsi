@@ -27,51 +27,14 @@ class AttendanceDailyEntryModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
-    /**
-     * Join ke profile + user (untuk ambil nama)
-     */
-    public function withProfile()
+    public function getTodayEntry($id)
     {
-        return $this->select('
-                attendance_daily_entry.*,
-                user.first_name AS profile_first_name,
-                user.last_name AS profile_last_name,
-                profile.nisn
-            ')
-            ->join('profile', 'profile.id = attendance_daily_entry.profile_id', 'left')
-            ->join('user', 'user.id = profile.user_id', 'left');
-    }
-
-    /**
-     * Join ke user pembuat & pengubah
-     */
-    public function withUser()
-    {
-        return $this->select('
-                attendance_daily_entry.*,
-                created_by.username AS created_by_username,
-                updated_by.username AS updated_by_username
-            ')
-            ->join('user AS created_by', 'created_by.id = attendance_daily_entry.created_by_id', 'left')
-            ->join('user AS updated_by', 'updated_by.id = attendance_daily_entry.updated_by_id', 'left');
-    }
-
-    /**
-     * Join ke semua relasi: profile -> user, dan pembuat/pengubah
-     */
-    public function withAll()
-    {
-        return $this->select('
-                attendance_daily_entry.*,
-                profile.nisn,
-                user.first_name AS profile_first_name,
-                user.last_name AS profile_last_name,
-                created_by.username AS created_by_username,
-                updated_by.username AS updated_by_username
-            ')
-            ->join('profile', 'profile.id = attendance_daily_entry.profile_id', 'left')
-            ->join('user', 'user.id = profile.user_id', 'left')
-            ->join('user AS created_by', 'created_by.id = attendance_daily_entry.created_by_id', 'left')
-            ->join('user AS updated_by', 'updated_by.id = attendance_daily_entry.updated_by_id', 'left');
+        return $this
+            ->select('*')
+            ->where('profile_id', $id)
+            ->where('DATE(clock_in)', date('Y-m-d'))
+            ->orWhere('DATE(clock_out)', date('Y-m-d'))
+            ->orderBy('clock_in', 'asc')
+            ->first();
     }
 }

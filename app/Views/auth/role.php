@@ -1,7 +1,4 @@
-<!-- app/Views/auth/choose_role.php -->
 <?= $this->extend('layouts/auth/base') ?>
-<?= $this->section('title') ?>Pilih Role<?= $this->endSection() ?>
-
 <?= $this->section('content') ?>
 <div class="container text-center mt-5">
   <h2>Pilih Role</h2>

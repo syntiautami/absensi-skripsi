@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <title>SMA IT Alia</title>
 
+  <!-- AdminLTE -->
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.css') ?>">
-  <!-- AdminLTE -->
-  <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>">
   
   <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
   <?= $this->renderSection('styles') ?>

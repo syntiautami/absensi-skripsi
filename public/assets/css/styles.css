@@ -1,3 +1,20 @@
+:root {
+    --primary: #2E7D32;
+    --secondary: #546E7A;
+    --success: #4CAF50;
+    --info: #1976D2;
+    --warning: #FFA000;
+    --danger: #D32F2F;
+    --background: #F5F7F8;
+    --on-background: #1a1c1e;
+    --surface: #ffffff;
+    --on-surface: #ffffff;
+    --outline-border: #dde2e4;
+}
+
+/* [class*="sidebar-dark-"]{
+    background-color: var(--primary);
+} */
 .dataTables_empty {
     text-align: center !important;
 }

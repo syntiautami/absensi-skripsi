@@ -68,6 +68,26 @@ class StudentClassSemesterModel extends Model
             ->orderBy('first_name, last_name')
             ->first();
     }
+    public function getByStudentId($id)
+    {
+        return $this
+            ->select('
+                student_class_semester.id,
+                class_semester.id as cs_id,
+                section.name as section_name,
+                grade.name as grade_name,
+                class_semester.name as code,
+                class_semester.grace_period,
+                class_semester.clock_in,
+                class_semester.clock_out,
+            ')
+            ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
+            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('section', 'section.id = grade.section_id', 'left')
+            ->where('student_class_semester.active',1)
+            ->where('student_class_semester.student_id',$id)
+            ->first();
+    }
 
     /**
      * Join dengan data class_semester
