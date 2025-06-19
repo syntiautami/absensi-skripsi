@@ -224,9 +224,9 @@ class ClassSemester extends BaseController
         
         if ($this->request->getMethod() === 'POST'){
             $data = $this->request->getPost();
-
+            $gracePeriod = !empty($data['grace_period']) ? $data['grace_period'] : null;
             $classSemesterModel ->update($id,[
-                'grace_period' => $data['grace_period'],
+                'grace_period' => $gracePeriod,
                 'clock_in' => $data['clock-in'],
                 'clock_out' => $data['clock-out'],
                 'updated_by_id' => session()->get('user')['id'],
