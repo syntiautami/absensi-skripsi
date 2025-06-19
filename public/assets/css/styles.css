@@ -12,6 +12,8 @@
     --outline-border: #dde2e4;
     --font-color-bg:#616161;
     --sidebar-active: #c8f6c9;
+    --secondary-2:#cfd8dc;
+    --color-secondary-2:#29434e;
 }
 
 [class*="sidebar-dark-"]{
@@ -51,6 +53,11 @@ a,
 .btn-primary{
     background-color: var(--primary) !important;
     color: var(--surface) !important;
+}
+
+.btn-secondary{
+    background-color: var(--secondary-2);
+    color: var(--color-secondary-2) !important;
 }
 
 .table thead th{
