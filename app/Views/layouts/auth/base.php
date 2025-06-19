@@ -16,6 +16,8 @@
 
   <!-- Scripts -->
   <script src="<?= base_url('assets/adminlte/plugins/jquery/jquery.min.js') ?>"></script>
+  <script src="<?= base_url('assets/adminlte/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+  <script src="<?= base_url('assets/adminlte/plugins/jquery-validation/additional-methods.min.js') ?>"></script>
   <script src="<?= base_url('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
   <script src="<?= base_url('assets/adminlte/js/adminlte.min.js') ?>"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -41,6 +43,21 @@
         });
     </script>
   <?php endif; ?>
+  <script>
+    $('form').validate({
+      errorElement: 'div',
+      errorPlacement: function (error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+      },
+      highlight: function (element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+      }
+  });
+  </script>
   <?= $this->renderSection('scripts') ?>
 </body>
 </html>
