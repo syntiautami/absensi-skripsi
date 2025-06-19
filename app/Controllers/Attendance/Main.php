@@ -14,8 +14,19 @@ class Main extends BaseController
 {
     public function index()
     {
+        $dailyEntryModel = new AttendanceDailyEntryModel();
+        $todayEntries = $dailyEntryModel->getTodayEntries();
+        $totalEntries = $dailyEntryModel->countTotalEntries();
+        $attModel = new AttendanceModel();
+        $todayAttendance = $attModel -> countSummaryByDate();
+        $total = $totalEntries + (int)$todayAttendance['total_absent'] + (int)$todayAttendance['total_late'];
         return view('attendance/index', [
-            'date' => Time::now('Asia/Jakarta', 'en_ID')->getTimestamp()
+            'date' => Time::now('Asia/Jakarta', 'en_ID')->getTimestamp(),
+            'daily_entries' => $todayEntries,
+            'late' => $todayAttendance['total_late'],
+            'absent' => $todayAttendance['total_absent'],
+            'present' => $totalEntries,
+            'total' => $total,
         ]);
     }
 
@@ -73,6 +84,7 @@ class Main extends BaseController
                         $attModel -> insert([
                             'student_class_semester_id' => $studentData['id'],
                             'attendance_type_id' => 4, //late
+                            'date'       => date('Y-m-d'),
                             'created_by_id'  => session()->get('user')['id']
                         ]);
                     }
@@ -81,6 +93,7 @@ class Main extends BaseController
                         $attModel -> insert([
                             'student_class_semester_id' => $studentData['id'],
                             'attendance_type_id' => 1, //absent
+                            'date'       => date('Y-m-d'),
                             'created_by_id'  => session()->get('user')['id']
                         ]);
                     }

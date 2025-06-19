@@ -37,4 +37,26 @@ class AttendanceDailyEntryModel extends Model
             ->orderBy('clock_in', 'asc')
             ->first();
     }
+
+    public function getTodayEntries($limit=15)
+    {
+        return $this
+            ->select('*')
+            ->where('DATE(clock_in)', date('Y-m-d'))
+            ->orWhere('DATE(clock_out)', date('Y-m-d'))
+            ->orderBy('clock_in', 'asc')
+            ->limit($limit)
+            ->findAll();
+    }
+    public function countTotalEntries($date = null)
+    {
+        if ($date === null) {
+            $date = date('Y-m-d');
+        }
+
+        return $this
+            ->where('DATE(clock_in)', $date)
+            ->orWhere('DATE(clock_out)', $date)
+            ->countAllResults();
+    }
 }

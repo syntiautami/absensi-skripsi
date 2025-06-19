@@ -55,11 +55,11 @@
                     <p class="m-0">Tepat Waktu</p>
                 </div>
                 <div class="card flex-fill mr-2 p-3 bg-warning text-white text-center">
-                    <h2 class="text-late">0</h2>
+                    <h2 class="text-late"><?= $late ?></h2>
                     <p class="m-0">Terlambat</p>
                 </div>
                 <div class="card flex-fill mr-2 p-3 bg-danger text-white text-center">
-                    <h2 class="text-absent">0</h2>
+                    <h2 class="text-absent"><?= $absent ?></h2>
                     <p class="m-0">Alpa</p>
                 </div>
                 <div class="card flex-fill p-3 bg-primary text-white text-center">

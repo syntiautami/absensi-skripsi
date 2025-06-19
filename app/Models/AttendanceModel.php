@@ -32,6 +32,20 @@ class AttendanceModel extends Model
         ->where('DATE(date)', date('Y-m-d'))
         ->first();
     }
+    public function countSummaryByDate($date = null)
+    {
+        if ($date === null) {
+            $date = date('Y-m-d');
+        }
+
+        return $this
+            ->select('
+                SUM(attendance_type_id = 1) AS total_absent,
+                SUM(attendance_type_id = 4) AS total_late
+            ')
+            ->where('date', $date)
+            ->first();
+    }
     /**
      * Join dengan attendance_type
      */
