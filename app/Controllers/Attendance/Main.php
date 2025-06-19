@@ -19,17 +19,37 @@ class Main extends BaseController
         $todayEntries = $dailyEntryModel->getTodayEntries();
         $totalEntries = $dailyEntryModel->countTotalEntries();
         $attModel = new AttendanceModel();
-        $todayAttendance = $attModel -> countSummaryByDate();
-        $total = $totalEntries + (int)$todayAttendance['total_absent'] + (int)$todayAttendance['total_late'];
+        $todayAttendance = $attModel -> getTodayAttendanceList();
+        $studentAttendance = [];
+        foreach ($todayAttendance as $entry) {
+            $studentAttendance[$entry['profile_id']] = $entry;
+        }
+        $total = 0;
+        $late = 0;
+        $absent = 0;
 
         $listStudentHome = [];
         $count = 0;
         foreach ($todayEntries as $entry) {
-            $entry['status'] = 'present';
-            if ($count < 4) {
-                $listStudentHome[] = $entry;
+            if (isset($studentAttendance[$entry['profile_id']]) && $studentAttendance[$entry['profile_id']]['attendance_type_id'] == 1) {
+                // Kalau ada di studentAttendance DAN attendance_type_id == 1 → status jadi 'absent'
+                $entry['status'] = 'absent';
+                $total++;
+                $absent++;
+            }elseif (isset($studentAttendance[$entry['profile_id']]) && $studentAttendance[$entry['profile_id']]['attendance_type_id'] == 4) {
+                // Kalau ada di studentAttendance DAN attendance_type_id == 4 → status jadi 'late'
+                $entry['status'] = 'late';
+                $late++;
+                $total++;
+            }else{
+                $entry['status'] = 'present';
+                $total++;
             }
-            $count++;
+
+            if (in_array($entry['status'], ['present', 'late']) && $count < 4) {
+                $listStudentHome[] = $entry;
+                $count++;
+            }
         }
 
         $studentIds = array_column($todayEntries,'student_id');
@@ -43,8 +63,8 @@ class Main extends BaseController
             'date' => Time::now('Asia/Jakarta', 'en_ID')->getTimestamp(),
             'daily_entries' => $listStudentHome,
             'student_data' => $studentClass,
-            'late' => $todayAttendance['total_late'],
-            'absent' => $todayAttendance['total_absent'],
+            'late' => $late,
+            'absent' => $absent,
             'present' => $totalEntries,
             'total' => $total,
         ]);

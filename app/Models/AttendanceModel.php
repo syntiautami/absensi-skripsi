@@ -32,6 +32,25 @@ class AttendanceModel extends Model
         ->where('DATE(date)', date('Y-m-d'))
         ->first();
     }
+    
+    public function getTodayAttendanceList($date = null)
+    {
+        if ($date === null) {
+            $date = date('Y-m-d');
+        }
+
+        return $this
+            ->select('
+                attendance_type_id,
+                date,
+                student.profile_id
+            ')
+            ->join('student_class_semester', 'student_class_semester.id = attendance.student_class_semester_id')
+            ->join('student', 'student_class_semester.student_id = student.id')
+            ->where('date', $date)
+            ->findAll();
+    }
+
     public function countSummaryByDate($date = null)
     {
         if ($date === null) {
