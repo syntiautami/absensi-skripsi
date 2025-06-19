@@ -15,13 +15,13 @@
         <li class="nav-item">
           <a href="<?= base_url('admin/') ?>" class="nav-link <?= ($viewing ?? '') === 'dashboard' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>Dashboard</p>
+            <p>Beranda</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="<?= base_url('admin/users/') ?>" class="nav-link <?= ($viewing ?? '') === 'user' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-solid fa-user"></i>
-            <p>Users</p>
+            <p>Pengguna</p>
           </a>
         </li>
         <li class="nav-item">
