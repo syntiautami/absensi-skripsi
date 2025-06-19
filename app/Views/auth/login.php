@@ -19,17 +19,19 @@
         <p class="mb-3">Selamat Datang Kembali !</p>
         <form class="mt-3" action="" method="post" style="width: 80%;">
           <div class="form-group">
-            <input type="text" name="login" class="form-control" placeholder="Username/Email" required>
+            <label for="">Nama Pengguna</label>
+            <input type="text" name="login" class="form-control" placeholder="Masukkan Nama Pengguna" required>
           </div>
           <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <label for="">Kata Sandi</label>
+            <input type="password" name="password" class="form-control" placeholder="Masukkan Kata Sandi" required>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <div class="form-check">
               <input type="checkbox" class="form-check-input">
-              <label for="" class="form-check-label">Ingat Saya</label>
+              <label for="" class="form-check-label">Ingat Kata Sandi</label>
             </div>
-          </div>
+          </div> -->
           <div class="mt-5">
             <button type="submit" class="btn btn-primary w-100">Masuk</button>
           </div>
