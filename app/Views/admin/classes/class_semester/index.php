@@ -13,20 +13,18 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('breadcrumb') ?>
-    <nav aria-label="breadcrumb" style="margin-top:1rem;">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="<?= base_url('admin/') ?>">Home</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="<?= base_url('admin/classes/') ?>">Kelas</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">Semester <?= esc($semester['name']) ?></li>
-        </ol>
-    </nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="<?= base_url('admin/') ?>">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="<?= base_url('admin/classes/') ?>">Kelas</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Semester <?= esc($semester['name']) ?></li>
+    </ol>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>

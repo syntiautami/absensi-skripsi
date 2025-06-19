@@ -97,3 +97,18 @@ a,
 .user-pic img.border.present{
     border: 3px solid var(--primary) !important;
 }
+
+
+/* breadcrumb */
+.breadcrumb{
+    background-color: initial !important;
+    padding-bottom: 0;
+}
+.breadcrumb-item.active{
+    color: black;
+    font-weight: bold;
+}
+.breadcrumb-item a{
+    color: var(--font-color-bg) !important;
+}
+/* breadcrumb */
