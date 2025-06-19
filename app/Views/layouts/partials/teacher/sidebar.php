@@ -14,7 +14,7 @@
         <li class="nav-item">
           <a href="<?= base_url('teacher/') ?>" class="nav-link <?= ($viewing ?? '') === 'dashboard' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>Dashboard</p>
+            <p>Beranda</p>
           </a>
         </li>
 
