@@ -43,7 +43,10 @@
                           <div>
                               <strong class="student-name"><?= esc("{$item['first_name']} {$item['last_name']}") ?></strong><br>
                               <small class="student-class"><?= esc("{$student_data[$item['profile_id']]['grade_name']} {$student_data[$item['profile_id']]['code']}") ?></small><br>
-                              <span class="student-time text-success"><?= $timeFormatted ?></span>
+                              <span class="student-time text-success d-flex align-items-center">
+                                <span class="status-box <?= $item['status'] ?> me-2" style="width: 10px; height: 10px; display: inline-block; border-radius: 2px;"></span>
+                                <?= $timeFormatted ?>
+                              </span>
                           </div>
                       </div>
                   </div>
@@ -98,7 +101,9 @@
         <div>
             <strong class="student-name"></strong><br>
             <small class="student-class"></small><br>
-            <span class="student-time text-success"></span>
+            <span class="student-time text-success d-flex align-items-center">
+              <span class="status-box me-2" style="width: 10px; height: 10px; background-color: green; display: inline-block; border-radius: 2px;"></span>
+            </span>
         </div>
     </div>
 </div>
@@ -167,10 +172,11 @@
       $('.student-container').find('.student-name').text(data['name'])
       $('.student-container').find('.student-class').text(data['kelas'])
       $('.student-container').find('.student-time').text(data['time'])
+      $('.student-container').find('.student-time').find('.status-box').addClass(data.status)
     }
 
     function showNotif(data){
-      if ([''].includes(data['status'])) return;
+      if (['home'].includes(data['status'])) return;
       let type = 'success';
       let title = 'INFO';
       let text = `

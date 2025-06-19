@@ -25,6 +25,7 @@ class Main extends BaseController
         $listStudentHome = [];
         $count = 0;
         foreach ($todayEntries as $entry) {
+            $entry['status'] = 'present';
             if ($count < 4) {
                 $listStudentHome[] = $entry;
             }

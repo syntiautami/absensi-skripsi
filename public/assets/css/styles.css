@@ -112,3 +112,23 @@ a,
     color: var(--font-color-bg) !important;
 }
 /* breadcrumb */
+
+/* legend attendance */
+.student-time .status-box.absent{
+    background-color: var(--danger) !important;
+}
+.student-time .status-box.late{
+    background-color: var(--warning) !important;
+}
+.student-time .status-box.sick{
+    background-color: var(--info) !important;
+}
+.student-time .status-box.excused{
+    background-color: var(--info) !important;
+}
+.student-time .status-box.present{
+    background-color: var(--primary) !important;
+}
+.student-time .status-box.home{
+    background-color: var(--primary) !important;
+}
