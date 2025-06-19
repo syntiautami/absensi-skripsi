@@ -27,41 +27,29 @@ class TeacherClassSemesterHomeroomModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
-    /**
-     * Join ke guru dan user-nya
-     */
-    public function withTeacher()
-    {
-        return $this->select('
-                teacher_class_semester_homeroom.*,
-                user.first_name AS teacher_first_name,
-                user.last_name AS teacher_last_name,
-            ')
-            ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')
-            ->join('profile', 'profile.id = teacher.profile_id', 'left')
-            ->join('user', 'user.id = profile.user_id', 'left');
-    }
-
-    /**
-     * Join ke class_semester dan semester
-     */
-    public function getFromClassSemesterIds($ids)
-    {
-        return $this->select('
+    
+    public function getByProfileId($id){
+        return $this
+            ->select('
                 teacher_class_semester_homeroom.id,
                 teacher_class_semester_homeroom.class_semester_id,
-                user.first_name,
-                user.last_name,
-                profile.profile_photo,
+                teacher_class_semester_homeroom.teacher_id,
+                teacher.profile_id,
+                section.name as section_name,
+                grade.name as grade_name,
+                class_semester.name as class_code,
             ')
-            ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
-            ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')
-            ->join('profile', 'profile.id = teacher.profile_id', 'left')
-            ->join('user', 'user.id = profile.user_id', 'left')
-            ->whereIn('class_semester_id',$ids)
-            ->findAll();
+            ->join('teacher','teacher.id = teacher_class_semester_homeroom.teacher_id')
+            ->join('class_semester','class_semester.id = teacher_class_semester_homeroom.class_semester_id')
+            ->join('grade','grade.id = class_semester.grade_id')
+            ->join('semester','semester.id = class_semester.semester_id')
+            ->join('section','section.id = grade.section_id')
+            ->where([
+                'teacher.profile_id' => $id,
+                'semester.in_session' =>1,
+            ])
+            ->first();
     }
-
     public function getFromClassSemesterId($id)
     {
         return $this->select('
@@ -78,23 +66,20 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->where('class_semester_id',$id)
             ->findAll();
     }
-
-    /**
-     * Join lengkap: guru + kelas + semester
-     */
-    public function withAll()
+    public function getFromClassSemesterIds($id)
     {
         return $this->select('
-                teacher_class_semester_homeroom.*,
-                user.first_name AS teacher_first_name,
-                user.last_name AS teacher_last_name,
-                class_semester.name AS class_name,
-                semester.name AS semester_name
+                teacher_class_semester_homeroom.id,
+                teacher_class_semester_homeroom.class_semester_id,
+                user.first_name,
+                user.last_name,
+                profile.profile_photo,
             ')
+            ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
             ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')
             ->join('profile', 'profile.id = teacher.profile_id', 'left')
             ->join('user', 'user.id = profile.user_id', 'left')
-            ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
-            ->join('semester', 'semester.id = class_semester.semester_id', 'left');
+            ->whereIn('class_semester_id',$id)
+            ->findAll();
     }
 }

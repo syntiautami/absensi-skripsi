@@ -36,7 +36,7 @@ class UserModel extends Model
 
     public function getLoginData($data){
         return $this
-            ->select('user.*,profile.profile_photo')
+            ->select('user.*,profile.profile_photo, profile.id as profile_id')
             ->where('username', $data)
             ->orWhere('email', $data)
             ->join('profile','profile.user_id=user.id')

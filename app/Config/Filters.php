@@ -15,6 +15,7 @@ use CodeIgniter\Filters\SecureHeaders;
 use \App\Filters\AuthFilter;
 use \App\Filters\TrailingSlashRedirect;
 use \App\Filters\RoleFilter;
+use \App\Filters\WalasFilter;
 
 class Filters extends BaseFilters
 {
@@ -40,6 +41,7 @@ class Filters extends BaseFilters
         'auth'              => AuthFilter::class,
         'trailing-slash'    => TrailingSlashRedirect::class,
         'auto-role'         => RoleFilter::class,
+        'walas-role'         => WalasFilter::class,
     ];
 
     /**
@@ -80,6 +82,7 @@ class Filters extends BaseFilters
             // 'invalidchars',
             // 'trailing-slash',
             'auto-role',
+            'walas-role',
         ],
         'after' => [
             // 'honeypot',

@@ -1,24 +1,37 @@
 <?= $this->extend('layouts/auth/base') ?>
 <?= $this->section('content') ?>
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
-  <div class="row w-100">
-    <div class="col-md-6 d-none d-md-block">
-      <div class="h-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="row w-100 vh-100">
+    <div class="col-md-6 d-none d-md-block align-content-center" >
+      <div class="d-flex align-items-center justify-content-center bg-light" style="height:80%;">
         <img src="<?= base_url('assets/img/login-illustration.svg') ?>" alt="Login Illustration" class="img-fluid">
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card shadow rounded p-4">
-        <h3 class="text-center mb-4"><b>Login</b></h3>
-        <form action="<?= base_url('') ?>" method="post">
-          <div class="mb-3">
+    <div class="col-md-6 align-content-center">
+      <div class="card shadow rounded p-4 justify-content-center align-items-center" style="height:80%;">
+        <div class="img-logo text-center">
+          <img class="text-center" src="<?= base_url('assets/img/logo.png') ?>" 
+          alt="Logo" 
+          class="brand-image img-circle"
+          style="opacity: .8; width:100px; height:auto;">
+        </div>
+        <h3 class="text-center mt-3"><b>Masuk</b></h3>
+        <p class="mb-3">Selamat Datang Kembali !</p>
+        <form class="mt-3" action="" method="post" style="width: 80%;">
+          <div class="form-group">
             <input type="text" name="login" class="form-control" placeholder="Username/Email" required>
           </div>
-          <div class="mb-3">
+          <div class="form-group">
             <input type="password" name="password" class="form-control" placeholder="Password" required>
           </div>
-          <div class="text-end">
-            <button type="submit" class="btn btn-primary">Login</button>
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input">
+              <label for="" class="form-check-label">Ingat Saya</label>
+            </div>
+          </div>
+          <div class="mt-5">
+            <button type="submit" class="btn btn-primary w-100">Masuk</button>
           </div>
         </form>
       </div>
