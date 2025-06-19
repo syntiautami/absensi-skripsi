@@ -29,7 +29,25 @@
 
             <!-- List Siswa -->
             <div class="students-container" style="max-height: 500px; overflow-y: auto;">
-                
+                <?php $no = 1; foreach ($daily_entries as $item): ?>
+                  <?php
+                    $photo = !empty($item['profile_photo']) ? base_url('assets/users/' . $item['profile_photo']) : base_url('assets/users/default.jpg');
+                    $timeRaw = !empty($item['clock_out']) ? $item['clock_out'] : $item['clock_in'];
+                    $timeFormatted = (new DateTime($timeRaw))->format('H:i:s');
+                  ?>
+                  <div class="card mb-2 p-2" data-id="<?= $student_data[$item['profile_id']]['id'] ?>">
+                      <div class="d-flex align-items-center">
+                          <div class="mr-2">
+                            <img src="<?= $photo ?>" class="img-fluid rounded-circle" height="50" width="50">
+                          </div>
+                          <div>
+                              <strong class="student-name"><?= esc("{$item['first_name']} {$item['last_name']}") ?></strong><br>
+                              <small class="student-class"><?= esc("{$student_data[$item['profile_id']]['grade_name']} {$student_data[$item['profile_id']]['code']}") ?></small><br>
+                              <span class="student-time text-success"><?= $timeFormatted ?></span>
+                          </div>
+                      </div>
+                  </div>
+                <?php endforeach ?>
             </div>
         </div>
 
@@ -118,6 +136,10 @@
     }
     function addStudentCard(data) {
       // Clone template
+      const existingCard = document.querySelector(`.card[data-id="${data.id}"]`);
+      if (existingCard) {
+        return;
+      }
       const $card = $('.card-empty').clone();
       $card.removeClass('card-empty').show();
       $card.attr('data-id',data.id);
@@ -126,7 +148,7 @@
       $card.find('img').attr('src', data.img);
       $card.find('.student-name').text(data.name);
       $card.find('.student-class').text(data.kelas);
-      $card.find('.student-time').text(data.timestamp);
+      $card.find('.student-time').text(data.time);
 
       const $container = $('.students-container');
 
@@ -144,7 +166,7 @@
     function updateDashboard(data){
       $('.student-container').find('.student-name').text(data['name'])
       $('.student-container').find('.student-class').text(data['kelas'])
-      $('.student-container').find('.student-time').text(data['timestamp'])
+      $('.student-container').find('.student-time').text(data['time'])
     }
 
     function showNotif(data){
@@ -155,6 +177,12 @@
         ${data.name} ${data.kelas} <br> <br>
         Anda telah melakukan absensi <br>hari ini pada pukul ${data.time}
       `;
+
+      if (data.status == 'home'){
+        text = `
+        ${data.name} ${data.kelas} <br> <br>
+        `
+      }
 
         Swal.fire({
           icon: type,

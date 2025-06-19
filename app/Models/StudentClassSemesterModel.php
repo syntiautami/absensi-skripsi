@@ -30,6 +30,29 @@ class StudentClassSemesterModel extends Model
     /**
      * Join dengan data profile + user (siswa)
      */
+    public function getByStudentIds($ids)
+    {
+        return $this
+            ->select('
+                student_class_semester.id,
+                class_semester.id as cs_id,
+                section.name as section_name,
+                grade.name as grade_name,
+                class_semester.name as code,
+                class_semester.grace_period,
+                class_semester.clock_in,
+                class_semester.clock_out,
+                student.profile_id
+            ')
+            ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
+            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('section', 'section.id = grade.section_id', 'left')
+            ->join('student', 'student.id = student_class_semester.student_id', 'left')
+            ->where('student_class_semester.active',1)
+            ->whereIn('student_class_semester.student_id',$ids)
+            ->findAll();
+    }
+            
     public function getByClassSemesterId($id)
     {
         return $this

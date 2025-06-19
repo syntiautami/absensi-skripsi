@@ -38,14 +38,24 @@ class AttendanceDailyEntryModel extends Model
             ->first();
     }
 
-    public function getTodayEntries($limit=4)
+    public function getTodayEntries()
     {
         return $this
-            ->select('*')
+            ->select('
+                attendance_daily_entry.clock_in,
+                attendance_daily_entry.clock_out,
+                student.id as student_id,
+                student.profile_id,
+                profile.profile_photo,
+                user.first_name,
+                user.last_name,
+            ')
+            ->join('student','student.profile_id = attendance_daily_entry.profile_id')
+            ->join('profile','profile.id = attendance_daily_entry.profile_id')
+            ->join('user','user.id = profile.user_id')
             ->where('DATE(clock_in)', date('Y-m-d'))
             ->orWhere('DATE(clock_out)', date('Y-m-d'))
-            ->orderBy('clock_in', 'asc')
-            ->limit($limit)
+            ->orderBy('clock_in', 'desc')
             ->findAll();
     }
     public function countTotalEntries($date = null)

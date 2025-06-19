@@ -21,9 +21,27 @@ class Main extends BaseController
         $attModel = new AttendanceModel();
         $todayAttendance = $attModel -> countSummaryByDate();
         $total = $totalEntries + (int)$todayAttendance['total_absent'] + (int)$todayAttendance['total_late'];
+
+        $listStudentHome = [];
+        $count = 0;
+        foreach ($todayEntries as $entry) {
+            if ($count < 4) {
+                $listStudentHome[] = $entry;
+            }
+            $count++;
+        }
+
+        $studentIds = array_column($todayEntries,'student_id');
+        $scsModel = new StudentClassSemesterModel();
+        $scsList = $scsModel -> getByStudentIds($studentIds);
+        $studentClass = [];
+        foreach ($scsList as $entry) {
+            $studentClass[$entry['profile_id']] = $entry;
+        }
         return view('attendance/index', [
             'date' => Time::now('Asia/Jakarta', 'en_ID')->getTimestamp(),
-            'daily_entries' => $todayEntries,
+            'daily_entries' => $listStudentHome,
+            'student_data' => $studentClass,
             'late' => $todayAttendance['total_late'],
             'absent' => $todayAttendance['total_absent'],
             'present' => $totalEntries,
@@ -116,9 +134,10 @@ class Main extends BaseController
             if ($sendEmail) {
                 send_email([
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
-                    'kelas' => $studentData['section_name'].' '.$studentData['grade_name'].' '.$studentData['code'],
+                    'kelas' => $studentData['grade_name'].' '.$studentData['code'],
                     'parent_email' => 'fauzi.ahmd72@gmail.com',
                     'timestamp' => date('H:i:s',strtotime($studentTappingTime)),
+                    'status' => $status
                 ]);
             }
 
@@ -126,7 +145,7 @@ class Main extends BaseController
                 'data' => [
                     'id' => $studentData['id'],
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
-                    'kelas' => $studentData['section_name'].' '.$studentData['grade_name'].' '.$studentData['code'],
+                    'kelas' => $studentData['grade_name'].' '.$studentData['code'],
                     'img' => base_url('assets/users/' . ($studentProfile['profile_photo'] ?: 'default.jpg')),
                     'timestamp' => $studentTappingTime,
                     'time' => date('H:i:s',strtotime($studentTappingTime)),
