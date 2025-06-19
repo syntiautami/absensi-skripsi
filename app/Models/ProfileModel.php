@@ -40,6 +40,7 @@ class ProfileModel extends Model
             ->select("
                 student.id as student_id,
                 profile.profile_photo,
+                profile.parent_email,
                 user.last_name,
                 user.first_name
             ")

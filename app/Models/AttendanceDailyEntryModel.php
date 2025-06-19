@@ -38,7 +38,7 @@ class AttendanceDailyEntryModel extends Model
             ->first();
     }
 
-    public function getTodayEntries($limit=15)
+    public function getTodayEntries($limit=4)
     {
         return $this
             ->select('*')

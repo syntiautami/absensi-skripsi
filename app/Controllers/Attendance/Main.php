@@ -9,6 +9,7 @@ use App\Models\AttendanceModel;
 use App\Models\ProfileModel;
 use App\Models\StudentClassSemesterModel;
 use \CodeIgniter\I18n\Time;
+use \Config\Services;
 
 class Main extends BaseController
 {
@@ -64,15 +65,21 @@ class Main extends BaseController
             $existingAttendance = $attModel ->getTodayAttendance($studentData['id']);
                 
             
+            $studentTappingTime = $currentTap;
+            $sendEmail = true;
             if ($todayEntry) {
                 $status = 're-tap';
+                $sendEmail = false;
                 if ($currentTap > $blockingPeriodTime) {
                     $status = 'home';
+                    $sendEmail = true;
                 }
                 // tapping pulang
                 $dailyEntryModel->update($todayEntry['id'], [
                     'updated_by_id' => session()->get('user')['id'],
                 ]);
+
+                $studentTappingTime = $todayEntry['clock_in'];
             } else {
                 // tapping masuk
                 $status = 'absent';
@@ -106,13 +113,23 @@ class Main extends BaseController
                 ]);
             }
 
+            if ($sendEmail) {
+                send_email([
+                    'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
+                    'kelas' => $studentData['section_name'].' '.$studentData['grade_name'].' '.$studentData['code'],
+                    'parent_email' => 'fauzi.ahmd72@gmail.com',
+                    'timestamp' => date('H:i:s',strtotime($studentTappingTime)),
+                ]);
+            }
+
             return $this->response->setJSON([
                 'data' => [
                     'id' => $studentData['id'],
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
                     'kelas' => $studentData['section_name'].' '.$studentData['grade_name'].' '.$studentData['code'],
                     'img' => base_url('assets/users/' . ($studentProfile['profile_photo'] ?: 'default.jpg')),
-                    'timestamp' => $currentTap,
+                    'timestamp' => $studentTappingTime,
+                    'time' => date('H:i:s',strtotime($studentTappingTime)),
                     'status' => $status
                 ]
             ]);

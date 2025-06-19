@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.min.css') ?>">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
   <?= $this->renderSection('styles') ?>
 </head>
 <body class="hold-transition">
@@ -88,6 +89,7 @@
   <script src="<?= base_url('assets/adminlte/plugins/jquery/jquery.min.js') ?>"></script>
   <script src="<?= base_url('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
   <script src="<?= base_url('assets/adminlte/js/adminlte.min.js') ?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let serverTimestamp = <?= $date ?> * 1000; // PHP timestamp in ms
     function finishTapping(elem){
@@ -129,7 +131,8 @@
       const $container = $('.students-container');
 
       // Cek jumlah card
-      if ($container.children('.card').length >= 5) {
+      const thresholdCard = 4
+      if ($container.children('.card').length >= thresholdCard) {
           // Hapus yang paling bawah (last)
           $container.children('.card').last().remove();
       }
@@ -145,13 +148,29 @@
     }
 
     function showNotif(data){
+      if ([''].includes(data['status'])) return;
+      let type = 'success';
+      let title = 'INFO';
+      let text = `
+        ${data.name} ${data.kelas} <br> <br>
+        Anda telah melakukan absensi <br>hari ini pada pukul ${data.time}
+      `;
 
-    }
+        Swal.fire({
+          icon: type,
+          title: title,
+          html: text,
+          customClass : {
+            confirmButton : 'btn-primary'
+          }
+        });
+      }
 
     function updateStatistik(data){
 
     }
     $(function(){
+      $("input[name='barcode-number']").focus()
       updateClock();
       setInterval(updateClock, 1000);
       $("input[name='barcode-number']").on('change', function(e){
@@ -164,9 +183,11 @@
           method: 'POST',
           data: { barcode: barcode },
           success: function(response) {
+            console.log(response)
             finishTapping(elemInput)
             const data = response['data'];
             const status = data['status']
+            console.log(data)
 
             // change student container Large
             updateDashboard(data)
