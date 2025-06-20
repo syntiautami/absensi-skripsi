@@ -43,6 +43,16 @@ class StudentModel extends Model
             ->findAll();
     }
 
+    public function getByUserId($id){
+        return $this
+            ->select(
+                'student.*'
+            )
+            ->join('profile','profile.id = student.profile_id')
+            ->where('profile.user_id',$id)
+            ->first();
+    }
+
     public function excludeStudentsIds($ids){
         return $this
             ->select(

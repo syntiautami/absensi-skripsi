@@ -28,6 +28,24 @@
     </div>
   </div>
 
+  <div id="waiting-overlay" style="
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 1.5rem;
+  ">
+      <div>
+          <i class="fas fa-spinner fa-spin fa-3x mb-3"></i><br>
+          Mohon tunggu...
+      </div>
+  </div>
+
   <?= $this->include('layouts/partials/footer') ?>
 </div>
 

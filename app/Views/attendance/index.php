@@ -118,6 +118,7 @@
     function finishTapping(elem){
       elem.prop('disabled', false);
       elem.focus()
+      $('#waiting-overlay').hide();
     }
     function updateClock() {
         let now = new Date(serverTimestamp);
@@ -240,6 +241,7 @@
       updateClock();
       setInterval(updateClock, 1000);
       $("input[name='barcode-number']").on('change', function(e){
+        $('#waiting-overlay').show();
         const barcode = $(this).val();
         $(this).val('')
         const elemInput = $(this);

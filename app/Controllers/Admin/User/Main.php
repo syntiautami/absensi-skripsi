@@ -5,6 +5,8 @@ namespace App\Controllers\Admin\User;
 use App\Controllers\BaseController;
 use App\Models\ProfileModel;
 use App\Models\RoleModel;
+use App\Models\StudentModel;
+use App\Models\TeacherModel;
 use App\Models\UserModel;
 use App\Models\UserRoleModel;
 class Main extends BaseController
@@ -52,6 +54,22 @@ class Main extends BaseController
                 'profile_id' =>$profileId,
                 'role_id' => $id,
             ]);
+
+            if ($id == 4) {
+                // create object student
+                $studentModel = new StudentModel();
+                $studentModel-> insert([
+                    'profile_id' =>$profileId,
+                    'created_by_id' =>session()->get('user')['id'],
+                ]);
+            }elseif($id == 1){
+                // create object teacher
+                $teacherModel = new TeacherModel();
+                $teacherModel-> insert([
+                    'profile_id' =>$profileId,
+                    'created_by_id' =>session()->get('user')['id'],
+                ]);
+            }
             
 
             return redirect()->to(base_url('admin/users/'.$id.'/'))->with('success', 'Data berhasil ditambahkan.');
@@ -209,7 +227,21 @@ class Main extends BaseController
             return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
 
+        $studentModel = new StudentModel();
+        $student = $studentModel->getByUserId($id);
+
+        if ($this->request->getMethod() == 'POST') {
+            $data = $this->request->getPost();
+            $updateData = [
+                'nis' => $data['nis'],
+                'nisn' => $data['nisn'],
+            ];
+            $studentModel->update($student['id'], $updateData);
+            return redirect()->to(base_url('admin/users/'.$role_id.'/edit/'.$id.'/additional/'))->with('success', 'Data berhasil diupdate.');
+        }
+
         return view('admin/user/additional', [
+            'student' => $student,
             'role' => $role,
             'user' => $user,
             'viewing' => 'user',
