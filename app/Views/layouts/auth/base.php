@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>SMA IT Alia</title>
+  <link rel="icon" type="image/x-icon" href="<?= base_url('favicon.ico') ?>">
 
   <!-- Bootstrap & AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">

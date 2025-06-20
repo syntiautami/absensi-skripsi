@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>SMA IT Alia</title>
+  <link rel="icon" type="image/x-icon" href="<?= base_url('favicon.ico') ?>">
 
   <!-- AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.css') ?>">
