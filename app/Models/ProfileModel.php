@@ -38,6 +38,7 @@ class ProfileModel extends Model
     public function getByBarcodeNumber($id){
         return $this
             ->select("
+                profile.id,
                 student.id as student_id,
                 profile.profile_photo,
                 profile.parent_email,

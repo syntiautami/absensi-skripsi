@@ -73,7 +73,7 @@
             <!-- Statistik kotak bawah -->
             <div class="d-flex justify-content-between mt-4">
                 <div class="card flex-fill mr-2 p-3 bg-success text-white text-center">
-                    <h2 class="text-present">0</h2>
+                    <h2 class="text-present"><?= $present ?></h2>
                     <p class="m-0">Tepat Waktu</p>
                 </div>
                 <div class="card flex-fill mr-2 p-3 bg-warning text-white text-center">
@@ -85,7 +85,7 @@
                     <p class="m-0">Alpa</p>
                 </div>
                 <div class="card flex-fill p-3 bg-primary text-white text-center">
-                    <h2 class="text-total">0</h2>
+                    <h2 class="text-total"><?= $total ?></h2>
                     <p class="m-0">Total</p>
                 </div>
             </div>

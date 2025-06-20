@@ -27,6 +27,7 @@ class Main extends BaseController
         $total = 0;
         $late = 0;
         $absent = 0;
+        $present = 0;
 
         $listStudentHome = [];
         $count = 0;
@@ -43,6 +44,7 @@ class Main extends BaseController
                 $total++;
             }else{
                 $entry['status'] = 'present';
+                $present++;
                 $total++;
             }
 
@@ -70,6 +72,7 @@ class Main extends BaseController
             'absent' => $absent,
             'present' => $totalEntries,
             'total' => $total,
+            'present' => $present,
         ]);
     }
 
@@ -173,7 +176,7 @@ class Main extends BaseController
                     }
                     // belum ada → insert baru
                     $dailyEntryModel->insert([
-                        'profile_id'     => $studentProfile['student_id'],
+                        'profile_id'     => $studentProfile['id'],
                         'clock_in'       => date('Y-m-d H:i:s'),
                         'created_by_id'  => session()->get('user')['id'],
                     ]);
