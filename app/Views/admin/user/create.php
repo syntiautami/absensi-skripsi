@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/base') ?>
 
 <?= $this->section('header') ?>
-    <?= $this->include('components/header') ?>
+    <?= view('components/header', ['role' => 'Admin']) ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('breadcrumb') ?>
@@ -15,14 +15,13 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/users/'.$role['id'].'/') ?>"><?= $role['alt_name'] ?></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$user['first_name']} {$user['last_name']}") ?></li>
+        <li class="breadcrumb-item active" aria-current="page">Buat Akun</li>
     </ol>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
     <section class="content">
         <div class="card">
-            <?= $this->include('admin/user/components/tabs') ?>
             <form action="" method="post">
                 <?= csrf_field() ?>
                 <div class="card-body">
@@ -37,13 +36,30 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="first_name" class="col-form-label">Nama Depan</label>
-                                        <input type="text" class="form-control" id="first_name" name="first_name" value="<?= esc($user['first_name']) ?>" required>
+                                        <input type="text" class="form-control" id="first_name" name="first_name" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="last_name" class="col-form-label">Nama Belakang</label>
-                                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?= esc($user['last_name']) ?>" required>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="gender">Jenis Kelamin</label>
+                                        <div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender_male" value="male" <?= (isset($profile['gender']) && $profile['gender'] == 'male') ? 'checked' : '' ?>>
+                                                <label class="form-check-label" for="gender_male">Laki-laki</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender_female" value="female" <?= (isset($profile['gender']) && $profile['gender'] == 'female') ? 'checked' : '' ?>>
+                                                <label class="form-check-label" for="gender_female">Perempuan</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -51,13 +67,13 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="username" class="col-form-label">Nama Pengguna</label>
-                                        <input type="text" class="form-control" id="username" name="username" value="<?= esc($user['username']) ?>" required>
+                                        <input type="text" class="form-control" id="username" name="username" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="email" class="col-form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="<?= esc($user['email']) ?>" required>
+                                        <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
                                 </div>
                             </div>
@@ -70,31 +86,16 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="password" class="col-form-label">Kata Sandi</label>
-                                        <input type="password" class="form-control" id="password" name="password">
+                                        <input type="password" class="form-control" id="password" name="password" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="confirm_password" class="col-form-label">Konfirmasi Kata Sandi</label>
-                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="">
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label class="section-header">TIPE AKUN</label>
-                                </div>
-                            </div>
-                            <?php $no = 1; foreach ($roles as $role): ?>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" name="roles[]" value="<?= $role['id'] ?>">
-                                            <label for="roles[]" class="form-check-label"><?= $role['alt_name'] ?></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach ?>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-3">
@@ -137,6 +138,9 @@
                 },
                 confirm_password: {
                     equalTo: '#password'
+                },
+                gender : {
+                    required : true
                 }
             },
             messages : {

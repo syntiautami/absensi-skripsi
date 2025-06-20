@@ -77,10 +77,18 @@
           element.closest('.form-group').append(error);
       },
       highlight: function (element, errorClass, validClass) {
-          $(element).addClass('is-invalid');
+          if ($(element).is(':radio')) {
+              $(element).closest('.form-group').addClass('is-invalid');
+          } else {
+              $(element).addClass('is-invalid');
+          }
       },
       unhighlight: function (element, errorClass, validClass) {
-          $(element).removeClass('is-invalid');
+          if ($(element).is(':radio')) {
+              $(element).closest('.form-group').removeClass('is-invalid');
+          } else {
+              $(element).removeClass('is-invalid');
+          }
       }
   });
 </script>

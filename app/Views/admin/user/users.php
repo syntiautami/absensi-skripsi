@@ -42,6 +42,11 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-end mt-3">
+                    <a href="<?= base_url('admin/users/'.$role['id'].'/create/') ?>" class="btn btn-primary">
+                        Buat Akun
+                    </a>
+                </div>
             </div>
         </div>
     </section>

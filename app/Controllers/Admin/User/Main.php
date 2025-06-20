@@ -20,6 +20,48 @@ class Main extends BaseController
             'viewing' => 'user',
         ]);
     }
+
+    public function create($id)
+    {
+        $roleModel = new RoleModel();
+        $role = $roleModel->where('id',$id)->first();
+        if (!$role) {
+            return redirect()->to(base_url('admin/users/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        if ($this->request->getMethod() == 'POST') {
+            $data = $this->request->getPost();
+            $userModel = new UserModel();
+            $profileModel = new ProfileModel();
+            $userRoleModel = new UserRoleModel();
+
+            $userId = $userModel->insert([
+                'first_name' => $data['first_name'],
+                'last_name'  => $data['last_name'],
+                'email'      => $data['email'],
+                'username'   => $data['username'],
+                'password'   => password_hash($data['password'], PASSWORD_DEFAULT),
+            ]);
+            $profileId = $profileModel->insert([
+                'user_id'   => $userId,
+                'gender' => $data['gender'],
+                'created_by_id' => session()->get('user')['id'],
+            ]);
+
+            $userRoleModel -> insert([
+                'profile_id' =>$profileId,
+                'role_id' => $id,
+            ]);
+            
+
+            return redirect()->to(base_url('admin/users/'.$id.'/'))->with('success', 'Data berhasil ditambahkan.');
+        }
+
+        return view('admin/user/create', [
+            'role' => $role,
+            'viewing' => 'user',
+        ]);
+    }
     
     public function users($id)
     {
