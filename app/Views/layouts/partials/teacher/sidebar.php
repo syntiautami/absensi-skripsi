@@ -28,11 +28,13 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?= base_url('teacher/attendance/') ?>" class="nav-link <?= ($viewing ?? '') === 'attendance' ? 'active' : '' ?>">
-                <p>Absensi Harian</p>
-              </a>
-            </li>
+            <?php if (session()->get('homeroom_teacher')): ?>
+              <li class="nav-item">
+                <a href="<?= base_url('teacher/attendance/') ?>" class="nav-link <?= ($viewing ?? '') === 'attendance' ? 'active' : '' ?>">
+                  <p>Absensi Harian</p>
+                </a>
+              </li>
+            <?php endif; ?>
             <li class="nav-item">
               <a href="<?= base_url('teacher/attendance/subject/') ?>" class="nav-link <?= ($viewing ?? '') === 'attendance-subject' ? 'active' : '' ?>">
                 <p>Absensi Mata Pelajaran</p>

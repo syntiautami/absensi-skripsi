@@ -84,6 +84,7 @@ $routes->get('admin/report/attendance-subject/', 'Admin\Report\Subject::index', 
 // teacher
 $routes->get('teacher/', 'Teacher\Main::index', $auth_filters);
 $routes->get('teacher/attendance/', 'Teacher\Attendance\Main::index', $auth_filters);
+$routes->post('teacher/attendance/', 'Teacher\Attendance\Main::index', $auth_filters);
 $routes->get('teacher/attendance/subject/', 'Teacher\Attendance\Subject::index', $auth_filters);
 
 // teacher attendance report

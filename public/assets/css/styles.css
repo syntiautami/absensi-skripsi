@@ -14,6 +14,7 @@
     --sidebar-active: #c8e6c9;
     --secondary-2:#cfd8dc;
     --color-secondary-2:#29434e;
+    --color-sick: #17a2b8;
 }
 
 [class*="sidebar-dark-"]{
@@ -98,7 +99,7 @@ a,
     border: 3px solid var(--warning) !important;
 }
 .user-pic img.border.sick{
-    border: 3px solid var(--info) !important;
+    border: 3px solid var(--color-sick) !important;
 }
 .user-pic img.border.excused{
     border: 3px solid var(--info) !important;
@@ -136,7 +137,7 @@ a,
     background-color: var(--warning) !important;
 }
 .student-time .status-box.sick{
-    background-color: var(--info) !important;
+    background-color: var(--color-sick) !important;
 }
 .student-time .status-box.excused{
     background-color: var(--info) !important;
@@ -204,4 +205,21 @@ a,
 
 .card-footer{
     background-color: transparent !important;
+}
+
+.primary-color{
+    color: var(--primary) !important;
+}
+
+.primary-bg-color{
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--surface) !important;
+}
+
+.status-container .status-item.active{
+    border: 2px solid var(--primary);
+    border-radius: 14px;
+    border-color: var(--primary) !important;
+    background-color: var(--success);
 }

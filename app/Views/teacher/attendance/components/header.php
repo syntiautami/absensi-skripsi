@@ -51,7 +51,6 @@
             <span class="ml-3 badge badge-warning rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Terlambat
             <span class="ml-3 badge badge-primary rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Izin
             <span class="ml-3 badge badge-info rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Sakit
-            <span class="ml-3 badge badge-secondary rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Libur
         </div>
 
     </div>
