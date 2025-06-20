@@ -5,7 +5,7 @@
         </div>
         <div>
             <div class="font-weight-bold">SMA IT ALIA TANGERANG</div>
-            <div class="text-muted"><?= esc($role ?? 'Admin') ?></div>
+            <div class="text-muted">Admin</div>
         </div>
     </div>
 </header>

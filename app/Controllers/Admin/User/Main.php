@@ -45,6 +45,34 @@ class Main extends BaseController
         if (!$role) {
             return redirect()->to(base_url('admin/users/'))->with('error', 'Data tidak ditemukan.');
         }
+        $roles = $roleModel->orderBy('alt_name')->findAll();
+
+        $userModel = new UserModel();
+        $user = $userModel->where('id',$id)-> first();
+
+        if ($this->request->getMethod() == 'POST') {
+            dd($this->request->getPost());
+        }
+
+        if (!$user) {
+            return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        return view('admin/user/edit', [
+            'role' => $role,
+            'roles' => $roles,
+            'user' => $user,
+            'viewing' => 'user',
+        ]);
+    }
+
+    public function edit_profile($role_id, $id)
+    {
+        $roleModel = new RoleModel();
+        $role = $roleModel->where('id',$role_id)->first();
+        if (!$role) {
+            return redirect()->to(base_url('admin/users/'))->with('error', 'Data tidak ditemukan.');
+        }
 
         $userModel = new UserModel();
         $user = $userModel->where('id',$id)-> first();
@@ -53,7 +81,29 @@ class Main extends BaseController
             return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
 
-        return view('admin/user/edit', [
+        return view('admin/user/profile', [
+            'role' => $role,
+            'user' => $user,
+            'viewing' => 'user',
+        ]);
+    }
+
+    public function edit_additional($role_id, $id)
+    {
+        $roleModel = new RoleModel();
+        $role = $roleModel->where('id',$role_id)->first();
+        if (!$role) {
+            return redirect()->to(base_url('admin/users/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->where('id',$id)-> first();
+
+        if (!$user) {
+            return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        return view('admin/user/additional', [
             'role' => $role,
             'user' => $user,
             'viewing' => 'user',

@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/base') ?>
 
 <?= $this->section('header') ?>
-    <?= view('components/header', ['role' => 'Admin']) ?>
+    <?= $this->include('components/header') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('breadcrumb') ?>
@@ -12,37 +12,96 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/users/') ?>">Pengguna</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><?= $role['alt_name'] ?></li>
+        <li class="breadcrumb-item">
+            <a href="<?= base_url('admin/users/'.$role['id'].'/') ?>"><?= $role['alt_name'] ?></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$user['first_name']} {$user['last_name']}") ?></li>
     </ol>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
     <section class="content">
         <div class="card">
-            <div class="card-body">
-                <table id="usersTable" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Nama</th>
-                            <th class="text-center" style="width: 300px;">Username</th>
-                            <th class="text-center" style="width: 150px;">Kelas</th>
-                            <th class="text-center" style="width: 150px;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1; foreach ($user_roles as $item): ?>
-                        <tr>
-                            <td class="text-center"><?= esc("{$item['first_name']} {$item['last_name']}") ?></td>
-                            <td class="text-center"><?= esc($item['username']) ?></td>
-                            <td class="text-center"></td>
-                            <td class="text-center">
-                                <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/') ?>" class="btn btn-sm btn-primary">Ubah</a>
-                            </td>
-                        </tr>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
-            </div>
+            <?= $this->include('admin/user/components/tabs') ?>
+            <form action="" method="post">
+                <?= csrf_field() ?>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="section-header">INFORMASI AKUN</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="first_name" class="col-form-label">Nama Depan</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name" value="<?= esc($user['first_name']) ?>" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="last_name" class="col-form-label">Nama Belakang</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?= esc($user['last_name']) ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="username" class="col-form-label">Nama Pengguna</label>
+                                        <input type="text" class="form-control" id="username" name="username" value="<?= esc($user['username']) ?>" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="email" class="col-form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="<?= esc($user['email']) ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="section-header">KATA SANDI</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="password" class="col-form-label">Kata Sandi</label>
+                                        <input type="password" class="form-control" id="password" name="password">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="confirm_password" class="col-form-label">Konfirmasi Kata Sandi</label>
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="section-header">TIPE AKUN</label>
+                                </div>
+                            </div>
+                            <?php $no = 1; foreach ($roles as $role): ?>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" name="roles[]" value="<?= $role['id'] ?>">
+                                            <label for="roles[]" class="form-check-label"><?= $role['alt_name'] ?></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -51,15 +110,42 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#usersTable').DataTable({
-            "responsive": true,
-            "autoWidth": false,
-            "searching" : false,
-            "lengthChange" : false,
-            "paging": false,
-            "info" : false,
-            "order" : [['0', 'asc']]
-        });
+        $('form').validate({
+            rules: {
+                username: {
+                    remote: {
+                        url: '<?= base_url('admin/users/check-username/') ?>',
+                        type: "post",
+                        data:{
+                            email: function() {
+                                return $("#id_email").val();
+                            },
+                            user_id: '<?= $user['id'] ?? 0 ?>'
+                        },
+                        dataType: 'json',
+                        dataFilter: (response)=>{
+                            console.log(response)
+                            if (response == 'false') {
+                                return false
+                            }
+                            return true
+                        },
+                        delay: 5000,
+                    }
+                },
+                email : {
+                    email: true
+                },
+                confirm_password: {
+                    equalTo: '#password'
+                }
+            },
+            messages : {
+                username: {
+                    remote : "Nama pengguna sudah digunakan"
+                }
+            }
+        })
     });
 </script>
 <?= $this->endSection() ?>

@@ -16,6 +16,8 @@ class StudentModel extends Model
     protected $allowedFields    = [
         'profile_id',
         'active',
+        'nis',
+        'nisn',
         'created_by_id',
         'created_at',
         'updated_by_id',

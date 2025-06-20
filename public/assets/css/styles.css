@@ -86,6 +86,7 @@ a,
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
     background-color: var(--sidebar-active);
+    border-color: var(--sidebar-active);
     color: var(--primary);
     font-weight: bold;
 }
@@ -155,3 +156,24 @@ a,
     color: var(--surface) !important;
 }
 /* paging table */
+
+/* form */
+.form-check input.form-check-input{
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    -webkit-appearance:none;
+    background-color: var(--outline-border);
+}
+.form-check input.form-check-input:checked{
+    border-radius: 3px;
+    background:url(../img/icon/checked.png) no-repeat;
+    background-size: 15px;
+    background-position: 35% 3px;
+    background-color: var(--sidebar-active);
+}
+.form-check label.form-check-label{
+    margin-top: 3px;
+    margin-left: 10px;
+}
+/* form */

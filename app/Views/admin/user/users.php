@@ -36,7 +36,7 @@
                             <td class="text-center"><?= esc($item['username']) ?></td>
                             <td class="text-center"></td>
                             <td class="text-center">
-                                <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/') ?>" class="btn btn-sm btn-primary">Ubah</a>
+                                <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/user/') ?>" class="btn btn-sm btn-primary">Ubah</a>
                             </td>
                         </tr>
                         <?php endforeach ?>

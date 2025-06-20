@@ -69,10 +69,8 @@
         });
     </script>
   <?php endif; ?>
-<?= $this->renderSection('scripts') ?>
-
 <script>
-  $('form').validate({
+  $.validator.setDefaults({
       errorElement: 'div',
       errorPlacement: function (error, element) {
           error.addClass('invalid-feedback');
@@ -86,5 +84,6 @@
       }
   });
 </script>
+<?= $this->renderSection('scripts') ?>
 </body>
 </html>

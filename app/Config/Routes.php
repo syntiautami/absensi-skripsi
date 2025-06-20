@@ -27,8 +27,14 @@ $routes->get('admin/', 'Admin\Main::index', $auth_filters);
 
 // admin user
 $routes->get('admin/users/', 'Admin\User\Main::index', $auth_filters);
+$routes->post('admin/users/check-username/', 'Admin\User\Util::check_username', $auth_filters);
 $routes->get('admin/users/(:num)/', 'Admin\User\Main::users/$1', $auth_filters);
-$routes->get('admin/users/(:num)/edit/(:num)/', 'Admin\User\Main::edit_user/$1/$2', $auth_filters);
+$routes->get('admin/users/(:num)/edit/(:num)/user/', 'Admin\User\Main::edit_user/$1/$2', $auth_filters);
+$routes->post('admin/users/(:num)/edit/(:num)/user/', 'Admin\User\Main::edit_user/$1/$2', $auth_filters);
+$routes->get('admin/users/(:num)/edit/(:num)/profile/', 'Admin\User\Main::edit_profile/$1/$2', $auth_filters);
+$routes->post('admin/users/(:num)/edit/(:num)/profile/', 'Admin\User\Main::edit_profile/$1/$2', $auth_filters);
+$routes->get('admin/users/(:num)/edit/(:num)/additional/', 'Admin\User\Main::edit_additional/$1/$2', $auth_filters);
+$routes->post('admin/users/(:num)/edit/(:num)/additional/', 'Admin\User\Main::edit_additional/$1/$2', $auth_filters);
 
 // admin class
 $routes->get('admin/academic-year/', 'Admin\AcademicYear\Main::index', $auth_filters);

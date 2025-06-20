@@ -21,8 +21,6 @@ class ProfileModel extends Model
         'parent_email',
         'father_name',
         'mother_name',
-        'nis',
-        'nisn',
         'barcode_number',
         'profile_photo',
         'created_by_id',
