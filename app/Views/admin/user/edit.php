@@ -9,7 +9,10 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/') ?>">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Pengguna</li>
+        <li class="breadcrumb-item">
+            <a href="<?= base_url('admin/users/') ?>">Pengguna</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><?= $role['alt_name'] ?></li>
     </ol>
 <?= $this->endSection() ?>
 
@@ -17,20 +20,23 @@
     <section class="content">
         <div class="card">
             <div class="card-body">
-                <table id="roleTable" class="table table-bordered table-striped">
+                <table id="usersTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Jenis Pengguna</th>
+                            <th class="text-center">Nama</th>
+                            <th class="text-center" style="width: 300px;">Username</th>
+                            <th class="text-center" style="width: 150px;">Kelas</th>
                             <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; foreach ($roles as $item): ?>
+                        <?php $no = 1; foreach ($user_roles as $item): ?>
                         <tr>
-                            <td class="text-center"><?= esc($item['alt_name']) ?></td>
+                            <td class="text-center"><?= esc("{$item['first_name']} {$item['last_name']}") ?></td>
+                            <td class="text-center"><?= esc($item['username']) ?></td>
+                            <td class="text-center"></td>
                             <td class="text-center">
-                                <!-- tombol edit / hapus -->
-                                <a href="<?= base_url('admin/users/'.$item['id'].'/') ?>" class="btn btn-sm btn-success">Lihat</a>
+                                <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/') ?>" class="btn btn-sm btn-primary">Ubah</a>
                             </td>
                         </tr>
                         <?php endforeach ?>
@@ -45,13 +51,14 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#roleTable').DataTable({
+        $('#usersTable').DataTable({
             "responsive": true,
             "autoWidth": false,
             "searching" : false,
             "lengthChange" : false,
             "paging": false,
             "info" : false,
+            "order" : [['0', 'asc']]
         });
     });
 </script>

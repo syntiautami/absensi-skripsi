@@ -6,6 +6,7 @@
 
   <!-- AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.css') ?>">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.css') ?>">

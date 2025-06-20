@@ -52,16 +52,19 @@ a,
 
 .btn-primary{
     background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
     color: var(--surface) !important;
 }
 
 .btn-secondary{
     background-color: var(--secondary-2);
+    border-color: var(--secondary-2);
     color: var(--color-secondary-2) !important;
 }
 
 .btn-danger{
     background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
     color: var(--surface) !important;
 }
 
@@ -143,3 +146,12 @@ a,
 .student-time .status-box.home{
     background-color: var(--primary) !important;
 }
+
+
+/* paging table */
+.page-item.active .page-link{
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--surface) !important;
+}
+/* paging table */
