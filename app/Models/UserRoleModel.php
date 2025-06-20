@@ -25,7 +25,7 @@ class UserRoleModel extends Model
 
     public function getByUserId($userId)
     {
-        return $this->select('role.name')
+        return $this
             ->join('profile', 'profile.id = user_role.profile_id')
             ->join('role', 'role.id = user_role.role_id')
             ->where('profile.user_id', $userId)
@@ -46,5 +46,19 @@ class UserRoleModel extends Model
             ->join('user', 'user.id = profile.user_id')
             ->where('role_id', $id)
             ->findAll();
+    }
+
+    public function getByUserIdRoleIds($id)
+    {
+        $res = $this
+            ->select('
+                role.id
+            ')
+            ->join('profile', 'profile.id = user_role.profile_id')
+            ->join('role', 'role.id = user_role.role_id')
+            ->where('profile.user_id', $id)
+            ->findAll();
+
+        return array_column($res, 'id');
     }
 }

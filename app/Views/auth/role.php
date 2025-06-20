@@ -6,7 +6,7 @@
     <?php foreach ($roles as $role): ?>
       <div class="col-md-3">
         <a href="<?= base_url('role/' . $role['name']) ?>/" class="btn btn-primary btn-block mb-3">
-          <?= ucfirst($role['name']) ?>
+          <?= ucfirst($role['alt_name']) ?>
         </a>
       </div>
     <?php endforeach ?>

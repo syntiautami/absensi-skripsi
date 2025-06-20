@@ -108,8 +108,10 @@ class Main extends BaseController
         $roles = $roleModel->orderBy('alt_name')->findAll();
 
         $userModel = new UserModel();
-        $user = $userModel->where('id',$id)-> first();
+        $user = $userModel->getLoginDataById($id);
 
+        $userRoleModel = new UserRoleModel();
+        $userRoles = $userRoleModel->getByUserIdRoleIds($id);
         if (!$user) {
             return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
@@ -126,12 +128,27 @@ class Main extends BaseController
                 $updateData['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                 $updateData['confirm_password'] = password_hash($data['confirm_password'], PASSWORD_DEFAULT);
             }
-            $userModel = new UserModel();
             $userModel->update($id, $updateData);
             if (session()->get('user')['id'] == $id) {
                 session()->set('user', $userModel->getLoginDataById($id));
             }
 
+            $selectedRoles = $this->request->getPost('roles');
+            foreach ($selectedRoles as $roleId) {
+                // cek apakah user_role sudah ada
+                $existing = $userRoleModel
+                    ->where('profile_id', $user['profile_id'])
+                    ->where('role_id', $roleId)
+                    ->first();
+
+                if (!$existing) {
+                    // insert kalau belum ada
+                    $userRoleModel->insert([
+                        'profile_id' => $user['profile_id'],
+                        'role_id' => $roleId,
+                    ]);
+                }
+            }
             return redirect()->to(base_url('admin/users/'.$role_id.'/edit/'.$id.'/user/'))->with('success', 'Data berhasil diupdate.');
         }
 
@@ -139,6 +156,7 @@ class Main extends BaseController
             'role' => $role,
             'roles' => $roles,
             'user' => $user,
+            'user_roles' => $userRoles,
             'viewing' => 'user',
         ]);
     }

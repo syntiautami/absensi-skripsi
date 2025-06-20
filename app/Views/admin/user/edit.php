@@ -89,7 +89,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" name="roles[]" value="<?= $role['id'] ?>">
+                                            <input type="checkbox" class="form-check-input" name="roles[]" value="<?= $role['id'] ?>" <?= in_array($role['id'], $user_roles) ? 'checked' : '' ?>>
                                             <label for="roles[]" class="form-check-label"><?= $role['alt_name'] ?></label>
                                         </div>
                                     </div>
