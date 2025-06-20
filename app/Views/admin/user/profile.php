@@ -23,78 +23,90 @@
     <section class="content">
         <div class="card">
             <?= $this->include('admin/user/components/tabs') ?>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label class="section-header">INFORMASI AKUN</label>
+                                    <label class="section-header">DATA DIRI</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="first_name" class="col-form-label">Nama Depan</label>
-                                        <input type="text" class="form-control" id="first_name" name="first_name" value="<?= esc($user['first_name']) ?>" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="last_name" class="col-form-label">Nama Belakang</label>
-                                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?= esc($user['last_name']) ?>" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="username" class="col-form-label">Nama Pengguna</label>
-                                        <input type="text" class="form-control" id="username" name="username" value="<?= esc($user['username']) ?>" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="email" class="col-form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="<?= esc($user['email']) ?>" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label class="section-header">KATA SANDI</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="password" class="col-form-label">Kata Sandi</label>
-                                        <input type="password" class="form-control" id="password" name="password">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="confirm_password" class="col-form-label">Konfirmasi Kata Sandi</label>
-                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label class="section-header">TIPE AKUN</label>
-                                </div>
-                            </div>
-                            <?php $no = 1; foreach ($roles as $role): ?>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" name="roles[]" value="<?= $role['id'] ?>">
-                                            <label for="roles[]" class="form-check-label"><?= $role['alt_name'] ?></label>
+                                        <label for="gender">Jenis Kelamin</label>
+                                        <div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender_male" value="male" <?= (isset($profile['gender']) && $profile['gender'] == 'male') ? 'checked' : '' ?>>
+                                                <label class="form-check-label" for="gender_male">Laki-laki</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender_female" value="female" <?= (isset($profile['gender']) && $profile['gender'] == 'female') ? 'checked' : '' ?>>
+                                                <label class="form-check-label" for="gender_female">Perempuan</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            <?php endforeach ?>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="address" class="col-form-label">Alamat</label>
+                                        <input type="text" class="form-control" id="address" name="address" value="<?= esc($profile['address']) ?>" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="religion" class="col-form-label">Agama</label>
+                                        <input type="text" class="form-control" id="religion" name="religion" value="<?= esc($profile['religion']) ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="section-header">DATA ORANG TUA</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="father_name" class="col-form-label">Nama Ayah</label>
+                                        <input type="text" class="form-control" id="father_name" name="father_name" value="<?= esc($profile['father_name']) ?>">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="mother_name" class="col-form-label">Nama Ibu</label>
+                                        <input type="text" class="form-control" id="mother_name" name="mother_name" value="<?= esc($profile['mother_name']) ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="parent_email" class="col-form-label">Email Orang Tua</label>
+                                        <input type="text" class="form-control" id="parent_email" name="parent_email" value="<?= esc($profile['parent_email']) ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="section-header">FOTO PROFIL</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="photo">Upload Foto</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="photo" name="photo" accept="image/*">
+                                            <label class="custom-file-label" for="photo">Pilih file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-3">
@@ -110,6 +122,12 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
+        $(document).on('change', '.custom-file-input', function (event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
         $('form').validate({
             rules: {
                 username: {
@@ -124,6 +142,7 @@
                         },
                         dataType: 'json',
                         dataFilter: (response)=>{
+                            console.log(response)
                             if (response == 'false') {
                                 return false
                             }

@@ -25,12 +25,6 @@ class UserModel extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = ''; // Tidak ada kolom updated_at di migration ini
-
-    protected $validationRules    = [
-        'email'    => 'required|valid_email|is_unique[user.email,id,{id}]',
-        'username' => 'required|is_unique[user.username,id,{id}]',
-        'password' => 'required|min_length[6]',
-    ];
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
@@ -42,5 +36,12 @@ class UserModel extends Model
             ->join('profile','profile.user_id=user.id')
             ->first();
 
+    }
+    public function getLoginDataById($id){
+        return $this
+            ->select('user.*,profile.profile_photo, profile.id as profile_id')
+            ->where('user.id', $id)
+            ->join('profile','profile.user_id=user.id')
+            ->first();
     }
 }

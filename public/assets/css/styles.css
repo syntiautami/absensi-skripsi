@@ -158,19 +158,25 @@ a,
 /* paging table */
 
 /* form */
-.form-check input.form-check-input{
+.form-check input.form-check-input[type=checkbox]{
     height: 20px;
     width: 20px;
     border-radius: 3px;
     -webkit-appearance:none;
     background-color: var(--outline-border);
 }
-.form-check input.form-check-input:checked{
+.form-check input.form-check-input[type=checkbox]:checked{
     border-radius: 3px;
     background:url(../img/icon/checked.png) no-repeat;
     background-size: 15px;
     background-position: 35% 3px;
     background-color: var(--sidebar-active);
+}
+.form-check input.form-check-input[type=radio]{
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    accent-color:green;
 }
 .form-check label.form-check-label{
     margin-top: 3px;

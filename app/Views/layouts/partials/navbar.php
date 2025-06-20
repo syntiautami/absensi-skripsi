@@ -23,10 +23,10 @@
   <ul class="navbar-nav ml-auto mr-3">
     <li class="nav-item dropdown">
       <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
-        <img src="<?= base_url('assets/users/' . (session('user')['profile_photo'] ?? 'default.jpg')) ?>"
+        <img src="<?= base_url(session('user')['profile_photo'] ?? 'assets/img/users/default.jpg') ?>"
              alt="User Image"
-             class="img-circle elevation-2"
-             style="width: 40px; height: 40px; object-fit: cover; margin-right: 8px;">
+             class="img-circle"
+             style="width: 40px; height: 40px; margin-right: 8px;">
         <span class="d-none d-md-inline font-weight-bold">
           <?= esc(session('user')['first_name'] ?? 'User') ?>
         </span>

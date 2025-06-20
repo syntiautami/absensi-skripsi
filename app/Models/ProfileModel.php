@@ -48,4 +48,10 @@ class ProfileModel extends Model
             ->where('barcode_number',$id)
             ->first();
     }
+
+    public function getByUserId($id){
+        return $this
+            ->where('user_id',$id)
+            ->first();
+    }
 }
