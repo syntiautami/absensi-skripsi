@@ -268,7 +268,16 @@
           },
           error: function(xhr) {
             finishTapping(elemInput)
-            console.log(xhr)
+            if (xhr.status == 404) {
+              Swal.fire({
+                icon: 'error',
+                title: 'INFO',
+                html: 'Data siswa tidak ditemukan, silahkan hubungi guru piket.',
+                customClass : {
+                  confirmButton : 'btn-primary'
+                }
+              });
+            }
           }
         });
       })
