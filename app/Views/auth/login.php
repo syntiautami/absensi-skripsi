@@ -4,7 +4,7 @@
   <div class="row w-100 vh-100">
     <div class="col-md-6 d-none d-md-block align-content-center" >
       <div class="d-flex align-items-center justify-content-center bg-light" style="height:80%;">
-        <img src="<?= base_url('assets/img/login-illustration.svg') ?>" alt="Login Illustration" class="img-fluid">
+        <!-- <img src="<?= base_url('assets/img/login-illustration.svg') ?>" alt="Login Illustration" class="img-fluid"> -->
       </div>
     </div>
     <div class="col-md-6 align-content-center">

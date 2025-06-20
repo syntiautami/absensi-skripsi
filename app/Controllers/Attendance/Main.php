@@ -54,7 +54,10 @@ class Main extends BaseController
 
         $studentIds = array_column($todayEntries,'student_id');
         $scsModel = new StudentClassSemesterModel();
-        $scsList = $scsModel -> getByStudentIds($studentIds);
+        $scsList = [];
+        if (!empty($studentIds)) {
+            $scsList = $scsModel->getByStudentIds($studentIds);
+        }
         $studentClass = [];
         foreach ($scsList as $entry) {
             $studentClass[$entry['profile_id']] = $entry;
@@ -102,6 +105,20 @@ class Main extends BaseController
             $attModel = new AttendanceModel();
 
             $existingAttendance = $attModel ->getTodayAttendance($studentData['id']);
+
+            $attendanceStatus = null;
+            if ($existingAttendance){
+                $attType = (int)$existingAttendance['attendance_type_id'];
+                if ($attType == 1){
+                    $attendanceStatus = 'absent';
+                }elseif ($attType == 2){
+                    $attendanceStatus = 'sick';
+                }elseif ($attType == 3){
+                    $attendanceStatus = 'excused';
+                }elseif ($attType == 4){
+                    $attendanceStatus = 'late';
+                }
+            }
                 
             
             $studentTappingTime = $currentTap;
@@ -112,44 +129,55 @@ class Main extends BaseController
                 if ($currentTap > $blockingPeriodTime) {
                     $status = 'home';
                     $sendEmail = true;
+                    // tapping pulang
+                    $dailyEntryModel->update($todayEntry['id'], [
+                        'updated_by_id' => session()->get('user')['id'],
+                        'clock_out' => $currentTap,
+                    ]);
                 }
-                // tapping pulang
-                $dailyEntryModel->update($todayEntry['id'], [
-                    'updated_by_id' => session()->get('user')['id'],
-                ]);
+                if ($attendanceStatus && $attendanceStatus != 'late'){
+                    $sendEmail = false;
+                    $status = $attendanceStatus;
+                }
 
                 $studentTappingTime = $todayEntry['clock_in'];
             } else {
                 // tapping masuk
-                $status = 'absent';
-                if ($currentTap < $clockInTime) {
-                    $status = 'present';
-                } elseif (!empty($gracePeriod) && $currentTap >= $clockInTime && $currentTap <= $gracePeriodTime) {
-                    $status = 'late';
-                    if (!$existingAttendance){
-                        $attModel -> insert([
-                            'student_class_semester_id' => $studentData['id'],
-                            'attendance_type_id' => 4, //late
-                            'date'       => date('Y-m-d'),
-                            'created_by_id'  => session()->get('user')['id']
-                        ]);
+                if($attendanceStatus && in_array($attendanceStatus,['sick','excused'])){
+                    // sakit izin
+                    $status = $attendanceStatus;
+                    $sendEmail = false;
+                }else{
+                    $status = 'absent';
+                    if ($currentTap < $clockInTime) {
+                        $status = 'present';
+                    } elseif (!empty($gracePeriod) && $currentTap >= $clockInTime && $currentTap <= $gracePeriodTime) {
+                        $status = 'late';
+                        if (!$attendanceStatus){
+                            $attModel -> insert([
+                                'student_class_semester_id' => $studentData['id'],
+                                'attendance_type_id' => 4, //late
+                                'date'       => date('Y-m-d'),
+                                'created_by_id'  => session()->get('user')['id']
+                            ]);
+                        }
+                    } else {
+                        if (!$attendanceStatus) {
+                            $attModel -> insert([
+                                'student_class_semester_id' => $studentData['id'],
+                                'attendance_type_id' => 1, //absent
+                                'date'       => date('Y-m-d'),
+                                'created_by_id'  => session()->get('user')['id']
+                            ]);
+                        }
                     }
-                } else {
-                    if (!$existingAttendance) {
-                        $attModel -> insert([
-                            'student_class_semester_id' => $studentData['id'],
-                            'attendance_type_id' => 1, //absent
-                            'date'       => date('Y-m-d'),
-                            'created_by_id'  => session()->get('user')['id']
-                        ]);
-                    }
+                    // belum ada → insert baru
+                    $dailyEntryModel->insert([
+                        'profile_id'     => $studentProfile['student_id'],
+                        'clock_in'       => date('Y-m-d H:i:s'),
+                        'created_by_id'  => session()->get('user')['id'],
+                    ]);
                 }
-                // belum ada → insert baru
-                $dailyEntryModel->insert([
-                    'profile_id'     => $studentProfile['student_id'],
-                    'clock_in'       => date('Y-m-d H:i:s'),
-                    'created_by_id'  => session()->get('user')['id'],
-                ]);
             }
 
             if ($sendEmail) {
@@ -157,7 +185,7 @@ class Main extends BaseController
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
                     'kelas' => $studentData['grade_name'].' '.$studentData['code'],
                     'parent_email' => 'fauzi.ahmd72@gmail.com',
-                    'timestamp' => date('H:i:s',strtotime($studentTappingTime)),
+                    'time' => date('H:i:s',strtotime($studentTappingTime)),
                     'status' => $status
                 ]);
             }

@@ -14,7 +14,7 @@ if (!function_exists('send_email')) {
             <br><br>
             <b>Nama Siswa:</b> {$data['name']}<br>
             <b>Kelas:</b> {$data['kelas']}<br>
-            <b>Telah meninggalkan sekolah pada pukul:</b> {$data['timestamp']}<br><br>
+            <b>Telah meninggalkan sekolah pada pukul:</b> {$data['time']}<br><br>
 
             Terima kasih atas perhatian Bapak/Ibu.  
             Salam hormat,  
@@ -27,14 +27,17 @@ if (!function_exists('send_email')) {
             <br><br>
             <b>Nama Siswa:</b> {$data['name']}<br>
             <b>Kelas:</b> {$data['kelas']}<br>
-            <b>Telah hadir di sekolah pada pukul:</b> {$data['timestamp']}<br><br>
+            <b>Telah hadir di sekolah hari ini pada pukul:</b> {$data['time']}<br><br>
 
             Terima kasih atas perhatian Bapak/Ibu.  
             Salam hormat,  
             <b>Sistem Absensi SMA IT Alia Tangerang</b>
         ";
 
-        $emailMsg = $data['status'] == 'home' ? $homeMsg : $presentMsg;
+        $emailMsg = $presentMsg;
+        if ($data['status'] == 'home'){
+            $emailMsg = $homeMsg;
+        }
         $email->setFrom($fromEmail, $fromName);
         $email->setTo($data['parent_email']);
         $email->setSubject('Notifikasi Kehadiran Siswa - SMA IT Alia Tangerang');

@@ -188,6 +188,13 @@
         text = `
         ${data.name} ${data.kelas} <br> <br>
         `
+      }else if (data.status == 'absent'){
+        type = 'info';
+        text = `
+          ${data.name} ${data.kelas} <br> <br>
+          Anda terhitung alfa hari ini. <br>
+          silahkan hubungi guru piket.
+        `;
       }
 
         Swal.fire({
@@ -201,7 +208,28 @@
       }
 
     function updateStatistik(data){
+      let status = data['status'];
+      let present = parseInt($('.text-present').text())
+      let absent = parseInt($('.text-absent').text())
+      let late = parseInt($('.text-late').text())
+      let total = parseInt($('.text-total').text())
 
+      if (data.status == 'absent') {
+        absent += 1;
+        $('.text-absent').text(absent)
+        total += 1;
+        $('.text-total').text(total)
+      }else if (data.status == 'late') {
+        late += 1;
+        $('.text-late').text(late)
+        total += 1;
+        $('.text-total').text(total)
+      }else if (data.status == 'present') {
+        present += 1;
+        $('.text-present').text(present)
+        total += 1;
+        $('.text-total').text(total)
+      }
     }
     $(function(){
       $("input[name='barcode-number']").focus()
