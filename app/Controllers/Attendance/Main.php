@@ -79,7 +79,7 @@ class Main extends BaseController
     public function tapping()
     {
         $profileModel = new ProfileModel();
-        $attendanceModel = new AttendanceModel();
+        $attModel = new AttendanceModel();
         $BLOCKING_PERIOD = 15;
         
         $barcode = $this->request->getPost('barcode');
@@ -105,8 +105,6 @@ class Main extends BaseController
             $dailyEntryModel = new AttendanceDailyEntryModel();
             $todayEntry = $dailyEntryModel->getTodayEntry($studentProfile['student_id']);
 
-            $attModel = new AttendanceModel();
-
             $existingAttendance = $attModel ->getTodayAttendance($studentData['id']);
 
             $attendanceStatus = null;
@@ -127,7 +125,7 @@ class Main extends BaseController
             $studentTappingTime = $currentTap;
             $sendEmail = true;
             if ($todayEntry) {
-                $status = 're-tap';
+                $status = 'present';
                 $sendEmail = false;
                 if ($currentTap > $blockingPeriodTime) {
                     $status = 'home';

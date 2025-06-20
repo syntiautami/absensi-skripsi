@@ -102,7 +102,7 @@
             <strong class="student-name"></strong><br>
             <small class="student-class"></small><br>
             <span class="student-time text-success d-flex align-items-center">
-              <span class="status-box me-2" style="width: 10px; height: 10px; background-color: green; display: inline-block; border-radius: 2px;"></span>
+              <span class="student-time text-success d-flex align-items-center"></span>
             </span>
         </div>
     </div>
@@ -153,7 +153,9 @@
       $card.find('img').attr('src', data.img);
       $card.find('.student-name').text(data.name);
       $card.find('.student-class').text(data.kelas);
-      $card.find('.student-time').text(data.time);
+      $card.find('.student-time').html(`
+        <span class="status-box ${data.status} me-2"></span>${data.time}
+      `);
 
       const $container = $('.students-container');
 
@@ -195,17 +197,19 @@
           Anda terhitung alfa hari ini. <br>
           silahkan hubungi guru piket.
         `;
+      }else if (data.status == 'late'){
+        type = 'warning';
       }
 
-        Swal.fire({
-          icon: type,
-          title: title,
-          html: text,
-          customClass : {
-            confirmButton : 'btn-primary'
-          }
-        });
-      }
+      Swal.fire({
+        icon: type,
+        title: title,
+        html: text,
+        customClass : {
+          confirmButton : 'btn-primary'
+        }
+      });
+    }
 
     function updateStatistik(data){
       let status = data['status'];

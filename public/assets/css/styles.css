@@ -60,6 +60,11 @@ a,
     color: var(--color-secondary-2) !important;
 }
 
+.btn-danger{
+    background-color: var(--danger) !important;
+    color: var(--surface) !important;
+}
+
 .table thead th{
     vertical-align: middle;
 }
@@ -114,6 +119,12 @@ a,
 /* breadcrumb */
 
 /* legend attendance */
+.status-box{
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 2px;
+}
 .student-time .status-box.absent{
     background-color: var(--danger) !important;
 }

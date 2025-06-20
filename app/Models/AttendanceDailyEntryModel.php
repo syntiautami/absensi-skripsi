@@ -32,8 +32,10 @@ class AttendanceDailyEntryModel extends Model
         return $this
             ->select('*')
             ->where('profile_id', $id)
+            ->groupStart()
             ->where('DATE(clock_in)', date('Y-m-d'))
             ->orWhere('DATE(clock_out)', date('Y-m-d'))
+            ->groupEnd()
             ->orderBy('clock_in', 'asc')
             ->first();
     }
