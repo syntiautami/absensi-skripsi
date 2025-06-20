@@ -33,7 +33,10 @@ class Auth extends BaseController
                 return redirect()->to(base_url('role/'));
             }
             $role = $user_roles[0];
-            session()->set('role', $role);
+            if ($role['name'] == 'student') {
+                return redirect()->back()->with('error', 'Akun siswa tidak diizinkan login.');
+            }
+            session()->set('role', $role['name']);
             return redirect()->to(base_url($role . '/'));
         }
 
@@ -44,7 +47,7 @@ class Auth extends BaseController
     {
         $user = session()->get('user');
         $userRoleModel = new UserRoleModel();
-        $roles = $userRoleModel->getByUserId($user['id']); // pastikan ini mengembalikan array list role
+        $roles = $userRoleModel->getByUserId($user['id']);
 
         $data = [
             'roles' => $roles,
