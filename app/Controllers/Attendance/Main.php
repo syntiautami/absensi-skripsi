@@ -185,7 +185,7 @@ class Main extends BaseController
                 send_email([
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
                     'kelas' => $studentData['grade_name'].' '.$studentData['code'],
-                    'parent_email' => 'fauzi.ahmd72@gmail.com',
+                    'parent_email' => $studentProfile['parent_email'],
                     'time' => date('H:i:s',strtotime($studentTappingTime)),
                     'status' => $status
                 ]);

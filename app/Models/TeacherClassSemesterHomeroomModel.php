@@ -58,6 +58,7 @@ class TeacherClassSemesterHomeroomModel extends Model
                 user.first_name,
                 user.last_name,
                 profile.profile_photo,
+                teacher_class_semester_homeroom.teacher_id,
             ')
             ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
             ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')

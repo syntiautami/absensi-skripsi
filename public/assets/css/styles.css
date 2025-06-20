@@ -183,3 +183,25 @@ a,
     margin-left: 10px;
 }
 /* form */
+/* Ubah warna background & text saat hover */
+.tempus-dominus-widget .time-container .picker .list .list-item.active,
+.tempus-dominus-widget .time-container .picker .list .list-item:hover {
+    background-color: #28a745; /* ganti jadi hijau misalnya */
+    color: #fff;
+}
+
+/* Ubah border atau radius kalau mau */
+.tempus-dominus-widget .time-container .picker .list {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+/* Ubah warna list-item biasa (bukan hover/active) */
+.tempus-dominus-widget .time-container .picker .list .list-item {
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+.card-footer{
+    background-color: transparent !important;
+}

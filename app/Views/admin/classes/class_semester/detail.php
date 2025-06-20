@@ -50,6 +50,12 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
+                <hr>
+                <div class="d-flex justify-content-end mt-3">
+                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/edit/') ?>" class="btn btn-primary">
+                        Ubah Kelas
+                    </a>
+                </div>
             </div>
         </div>
     </section>
