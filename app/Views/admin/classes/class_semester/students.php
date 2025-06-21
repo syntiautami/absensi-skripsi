@@ -105,10 +105,17 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#studentsTable, #studentsTable-2').DataTable({
+        $('#studentsTable').DataTable({
             "responsive": true,
             "autoWidth": false,
             "searching" : false,
+            "lengthChange" : false,
+            "paging": false,
+            "info" : false,
+        });
+        $('#studentsTable-2').DataTable({
+            "responsive": true,
+            "autoWidth": false,
             "lengthChange" : false,
             "paging": false,
             "info" : false,

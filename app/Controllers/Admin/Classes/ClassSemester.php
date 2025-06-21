@@ -236,13 +236,15 @@ class ClassSemester extends BaseController
             }
             
             $pModel = new ProfileModel();
-            foreach ($barcodeNumbers as $profile_id => $barcode) {
-                $pModel->update($profile_id, [
-                    'barcode_number' => $barcode,
-                    'updated_by_id' => session()->get('user')['id']
-                ]);
+            if (!empty($barcodeNumbers)) {
+                foreach ($barcodeNumbers as $profile_id => $barcode) {
+                    $pModel->update($profile_id, [
+                        'barcode_number' => $barcode,
+                        'updated_by_id' => session()->get('user')['id']
+                    ]);
+                }
             }
-            
+                
             return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/class/'.$id.'/students/'))->with('success', 'Data berhasil diupdate.');
         }
         
