@@ -39,6 +39,18 @@ class AttendanceModel extends Model
             ->findAll();
     }
 
+    public function cronFunc($ids,$date){
+        return $this
+            ->select('
+                attendance.student_class_semester_id
+            ')
+            ->join('student_class_semester','student_class_semester.id = attendance.student_class_semester_id')
+            ->whereIn('student_class_semester.class_semester_id', $ids)
+            ->where('DATE(date)', $date)
+            ->where('attendance_type_id != ', 4)
+            ->findAll();
+    }
+
     public function getTodayAttendanceByscsId($ids){
         return $this
         ->whereIn('student_class_semester_id', $ids)

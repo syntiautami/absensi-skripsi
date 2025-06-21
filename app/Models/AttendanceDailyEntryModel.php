@@ -67,6 +67,15 @@ class AttendanceDailyEntryModel extends Model
             ->first();
     }
 
+    public function cronHelper($ids, $date)
+    {
+        return $this
+            ->select('profile_id')
+            ->whereIn('profile_id', $ids)
+            ->where('clock_in >=', $date)
+            ->findAll();
+    }
+
     public function getTodayEntries()
     {
         return $this

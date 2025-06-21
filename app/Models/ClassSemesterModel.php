@@ -109,4 +109,28 @@ class ClassSemesterModel extends Model
             'semesterList' => $semesterList,
         ];
     }
+
+    public function getCronFunc($date, $todayDate){
+        return $this
+            ->select('
+                class_semester.clock_in,
+                class_semester.clock_out,
+                class_semester.id as cs_id,
+                class_semester.name as class_code,
+                class_semester.grace_period,
+                grade.name as grade_name,
+            ')
+            ->join('semester', 'semester.id = class_semester.semester_id', 'left')
+            ->join('academic_year', 'academic_year.id = semester.academic_year_id', 'left')
+            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->where('academic_year.in_session',1)
+            ->where('academic_year.active',1)
+            ->where('grade.active', 1)
+            ->where('semester.active',1)
+            ->where('semester.in_session',1)
+            ->where('DATE(semester.start_date) <=', $date)
+            ->where('DATE(semester.end_date) >=', $todayDate)
+            ->where('class_semester.clock_in is not null')
+            ->findAll();
+    }
 }
