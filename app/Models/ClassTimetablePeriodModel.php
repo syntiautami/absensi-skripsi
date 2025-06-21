@@ -16,7 +16,6 @@ class ClassTimetablePeriodModel extends Model
     protected $allowedFields    = [
         'class_semester_subject_id',
         'timetable_period_id',
-        'date',
         'active',
         'created_by_id',
         'updated_by_id',
@@ -26,27 +25,19 @@ class ClassTimetablePeriodModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
-    public function getClassTimetableByTimetableIds($ids, $date = null){
-        if (empty($date)){
-            $date = date('Y-m-d');
-        }
+    public function getClassTimetableByTimetableIds($ids){
         return $this
             ->whereIn('timetable_period_id', $ids)
-            ->where('date', $date)
             ->findAll();
     }
 
-    public function getActiveClassTimetableList($ids, $date = null){
-        if (empty($date)){
-            $date = date('Y-m-d');
-        }
+    public function getActiveClassTimetableList($ids){
         return $this
             ->select('
                 class_semester_subject_id,
                 timetable_period_id,
             ')
             ->whereIn('timetable_period_id', $ids)
-            ->where('date', $date)
             ->where('active',1)
             ->findAll();
     }

@@ -123,7 +123,6 @@ class Timetable extends BaseController
                     $insertBatch[] = [
                         'timetable_period_id' => $timetableId,
                         'class_semester_subject_id' => $classSemesterSubjectId,
-                        'date' => $today,
                         'active' => 1,
                         'created_by_id' => session()-> get('user')['id']
                     ];
