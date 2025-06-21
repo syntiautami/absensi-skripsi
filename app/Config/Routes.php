@@ -12,7 +12,7 @@ $auth_filters = [
 
 // $routes->get('/', 'Home::index');
 
-$routes->get('cron/auto-alfa', 'Cron::autoAlfa');
+$routes->get('cron/auto-alfa/', 'Cron::autoAlfa');
 
 
 $routes->get('/', 'Auth::login');

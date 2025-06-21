@@ -5,6 +5,7 @@ namespace App\Controllers\Admin\User;
 use App\Controllers\BaseController;
 use App\Models\ProfileModel;
 use App\Models\RoleModel;
+use App\Models\StudentClassSemesterModel;
 use App\Models\StudentModel;
 use App\Models\TeacherModel;
 use App\Models\UserModel;
@@ -91,6 +92,9 @@ class Main extends BaseController
         
         $userRoleModel = new UserRoleModel();
         $userRoles = $userRoleModel-> getByRoleId($id);
+
+        $scsModel = new StudentClassSemesterModel();
+        $scsStudent = $scsModel;
 
         return view('admin/user/users', [
             'user_roles' => $userRoles,

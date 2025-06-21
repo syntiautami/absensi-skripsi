@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\AttendanceDailyEntryModel;
+use App\Models\AttendanceModel;
 use CodeIgniter\Controller;
 
 class Cron extends Controller

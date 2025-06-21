@@ -95,6 +95,12 @@ class Main extends BaseController
             $clockOutTime = $studentData['clock_out']; // format: H:i:s
             $gracePeriod = $studentData['grace_period']; // integer, dalam menit
 
+            if (empty($clockInTime)) {
+                return $this->response->setStatusCode(404)->setJSON([
+                    'message' => 'Jam masuk belum diatur, silahkan hubungi guru piket.'
+                ]);
+            }
+
             $clockInTimestamp = strtotime($clockInTime);
             $gracePeriodTimestamp = $clockInTimestamp + ($gracePeriod * 60);
             $gracePeriodTime = date('H:i:s', $gracePeriodTimestamp);
@@ -211,7 +217,7 @@ class Main extends BaseController
         } 
 
         return $this->response->setStatusCode(404)->setJSON([
-            'message' => 'Siswa tidak ditemukan'
+            'message' => 'Data siswa tidak ditemukan, silahkan hubungi guru piket.'
         ]);
     }
 }

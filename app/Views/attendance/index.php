@@ -251,7 +251,6 @@
           method: 'POST',
           data: { barcode: barcode },
           success: function(response) {
-            console.log(response)
             finishTapping(elemInput)
             const data = response['data'];
             const status = data['status']
@@ -268,13 +267,14 @@
             updateStatistik(data)
             showNotif(data)
           },
-          error: function(xhr) {
+          error: function(xhr, status, thrownError ) {
             finishTapping(elemInput)
+            console.log()
             if (xhr.status == 404) {
               Swal.fire({
                 icon: 'error',
                 title: 'INFO',
-                html: 'Data siswa tidak ditemukan, silahkan hubungi guru piket.',
+                html: xhr.responseJSON['message'],
                 customClass : {
                   confirmButton : 'btn-primary'
                 }
