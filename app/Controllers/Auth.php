@@ -37,7 +37,7 @@ class Auth extends BaseController
                 return redirect()->back()->with('error', 'Akun siswa tidak diizinkan login.');
             }
             session()->set('role', $role['name']);
-            return redirect()->to(base_url($role . '/'));
+            return redirect()->to(base_url($role['name'] . '/'));
         }
 
         return redirect()->back()->with('error', 'Username/email atau password salah');
