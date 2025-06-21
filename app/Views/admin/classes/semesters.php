@@ -1,13 +1,13 @@
 <?= $this->extend('layouts/base') ?>
 
 <?= $this->section('header') ?>
-    <?= view('components/header', ['role' => 'Admin']) ?>
+    <?= $this->include('components/header') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('breadcrumb') ?>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/') ?>">Home</a>
+            <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/classes') ?>">Kelas</a>
@@ -40,7 +40,7 @@
                                 <?php endif; ?>
                             </td>
                             <td class="text-center">
-                                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$item['id'].'/class/') ?>" class="btn btn-sm btn-success">Lihat</a>
+                                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$item['id'].'/class/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                             </td>
                         </tr>
                         <?php endforeach ?>

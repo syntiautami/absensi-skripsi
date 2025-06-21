@@ -6,7 +6,7 @@
 <?= $this->section('breadcrumb') ?>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="<?= base_url('teacher/') ?>">Home</a>
+            <a href="<?= base_url('teacher/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Laporan Absensi</li>
     </ol>

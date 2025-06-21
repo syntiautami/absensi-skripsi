@@ -33,11 +33,13 @@ class GradeModel extends Model
      *
      * @return \CodeIgniter\Database\BaseBuilder
      */
-    public function withSection()
-    {
-        return $this->select('grade.id, grade.name, grade.section_id, section.name AS section_name')
-                    ->join('section', 'section.id = grade.section_id', 'left')
-                    ->orderBy('section.name asc, grade.order asc')
-                    ->findAll();
+    public function getAllData(){
+        return $this
+            -> select('
+                grade.id,
+                grade.name
+            ')
+            ->orderBy('order','name')
+            ->findAll();
     }
 }

@@ -27,4 +27,8 @@ class SubjectModel extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+    public function getAllData(){
+        return $this->orderBy('name')->findAll();
+    }
 }

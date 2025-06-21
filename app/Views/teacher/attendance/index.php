@@ -45,7 +45,7 @@
 <?= $this->section('breadcrumb') ?>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="<?= base_url('teacher/') ?>">Home</a>
+            <a href="<?= base_url('teacher/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Absensi</li>
     </ol>
@@ -140,7 +140,7 @@
                                             <small class="d-block mt-2 font-weight-bold">Sakit</small>
                                         </div>
                                     </div>
-                                    <button id="modal-btn" class="btn btn-success btn-block mt-4" type="button" data-dismiss="modal">SIMPAN</button>
+                                    <button id="modal-btn" class="btn btn-primary btn-block mt-4" type="button" data-dismiss="modal">SIMPAN</button>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                     <!-- Save Button -->
                     <div class="row">
                         <div class="col text-right mr-5">
-                            <button class="btn btn-success px-4" type="submit">SIMPAN</button>
+                            <button class="btn btn-primary px-4" type="submit">SIMPAN</button>
                         </div>
                     </div>
                 </div>

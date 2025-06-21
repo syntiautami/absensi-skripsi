@@ -1,13 +1,13 @@
 <?= $this->extend('layouts/base') ?>
 
 <?= $this->section('header') ?>
-    <?= view('components/header', ['role' => 'Admin']) ?>
+    <?= $this->include('components/header') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('breadcrumb') ?>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/') ?>">Home</a>
+            <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/classes/') ?>">Kelas</a>
@@ -58,7 +58,7 @@
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-end mt-3">
-                        <a class="btn btn-success mr-3" data-toggle="modal" data-target="#modalTambahSiswa">Tambah Siswa</a>
+                        <a class="btn btn-primary mr-3" data-toggle="modal" data-target="#modalTambahSiswa">Tambah Siswa</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
         
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Tambah</button>
+                                <button type="submit" class="btn btn-primary">Tambah</button>
                             </div>
                         </div>
                     </div>

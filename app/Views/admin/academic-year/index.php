@@ -1,13 +1,13 @@
 <?= $this->extend('layouts/base') ?>
 
 <?= $this->section('header') ?>
-    <?= view('components/header', ['role' => 'Admin']) ?>
+    <?= $this->include('components/header') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('breadcrumb') ?>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/') ?>">Home</a>
+            <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Tahun Pelajaran</li>
     </ol>
@@ -46,7 +46,7 @@
                             </td>
                             <td class="text-center">
                                 <!-- tombol edit / hapus -->
-                                <a href="<?= base_url('admin/academic-year/'.$item['id'].'/') ?>" class="btn btn-sm btn-success">Lihat</a>
+                                <a href="<?= base_url('admin/academic-year/'.$item['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                 <a href="<?= base_url('admin/academic-year/'.$item['id'].'/edit/') ?>" class="btn btn-sm btn-primary">Ubah</a>
                             </td>
                         </tr>

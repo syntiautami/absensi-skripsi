@@ -37,40 +37,45 @@ class ClassSemesterModel extends Model
      *
      * @return \CodeIgniter\Database\BaseBuilder
      */
-    public function withGradeAndSemester()
+    public function getByAcademicYearId($id)
     {
-        return $this->select('class_semester.*, grade.name AS grade_name, semester.name AS semester_name')
-                    ->join('grade', 'grade.id = class_semester.grade_id', 'left')
-                    ->join('semester', 'semester.id = class_semester.semester_id', 'left');
-    }
-    public function getClassSemesterBySemesterId($id){
         return $this
             ->select('
-                class_semester.id,
-                class_semester.name,
-                class_semester.grade_id,
-                grade.name as grade_name,
-                grade.section_id,
-                section.name as section_name,
-                (
-                    SELECT COUNT(*) FROM student_class_semester 
-                    JOIN student on student.id = student_class_semester.student_id
-                    JOIN profile on profile.id = student.profile_id
-                    WHERE 
-                        student_class_semester.student_id is not null and
-                        student.profile_id is not null and
-                        profile.user_id is not null and
-                        student_class_semester.class_semester_id = class_semester.id
-                ) AS total_students
+                class_semester.id as cs_id,
+                class_semester.name as class_code,
+                grade.id as grade_id,
+                grade.name AS grade_name,
+                semester.id AS semester_id,
+                semester.name AS semester_name
             ')
             ->join('grade', 'grade.id = class_semester.grade_id', 'left')
-            ->join('section', 'grade.section_id = section.id', 'left')
-            ->where('semester_id',$id)->findAll();
+            ->join('semester', 'semester.id = class_semester.semester_id', 'left')
+            ->where('semester.academic_year_id', $id)
+            ->findAll();
     }
-    public function getClassSemesterById($id){
-        return $this->select('class_semester.id, class_semester.name, class_semester.grace_period, class_semester.clock_in, class_semester.clock_out, class_semester.grade_id, grade.name as grade_name, grade.section_id, section.name as section_name')
-                    ->join('grade', 'grade.id = class_semester.grade_id', 'left')
-                    ->join('section', 'grade.section_id = section.id', 'left')
-                    ->where('class_semester.id',$id)->first();
+
+    public function getPivotClassSemesterByAcademicYear($id){
+        $res = $this->getByAcademicYearId($id);
+        $tableData = [];
+        $semesterList = [];
+
+        foreach ($res as $row) {
+            $kelasKey = $row['grade_id'] . $row['class_code'];
+
+            if (!isset($tableData[$kelasKey])) {
+                $tableData[$kelasKey] = [
+                    'kelas' => $row['grade_name'].' '.$row['class_code'],
+                ];
+            }
+            $tableData[$kelasKey][$row['semester_name']] = $row;
+
+            if (!in_array($row['semester_name'], $semesterList)) {
+                $semesterList[] = $row['semester_name'];
+            }
+        }
+        return [
+            'tableData' => $tableData,
+            'semesterList' => $semesterList,
+        ];
     }
 }

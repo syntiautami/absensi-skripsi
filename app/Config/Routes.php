@@ -81,16 +81,31 @@ $routes->group('admin/classes', ['filter' => 'auth'], function($routes) {
 
 // admin subject
 $routes->group('admin/subject', ['filter' => 'auth'], function($routes) {
+    // class
     $routes->get('/', 'Admin\Subject\Main::index');
     $routes->get('class/', 'Admin\Subject\Classes::index');
+    $routes->get('class/academic-year/(:num)/', 'Admin\Subject\Classes::classes');
+    
+    // teacher
     $routes->get('teacher/', 'Admin\Subject\Teacher::index');
+    $routes->get('teacher/academic-year/(:num)/', 'Admin\Subject\Teacher::teachers/$1');
+    $routes->match(['get','post'], 'teacher/academic-year/(:num)/user/(:num)/', 'Admin\Subject\Teacher::teacher_subjects/$1/$2');
 });
 
 // admin report attendance
 $routes->group('admin/report', ['filter' => 'auth'], function($routes) {
+    // attendance
     $routes->get('attendance/', 'Admin\Report\Main::index');
+    $routes->get('attendance/academic-year/(:num)/', 'Admin\Report\Main::grades/$1');
+    $routes->get('attendance/academic-year/(:num)/grade/(:num)/', 'Admin\Report\Main::report_grades/$1/$2');
+        // download attendance
+        $routes->get('attendance/(:num)/download/', 'Attendance\Report::attendance/$1');
+
+    // attendance subject
     $routes->get('attendance-subject/', 'Admin\Report\Subject::index');
 });
+
+
 
 // teacher
 $routes->group('teacher', ['filter' => 'auth'], function($routes) {
@@ -99,7 +114,12 @@ $routes->group('teacher', ['filter' => 'auth'], function($routes) {
     $routes->match(['get', 'post'], 'attendance/', 'Teacher\Attendance\Main::index');
     $routes->get('attendance/subject/', 'Teacher\Attendance\Subject::index');
 
+    // laporan absensi
     $routes->get('report/attendance/', 'Teacher\Report\Main::index');
-    $routes->get('report/attendance/(:num)/download/', 'Teacher\Report\Main::exportData/$1');
+    $routes->get('report/attendance/(:num)/download/', 'Attendance\Report::attendance/$1');
+
+    // laporan absensi subject
     $routes->get('report/attendance-subject/', 'Teacher\Report\Subject::index');
+    $routes->get('report/attendance-subject/(:num)/', 'Teacher\Report\Subject::subject/$1');
+    $routes->get('report/attendance-subject/(:num)/download', 'Teacher\Report\Subject::exportData/$1');
 });
