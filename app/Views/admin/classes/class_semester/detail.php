@@ -43,7 +43,7 @@
                 <?php foreach ($class_homeroom as $homeroomTeacher): ?>
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <img src="<?= base_url('assets/users/' . $homeroomTeacher['profile_photo'] ?? 'default.jpg') ?>" alt="" class="img-circle elevation-2" width="50" height="50">
+                            <img src="<?= base_url($homeroomTeacher['profile_photo'] ?? 'assets/img/users/default.jpg') ?>" alt="" class="img-circle elevation-2" width="50" height="50">
                             <span class="d-none d-md-inline font-weight-bold">
                                 <?= esc("{$homeroomTeacher['first_name']} {$homeroomTeacher['last_name']}") ?>
                             </span>

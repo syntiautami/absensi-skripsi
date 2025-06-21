@@ -33,7 +33,10 @@ class ClassSemester extends BaseController
         $classSemesters = $classSemesterModel->getClassSemesterBySemesterId($semester['id']);
         $classSemesterids = array_column($classSemesters, 'id');
         $homeroomModel = new TeacherClassSemesterHomeroomModel();
-        $homeroomTeachers = $homeroomModel -> getFromClassSemesterIds($classSemesterids);
+        $homeroomTeachers = [];
+        if(!empty($classSemesterids)){
+            $homeroomTeachers = $homeroomModel -> getFromClassSemesterIds($classSemesterids);
+        }
         
         $hashHomeroomTeacher = [];
         foreach ($homeroomTeachers as $homeroomTeacher) {

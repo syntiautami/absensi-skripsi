@@ -32,9 +32,9 @@
                     <tbody>
                         <?php $no = 1; foreach ($user_roles as $item): ?>
                         <tr>
-                            <td class="text-center"><?= esc("{$item['first_name']} {$item['last_name']}") ?></td>
-                            <td class="text-center"><?= esc($item['username']) ?></td>
-                            <td class="text-center"></td>
+                            <td><?= esc("{$item['first_name']} {$item['last_name']}") ?></td>
+                            <td><?= esc($item['username']) ?></td>
+                            <td class="text-center">-</td>
                             <td class="text-center">
                                 <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/user/') ?>" class="btn btn-sm btn-primary">Ubah</a>
                             </td>

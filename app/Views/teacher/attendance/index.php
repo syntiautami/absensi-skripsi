@@ -80,7 +80,7 @@
                                         <div 
                                             class="user-pic"
                                         >
-                                            <img src="<?= base_url('assets/users/default.jpg') ?>" 
+                                            <img src="<?= base_url('assets/img/users/default.jpg') ?>" 
                                             alt="Foto Siswa"
                                             data-toggle="modal" 
                                             data-target="#attendanceModal" 

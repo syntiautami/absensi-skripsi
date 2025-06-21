@@ -29,26 +29,32 @@
             <form action="" method="post">
                 <?= csrf_field() ?>
                 <div class="card-body">
-                    <div class="form-group row">
+                    <div class="row">
                         <div class="col-sm-6">
-                            <label for="grace_period" class="col-form-label">Batas Keterlambatan</label>
-                            <input type="number" class="form-control" id="grace_period" name="grace_period" value="<?= esc($class_semester['grace_period']) ?>">
+                            <div class="form-group">
+                                <label for="grace_period" class="col-form-label">Batas Keterlambatan</label>
+                                <input type="number" class="form-control" id="grace_period" name="grace_period" value="<?= esc($class_semester['grace_period']) ?>">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="row">
                         <div class="col-sm-3">
-                            <label for="clock-in" class="col-form-label">Jam Masuk</label>
-                            <div class="input-group" id="clock-in">
-                                <input type="time" name="clock-in" class="form-control"
-                                    value="<?= !empty($class_semester['clock_in']) ? $class_semester['clock_in'] : '' ?>" />
+                            <div class="form-group">
+                                <label for="clock-in" class="col-form-label">Jam Masuk</label>
+                                <div class="input-group" id="clock-in">
+                                    <input type="time" name="clock-in" class="form-control" required
+                                        value="<?= !empty($class_semester['clock_in']) ? $class_semester['clock_in'] : '' ?>" />
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-3">
-                            <label for="clock-out" class="col-form-label">Jam Pulang</label>
-                            <div class="input-group" id="clock-out">
-                                <input type="time" name="clock-out" class="form-control"
-                                    value="<?= !empty($class_semester['clock_out']) ? $class_semester['clock_out'] : '' ?>" />
+                            <div class="form-group">
+                                <label for="clock-out" class="col-form-label">Jam Pulang</label>
+                                <div class="input-group" id="clock-out">
+                                    <input type="time" name="clock-out" class="form-control" required
+                                        value="<?= !empty($class_semester['clock_out']) ? $class_semester['clock_out'] : '' ?>" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,4 +68,12 @@
         </div>
     </section>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+    <script>
+        $(function(){
+            $('form').validate({})
+        })
+    </script>
 <?= $this->endSection() ?>

@@ -31,7 +31,7 @@
             <div class="students-container" style="max-height: 500px; overflow-y: auto;">
                 <?php $no = 1; foreach ($daily_entries as $item): ?>
                   <?php
-                    $photo = !empty($item['profile_photo']) ? base_url('assets/users/' . $item['profile_photo']) : base_url('assets/users/default.jpg');
+                    $photo = !empty($item['profile_photo']) ? base_url($item['profile_photo']) : base_url('assets/img/users/default.jpg');
                     $timeRaw = !empty($item['clock_out']) ? $item['clock_out'] : $item['clock_in'];
                     $timeFormatted = (new DateTime($timeRaw))->format('H:i:s');
                   ?>
@@ -60,7 +60,7 @@
             <div class="student-container">
               <div class="card flex-grow-1 p-4 text-center mb-0" style="border-radius: 7px 7px 0 0;">
                 <div class="text-center">
-                  <img src="<?= base_url('assets/users/default.jpg') ?>" class="rounded-circle mb-3" height="420" width="420">
+                  <img src="<?= base_url('/default.jpg') ?>" class="rounded-circle mb-3" height="420" width="420">
                 </div>
                 <h3 class="student-name">Nama</h3>
                 <h5 class="text-muted student-class">Kelas</h5>

@@ -196,7 +196,7 @@ class Main extends BaseController
                     'id' => $studentData['id'],
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
                     'kelas' => $studentData['grade_name'].' '.$studentData['code'],
-                    'img' => base_url('assets/users/' . ($studentProfile['profile_photo'] ?: 'default.jpg')),
+                    'img' => base_url(($studentProfile['profile_photo'] ?: 'assets/img/users/default.jpg')),
                     'timestamp' => $studentTappingTime,
                     'time' => date('H:i:s',strtotime($studentTappingTime)),
                     'status' => $status
