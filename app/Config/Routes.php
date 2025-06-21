@@ -45,8 +45,8 @@ $routes->post('admin/academic-year/create/', 'Admin\AcademicYear\Main::create', 
 $routes->get('admin/academic-year/(:num)/', 'Admin\AcademicYear\Main::detail/$1', $auth_filters);
 $routes->get('admin/academic-year/(:num)/edit/', 'Admin\AcademicYear\Main::edit/$1', $auth_filters);
 $routes->post('admin/academic-year/(:num)/edit/', 'Admin\AcademicYear\Main::edit/$1', $auth_filters);
-$routes->get('admin/academic-year/(:num)/semester/edit/', 'Admin\AcademicYear\semester::edit/$1', $auth_filters);
-$routes->post('admin/academic-year/(:num)/semester/edit/', 'Admin\AcademicYear\semester::edit/$1', $auth_filters);
+$routes->get('admin/academic-year/(:num)/semester/edit/', 'Admin\AcademicYear\Semester::edit/$1', $auth_filters);
+$routes->post('admin/academic-year/(:num)/semester/edit/', 'Admin\AcademicYear\Semester::edit/$1', $auth_filters);
 $routes->get('cron/auto-alfa', 'Cron::autoAlfa');
 
 // admin class

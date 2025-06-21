@@ -48,7 +48,7 @@
                                     <?php if (!empty($class_homeroom[$item['id']])): ?>
                                         <?php foreach ($class_homeroom[$item['id']] as $teacher): ?>
                                             <div style="display: flex; align-items: center; margin-bottom: 5px;">
-                                                <img src="<?= base_url('assets/users/' . $teacher['profile_photo'] ?? 'default.jpg') ?>" alt="<?= esc($teacher['first_name'].' '.$teacher['last_name']) ?>" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; margin-right: 8px;">
+                                                <img src="<?= base_url($teacher['profile_photo'] ?? 'assets/img/users/default.jpg') ?>" alt="<?= esc($teacher['first_name'].' '.$teacher['last_name']) ?>" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; margin-right: 8px;">
                                                 <span><?= esc($teacher['first_name'].' '.$teacher['last_name']) ?></span>
                                             </div>
                                         <?php endforeach; ?>
