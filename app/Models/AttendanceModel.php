@@ -26,6 +26,18 @@ class AttendanceModel extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+    
+    public function getAllAttendanceBycsId($id){
+        return $this
+            ->select('
+                attendance.student_class_semester_id,
+                attendance.attendance_type_id,
+                date
+            ')
+            ->join('student_class_semester','student_class_semester.id = attendance.student_class_semester_id')
+            ->where('student_class_semester.class_semester_id', $id)
+            ->findAll();
+    }
 
     public function getTodayAttendanceByscsId($ids){
         return $this

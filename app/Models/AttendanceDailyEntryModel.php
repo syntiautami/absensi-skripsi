@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use DateTime;
 
 class AttendanceDailyEntryModel extends Model
 {
@@ -26,6 +27,35 @@ class AttendanceDailyEntryModel extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+    public function buildTappingMap(array $profileIds, $startDate, $endDate): array
+    {
+        $result = $this
+            ->select('profile_id, clock_in, clock_out, created_at')
+            ->whereIn('profile_id', $profileIds)
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->findAll();
+
+        $tappingMap = [];
+
+        foreach ($result as $entry) {
+            if (empty($entry['profile_id'])) {
+                dd($entry);
+                continue;
+            }
+            $profileId = $entry['profile_id'];
+            $dateStr = (new DateTime($entry['created_at']))->format('Y-m-d');
+
+            $tappingMap[$profileId][$dateStr] = [
+                'clock_in'  => $entry['clock_in'] ? (new DateTime($entry['clock_in']))->format('H:i:s') : '',
+                'clock_out' => $entry['clock_out'] ? (new DateTime($entry['clock_out']))->format('H:i:s') : '',
+            ];
+        }
+
+        return $tappingMap;
+    }
+
 
     public function getTodayEntry($id)
     {

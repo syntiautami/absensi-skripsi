@@ -89,5 +89,6 @@ $routes->get('teacher/attendance/subject/', 'Teacher\Attendance\Subject::index',
 
 // teacher attendance report
 $routes->get('teacher/report/attendance/', 'Teacher\Report\Main::index', $auth_filters);
+$routes->get('teacher/report/attendance/(:num)/download/', 'Teacher\Report\Main::exportData/$1', $auth_filters);
 $routes->get('teacher/report/attendance-subject/', 'Teacher\Report\Subject::index', $auth_filters);
 

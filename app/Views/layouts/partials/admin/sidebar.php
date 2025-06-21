@@ -75,7 +75,7 @@
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="<?= base_url('admin/report/attendance/') ?>" class="nav-link <?= ($viewing ?? '') === 'report' ? 'active' : '' ?>">
-                <p>Absensi Harian</p>
+                <p>Absensi</p>
               </a>
             </li>
             <li class="nav-item">

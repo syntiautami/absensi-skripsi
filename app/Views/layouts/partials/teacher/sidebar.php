@@ -31,7 +31,7 @@
             <?php if (session()->get('homeroom_teacher')): ?>
               <li class="nav-item">
                 <a href="<?= base_url('teacher/attendance/') ?>" class="nav-link <?= ($viewing ?? '') === 'attendance' ? 'active' : '' ?>">
-                  <p>Absensi Harian</p>
+                  <p>Absensi</p>
                 </a>
               </li>
             <?php endif; ?>
@@ -54,11 +54,13 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?= base_url('teacher/report/attendance/') ?>" class="nav-link <?= ($viewing ?? '') === 'report' ? 'active' : '' ?>">
-                <p>Absensi Harian</p>
-              </a>
-            </li>
+            <?php if (session()->get('homeroom_teacher')): ?>
+              <li class="nav-item">
+                <a href="<?= base_url('teacher/report/attendance/') ?>" class="nav-link <?= ($viewing ?? '') === 'report' ? 'active' : '' ?>">
+                  <p>Absensi</p>
+                </a>
+              </li>
+            <?php endif; ?>
             <li class="nav-item">
               <a href="<?= base_url('teacher/report/attendance-subject/') ?>" class="nav-link <?= ($viewing ?? '') === 'report-subject' ? 'active' : '' ?>">
                 <p>Absensi Mata Pelajaran</p>

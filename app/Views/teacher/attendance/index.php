@@ -47,7 +47,7 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('teacher/') ?>">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Absensi Harian</li>
+        <li class="breadcrumb-item active" aria-current="page">Absensi</li>
     </ol>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
