@@ -5,10 +5,8 @@ namespace App\Controllers\Attendance;
 use App\Controllers\BaseController;
 use App\Models\AttendanceDailyEntryModel;
 use App\Models\AttendanceModel;
-use App\Models\SemesterModel;
 use App\Models\StudentClassSemesterModel;
 use App\Models\TeacherClassSemesterHomeroomModel;
-use CodeIgniter\HTTP\ResponseInterface;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -140,8 +138,12 @@ class Report extends BaseController
                 new DateInterval('P1D'),
                 (clone $endDateThisMonth)->modify('+1 day')
             );
+
+            $thresholdColTotal = 'B';
             foreach ($periods as $date) {
                 $currentCol = $col;
+                $thresholdColTotal++;
+                $thresholdColTotal++;
                 $nextCol = ++$currentCol;
 
 
@@ -251,6 +253,12 @@ class Report extends BaseController
 
             // Tulis data siswa
             $row = 10;
+            $summaryAll = [
+                'sick'               => 0,
+                'permission'         => 0,
+                'late'               => 0,
+                'absent'             => 0,
+            ];
             foreach ($students as $student) {
                 $studentId = $student['id'];
                 $summaryData = [
@@ -305,12 +313,16 @@ class Report extends BaseController
                     }else{
                         $summaryData['total_school_days']++;
                         if ($attendanceType == '4') {
+                            $summaryData['late']++;
                             $fillColor = $lateColor;
                         } elseif ($attendanceType == '3') {
+                            $summaryData['excused']++;
                             $fillColor = $excusedColor;
                         } elseif ($attendanceType == '2') {
+                            $summaryData['sick']++;
                             $fillColor = $sickColor;
                         } elseif ($attendanceType == '1') {
+                            $summaryData['absent']++;
                             $fillColor = $absentColor;
                         }else{
                             $summaryData['total_attendance']++;
@@ -371,6 +383,9 @@ class Report extends BaseController
 
                 // Summary Attendance
                 foreach ($summaryHeaders as $key => $label) {
+                    if (isset($summaryAll[$key])){
+                        $summaryAll[$key] += $summaryData[$key];
+                    }
                     $sheet->setCellValue($col.$row, $summaryData[$key] ?? '');
                     $sheet->getColumnDimension($col)->setAutoSize(true);
                     $sheet->getStyle($col.$row)->applyFromArray($headerStyle);
@@ -379,6 +394,36 @@ class Report extends BaseController
                 $row++;
             }
 
+            // summary sum column
+            $thresholdColTotal--;
+            $thresholdColTotal--;
+
+            $sheet->setCellValue($thresholdColTotal.$row, 'TOTAL');
+            $sheet->getStyle($thresholdColTotal.$row)->applyFromArray([
+                'font' => [
+                    'bold' => true,
+                ],
+                'fill' => [
+                    'fillType' => Fill::FILL_SOLID,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => Border::BORDER_THIN,
+                    ],
+                ],
+                'alignment' => [
+                    'vertical' => Alignment::VERTICAL_CENTER,
+                    'horizontal' => Alignment::HORIZONTAL_RIGHT,
+                ],
+            ]);
+            $thresholdColTotal++;
+            foreach ($summaryHeaders as $key => $label) {
+                if (isset($summaryAll[$key])) {
+                    $sheet->setCellValue($thresholdColTotal.$row, $summaryAll[$key] ?? '');
+                    $sheet->getStyle($thresholdColTotal.$row)->applyFromArray($headerStyle);
+                    $thresholdColTotal++;
+                }
+            }
             // sheet berikutnya (bulan berikutnya)
             $startDate->modify('+1 month');
         }
