@@ -32,14 +32,16 @@ class ClassSemesterSubjectModel extends Model
      *
      * @return \CodeIgniter\Database\BaseBuilder
      */
-    public function withClassSemesterAndSubject()
-    {
-        return $this->select('
-                    class_semester_subject.*,
-                    class_semester.name AS class_name,
-                    subject.name AS subject_name
-                ')
-                ->join('class_semester', 'class_semester.id = class_semester_subject.class_semester_id', 'left')
-                ->join('subject', 'subject.id = class_semester_subject.subject_id', 'left');
+    public function getAllSubjectByClassSemesterId($id){
+        return $this
+            ->select('
+                subject.id,
+                subject.name
+            ')
+            ->join('subject', 'subject.id = class_semester_subject.subject_id')
+            ->where('class_semester_id',$id)
+            ->where('class_semester_subject.active', 1)
+            ->orderBy('subject.name')
+            ->findAll();
     }
 }

@@ -60,7 +60,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <select class="form-control" name="class" id="" disabled>
-                                    <option value=""><?= esc(session()->get('homeroom_teacher')['section_name']) ?> <?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></option>
+                                    <option value=""><?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></option>
                                 </select>
                             </div>
                         </div>

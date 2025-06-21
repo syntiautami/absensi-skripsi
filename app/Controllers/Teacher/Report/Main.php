@@ -99,7 +99,7 @@ class Main extends BaseController
 
             $sheet->setCellValue('B2', 'Laporan Kehadiran Siswa');
             $sheet->getStyle('B2')->getFont()->setSize(18);
-            $sheet->setCellValue('B3', 'Kelas: '.$walas['section_name'].' '.$walas['grade_name'].' '.$walas['class_code']);
+            $sheet->setCellValue('B3', 'Kelas: '.$walas['grade_name'].' '.$walas['class_code']);
             $sheet->setCellValue('B4', 'Semester: '.$walas['semester_name'].' ' .$walas['academic_year_name']);
             $sheet->setCellValue('B5', 'Walikelas: '.$walas['first_name']. ' '.$walas['last_name']);
 

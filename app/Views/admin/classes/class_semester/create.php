@@ -34,7 +34,7 @@
                                 <label class="col-form-label">Kelas</label>
                                 <select name="grade_id" class="form-control">
                                     <?php foreach ($grades as $item): ?>
-                                        <option value="<?= $item['id'] ?>"><?= $item['section_name'] ?> <?= $item['name'] ?></option>
+                                        <option value="<?= $item['id'] ?>"><?= $item['name'] ?></option>
                                         <?php endforeach ?>
                                 </select>
                             </div>

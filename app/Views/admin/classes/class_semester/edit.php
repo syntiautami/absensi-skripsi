@@ -19,7 +19,7 @@
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/') ?>"><?= esc("{$class_semester['section_name']} {$class_semester['grade_name']} {$class_semester['name']}") ?></a>
+            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/') ?>"><?= esc("{$class_semester['grade_name']} {$class_semester['name']}") ?></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Ubah</li>
     </ol>

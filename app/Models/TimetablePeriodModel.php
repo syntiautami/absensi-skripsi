@@ -23,4 +23,11 @@ class TimetablePeriodModel extends Model
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
+
+    public function getTimetable($period){
+        return $this
+            ->where ('day_of_week', $period)
+            ->orWhere('day_of_week', null)
+            ->findAll();
+    }
 }

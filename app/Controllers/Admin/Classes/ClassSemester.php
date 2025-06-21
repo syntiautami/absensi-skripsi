@@ -49,6 +49,7 @@ class ClassSemester extends BaseController
             'class_homeroom' =>$hashHomeroomTeacher,
             'semester' => $semester,
             'viewing' => 'classes',
+            'viewing_sub' => 'classes',
         ]);
     }
 
@@ -101,6 +102,7 @@ class ClassSemester extends BaseController
             'semester' => $semester,
             'teachers' => $teachers,
             'viewing' => 'classes',
+            'viewing_sub' => 'classes',
         ]);
     }
 
@@ -131,6 +133,7 @@ class ClassSemester extends BaseController
             'class_homeroom' => $homeroomTeachers,
             'semester' => $semester,
             'viewing' => 'classes',
+            'viewing_sub' => 'classes',
         ]);
     }
 
@@ -181,6 +184,7 @@ class ClassSemester extends BaseController
             'semester' => $semester,
             'teachers' => $teachers,
             'viewing' => 'classes',
+            'viewing_sub' => 'classes',
         ]);
     }
     
@@ -267,6 +271,7 @@ class ClassSemester extends BaseController
             'students' => $students,
             'student_class_semesters' => $scs_list,
             'viewing' => 'classes',
+            'viewing_sub' => 'classes',
         ]);
     }
 
@@ -307,6 +312,7 @@ class ClassSemester extends BaseController
             'class_semester' => $classSemester,
             'semester' => $semester,
             'viewing' => 'classes',
+            'viewing_sub' => 'classes',
         ]);
     }
 
