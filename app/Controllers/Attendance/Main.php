@@ -104,7 +104,7 @@ class Main extends BaseController
 
             
             $dailyEntryModel = new AttendanceDailyEntryModel();
-            $todayEntry = $dailyEntryModel->getTodayEntry($studentProfile['student_id']);
+            $todayEntry = $dailyEntryModel->getTodayEntry($studentProfile['id']);
 
             $existingAttendance = $attModel ->getTodayAttendance($studentData['id']);
 
@@ -125,7 +125,7 @@ class Main extends BaseController
             
             $studentTappingTime = $currentTap;
             $sendEmail = true;
-            if ($todayEntry) {
+            if (!empty($todayEntry)) {
                 $status = 'present';
                 $sendEmail = false;
                 if ($currentTap > $blockingPeriodTime) {
