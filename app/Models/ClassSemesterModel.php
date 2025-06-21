@@ -44,10 +44,28 @@ class ClassSemesterModel extends Model
                     ->join('semester', 'semester.id = class_semester.semester_id', 'left');
     }
     public function getClassSemesterBySemesterId($id){
-        return $this->select('class_semester.id, class_semester.name, class_semester.grade_id, grade.name as grade_name, grade.section_id, section.name as section_name, (SELECT COUNT(*) FROM student_class_semester WHERE student_class_semester.class_semester_id = class_semester.id) AS total_students')
-                    ->join('grade', 'grade.id = class_semester.grade_id', 'left')
-                    ->join('section', 'grade.section_id = section.id', 'left')
-                    ->where('semester_id',$id)->findAll();
+        return $this
+            ->select('
+                class_semester.id,
+                class_semester.name,
+                class_semester.grade_id,
+                grade.name as grade_name,
+                grade.section_id,
+                section.name as section_name,
+                (
+                    SELECT COUNT(*) FROM student_class_semester 
+                    JOIN student on student.id = student_class_semester.student_id
+                    JOIN profile on profile.id = student.profile_id
+                    WHERE 
+                        student_class_semester.student_id is not null and
+                        student.profile_id is not null and
+                        profile.user_id is not null and
+                        student_class_semester.class_semester_id = class_semester.id
+                ) AS total_students
+            ')
+            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('section', 'grade.section_id = section.id', 'left')
+            ->where('semester_id',$id)->findAll();
     }
     public function getClassSemesterById($id){
         return $this->select('class_semester.id, class_semester.name, class_semester.grace_period, class_semester.clock_in, class_semester.clock_out, class_semester.grade_id, grade.name as grade_name, grade.section_id, section.name as section_name')

@@ -69,6 +69,9 @@ class StudentClassSemesterModel extends Model
             ->join('user', 'user.id = profile.user_id', 'left')
             ->where('student_class_semester.active',1)
             ->where('class_semester_id',$id)
+            ->where('student_class_semester.student_id is not null')
+            ->where('student.profile_id is not null')
+            ->where('profile.user_id is not null')
             ->orderBy('first_name, last_name')
             ->findAll();
     }
