@@ -54,13 +54,13 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="address" class="col-form-label">Alamat</label>
-                                        <input type="text" class="form-control" id="address" name="address" value="<?= esc($profile['address']) ?>" required>
+                                        <input type="text" class="form-control" id="address" name="address" value="<?= esc($profile['address']) ?>">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="religion" class="col-form-label">Agama</label>
-                                        <input type="text" class="form-control" id="religion" name="religion" value="<?= esc($profile['religion']) ?>" required>
+                                        <input type="text" class="form-control" id="religion" name="religion" value="<?= esc($profile['religion']) ?>">
                                     </div>
                                 </div>
                             </div>
