@@ -47,14 +47,14 @@
                                     <?= count($student_data[$class_semester_year['id']]) ?? '0' ?>
                                 </td>
                                 <td class="text-center">
-                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/create/') ?>" class="btn btn-primary">
+                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/create/') ?>" class="btn btn-primary">
                         Buat Kelas
                     </a>
                 </div>

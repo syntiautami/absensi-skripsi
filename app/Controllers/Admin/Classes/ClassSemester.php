@@ -115,7 +115,7 @@ class ClassSemester extends BaseController
                 }
             }
 
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$id.'/'))->with('success', 'Data berhasil diupdate.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$id.'/'))->with('success', 'Data berhasil diupdate.');
         }
         
         $teachers = $teacherModel -> getAllData();
@@ -209,7 +209,7 @@ class ClassSemester extends BaseController
                     ]);
                 }
             }
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$id.'/students/'))->with('success', 'Data berhasil diupdate.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$id.'/students/'))->with('success', 'Data berhasil diupdate.');
         }
         
         $scs_list = $scsModel -> getByClassSemesterIds($csIds);
@@ -265,7 +265,7 @@ class ClassSemester extends BaseController
 
         $studentClassSemester = $scsModel -> getByStudentId($id);
         if (!$studentClassSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/students/'))->with('success', 'Data berhasil diupdate.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$class_semester_year_id.'/students/'))->with('success', 'Data berhasil diupdate.');
         }
 
         $scsModel
@@ -276,7 +276,7 @@ class ClassSemester extends BaseController
             ])
             ->update();
         
-        return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/students/'))->with('success', 'Data berhasil diupdate.');
+        return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$class_semester_year_id.'/students/'))->with('success', 'Data berhasil diupdate.');
     }
 
     public function class_hour($academic_year_id, $id){
@@ -325,7 +325,7 @@ class ClassSemester extends BaseController
                 ]);
             }
             
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$id.'/class-hour/'))->with('success', 'Data berhasil diupdate.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$id.'/class-hour/'))->with('success', 'Data berhasil diupdate.');
         }
 
         return view('admin/classes/class_semester/class_hour', [

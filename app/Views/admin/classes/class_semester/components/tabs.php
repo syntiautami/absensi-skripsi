@@ -1,5 +1,5 @@
 <?php
-    $base_class_url = base_url('admin/classes/academic-year/' . $academic_year['id'] . '/class_semester_year/' . $class_semester_year['id'] . '/');
+    $base_class_url = base_url('admin/classes/academic-year/' . $academic_year['id'] . '/class-semester-year/' . $class_semester_year['id'] . '/');
     $current = current_url();
     $tabs = [
         ''             => 'Detail',

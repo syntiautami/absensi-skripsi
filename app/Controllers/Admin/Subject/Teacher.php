@@ -208,7 +208,7 @@ class Teacher extends BaseController
                     ->update();
             }
 
-            return redirect()->to(base_url('admin/subject/teacher/academic-year/'.$academic_year_id.'/class_semester_year/'.$id.'/'))->with('success', 'Data berhasil diubah.');
+            return redirect()->to(base_url('admin/subject/teacher/academic-year/'.$academic_year_id.'/class-semester-year/'.$id.'/'))->with('success', 'Data berhasil diubah.');
         }
 
         $teachers = $teacherModel-> getAllData();

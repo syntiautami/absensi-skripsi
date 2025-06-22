@@ -60,15 +60,7 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#academicYearTable').DataTable({
-            "responsive": true,
-            "autoWidth": false,
-            "searching" : false,
-            "lengthChange" : false,
-            "paging": false,
-            "info" : false,
-            "order" : [['1', 'desc']]
-        });
+        $('#academicYearTable').DataTable();
     });
 </script>
 <?= $this->endSection() ?>

@@ -56,9 +56,9 @@ $routes->group('admin/classes', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'Admin\Classes\Main::index');
     $routes->get('academic-year/(:num)/', 'Admin\Classes\Main::class_academic_year/$1');
     
-    $routes->match(['get','post'],'academic-year/(:num)/class_semester_year/create/', 'Admin\Classes\Main::create/$1');
+    $routes->match(['get','post'],'academic-year/(:num)/class-semester-year/create/', 'Admin\Classes\Main::create/$1');
     // Class Semester
-    $routes->group('academic-year/(:num)/class_semester_year/(:num)/', function($routes) {
+    $routes->group('academic-year/(:num)/class-semester-year/(:num)/', function($routes) {
         $routes->get('/', 'Admin\Classes\ClassSemester::detail/$1/$2');
         $routes->match(['get', 'post'], 'create/', 'Admin\Classes\ClassSemester::create/$1/$2');
         $routes->match(['get', 'post'], 'edit/', 'Admin\Classes\ClassSemester::edit/$1/$2');
@@ -83,12 +83,12 @@ $routes->group('admin/subject', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'Admin\Subject\Main::index');
     $routes->get('class/', 'Admin\Subject\Classes::index');
     $routes->get('class/academic-year/(:num)/', 'Admin\Subject\Classes::classes/$1');
-    $routes->match(['get','post'],'class/academic-year/(:num)/class_semester_year/(:num)/', 'Admin\Subject\Classes::class_subjects/$1/$2');
+    $routes->match(['get','post'],'class/academic-year/(:num)/class-semester-year/(:num)/', 'Admin\Subject\Classes::class_subjects/$1/$2');
     
     // teacher
     $routes->get('teacher/', 'Admin\Subject\Teacher::index');
     $routes->get('teacher/academic-year/(:num)/', 'Admin\Subject\Teacher::classes/$1');
-    $routes->match(['get','post'], 'teacher/academic-year/(:num)/class_semester_year/(:num)/', 'Admin\Subject\Teacher::teacher_subjects/$1/$2');
+    $routes->match(['get','post'], 'teacher/academic-year/(:num)/class-semester-year/(:num)/', 'Admin\Subject\Teacher::teacher_subjects/$1/$2');
 });
 
 // admin report attendance
@@ -96,12 +96,17 @@ $routes->group('admin/report', ['filter' => 'auth'], function($routes) {
     // attendance
     $routes->get('attendance/', 'Admin\Report\Main::index');
     $routes->get('attendance/academic-year/(:num)/', 'Admin\Report\Main::grades/$1');
-    $routes->get('attendance/academic-year/(:num)/grade/(:num)/', 'Admin\Report\Main::report_grades/$1/$2');
-        // download attendance
-        $routes->get('attendance/(:num)/download/', 'Attendance\Report::attendance/$1');
+    
+    // download attendance
+    $routes->get('attendance/(:num)/download/', 'Attendance\Report::attendance/$1');
 
     // attendance subject
-    $routes->get('attendance-subject/', 'Admin\Report\Subject::index');
+    $routes->get('attendance/subject/', 'Admin\Report\Subject::index');
+    $routes->get('attendance/subject/(:num)/', 'Admin\Report\Subject::classes/$1');
+    $routes->get('attendance/subject/(:num)/class-semester-year/(:num)', 'Admin\Report\Subject::subject_list/$1/$2');
+    
+    // download attendance subject
+    $routes->get('attendance/subject/(:num)/download', 'Attendance\Report::attendance_subject/$1');
 });
 
 

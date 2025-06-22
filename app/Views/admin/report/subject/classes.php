@@ -10,7 +10,7 @@
             <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/subject/teacher/') ?>">Mata Pelajaran Guru</a>
+            <a href="<?= base_url('admin/report/attendance/subject/') ?>">Laporan Absensi Mata Pelajaran</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page"><?= $academic_year['name'] ?></li>
     </ol>
@@ -20,7 +20,7 @@
     <section class="content">
         <div class="card">
             <div class="card-body">
-                <table id="teacherTable" class="table table-bordered table-striped">
+                <table id="academicYearTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">Kelas</th>
@@ -32,7 +32,7 @@
                         <tr>
                             <td class="text-center"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></td>
                             <td class="text-center">
-                                <a href="<?= base_url('admin/subject/teacher/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                <a href="<?= base_url('admin/report/attendance/subject/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                             </td>
                         </tr>
                         <?php endforeach ?>
@@ -47,7 +47,7 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#teacherTable').DataTable();
+        $('#academicYearTable').DataTable();
     });
 </script>
 <?= $this->endSection() ?>

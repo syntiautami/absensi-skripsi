@@ -126,7 +126,7 @@ class Classes extends BaseController
                 }
             }
 
-            return redirect()->to(base_url('admin/subject/class/academic-year/'.$academicYearId.'/class_semester_year/'.$id.'/'))->with('success', 'Data berhasil diubah.');
+            return redirect()->to(base_url('admin/subject/class/academic-year/'.$academicYearId.'/class-semester-year/'.$id.'/'))->with('success', 'Data berhasil diubah.');
         }
 
         $existingActiveSubjects = $cssModel-> getActiveExistingSubjectByCsyId($id);

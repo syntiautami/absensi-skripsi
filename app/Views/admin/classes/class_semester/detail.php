@@ -49,7 +49,7 @@
                 <?php endforeach; ?>
                 <hr>
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/edit/') ?>" class="btn btn-primary">
+                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/edit/') ?>" class="btn btn-primary">
                         Ubah Kelas
                     </a>
                 </div>

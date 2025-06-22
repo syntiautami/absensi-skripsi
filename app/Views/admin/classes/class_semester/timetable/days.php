@@ -16,10 +16,10 @@
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></a>
+            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/') ?>"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/timetable/') ?>">Jadwal Pelajaran</a>
+            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/timetable/') ?>">Jadwal Pelajaran</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Semester <?= $semester['name'] ?></li>
     </ol>
@@ -45,7 +45,7 @@
                                 <tr>
                                     <td class="text-center" data-order="<?= $no ?>"><?= day_indonesian($no) ?></td>
                                     <td class="text-center">
-                                        <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/timetable/'.$semester['id'].'/day/'.$no.'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                        <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/timetable/'.$semester['id'].'/day/'.$no.'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                     </td>
                                 </tr>
                             <?php endfor ?>

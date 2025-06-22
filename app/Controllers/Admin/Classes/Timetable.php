@@ -57,7 +57,7 @@ class Timetable extends BaseController
         $semester = $semesterModel -> getSemesterById($id);
         
         if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/timetable/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$class_semester_year_id.'/timetable/'))->with('error', 'Data tidak ditemukan.');
         }
 
         return view('admin/classes/class_semester/timetable/days', [
@@ -88,7 +88,7 @@ class Timetable extends BaseController
         $semester = $semesterModel -> getSemesterById($semester_id);
         
         if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/timetable/'))->with('error', 'Data tidak ditemukan.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$class_semester_year_id.'/timetable/'))->with('error', 'Data tidak ditemukan.');
         }
 
         $csModel = new ClassSemesterModel();
@@ -170,7 +170,7 @@ class Timetable extends BaseController
                 $classTimetablePeriodModel->updateBatch($toDeactivate, 'id');
             }
 
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/timetable/'.$semester_id.'/day/'.$day.'/'))->with('success', 'Data berhasil diperbarui.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class-semester-year/'.$class_semester_year_id.'/timetable/'.$semester_id.'/day/'.$day.'/'))->with('success', 'Data berhasil diperbarui.');
         }
 
         $classTimetablePeriodList = $classTimetablePeriodModel->getActiveClassTimetableList($timetableIds, $day);
