@@ -35,7 +35,7 @@ class Classes extends BaseController
             'academic_year' => $academicYear,
             'classSemesters' => $classSemesters['tableData'],
             'semesters' => $classSemesters['semesterList'],
-            'viewing' => 'report',
+            'viewing' => 'class-subject',
         ]);
     }
 
@@ -121,7 +121,7 @@ class Classes extends BaseController
             'class_semester' => $class_semester,
             'existing_subjects' => $existingMap,
             'subjects' => $subjects,
-            'viewing' => 'report',
+            'viewing' => 'class-subject',
         ]);
     }
 }
