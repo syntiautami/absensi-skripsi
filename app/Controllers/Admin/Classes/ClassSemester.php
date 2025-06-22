@@ -220,7 +220,7 @@ class ClassSemester extends BaseController
         ]);
     }
 
-    public function class_hour($academic_year_id, $semester_id, $id){
+    public function class_hour($academic_year_id, $id){
         $model = new AcademicYearModel();
         $classSemesterModel = new ClassSemesterModel();
         $semesterModel = new SemesterModel();
@@ -229,33 +229,51 @@ class ClassSemester extends BaseController
         if (!$academic_year) {
             return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
         }
-        $semester = $semesterModel ->getSemesterById($semester_id);
-        if (!$semester) {
+
+        $csyModel = new ClassSemesterYearModel();
+        $class_semester_year = $csyModel-> getById($id);
+        if (!$class_semester_year) {
             return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
         
-        $classSemester = $classSemesterModel->getClassSemesterById($id);
-        if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
-        }
+        $csModel = new ClassSemesterModel();
+        $class_semesters = $csModel->getCsByCsyId($id);
         
         if ($this->request->getMethod() === 'POST'){
-            $data = $this->request->getPost();
-            $gracePeriod = !empty($data['grace_period']) ? $data['grace_period'] : null;
-            $classSemesterModel ->update($id,[
-                'grace_period' => $gracePeriod,
-                'clock_in' => $data['clock-in'],
-                'clock_out' => $data['clock-out'],
-                'updated_by_id' => session()->get('user')['id'],
-            ]);
+            $post = $this->request->getPost();
+
+            $classSemesterData = [];
+
+            foreach ($post['grace_period'] as $cs_id => $grace_period) {
+                $classSemesterData[$cs_id]['grace_period'] = $grace_period;
+            }
+
+            foreach ($post['clock-in'] as $cs_id => $clock_in) {
+                $classSemesterData[$cs_id]['clock_in'] = $clock_in;
+            }
+
+            foreach ($post['clock-out'] as $cs_id => $clock_out) {
+                $classSemesterData[$cs_id]['clock_out'] = $clock_out;
+            }
+
+
+            foreach ($classSemesterData as $class_semesterId => $data) {
+                $gracePeriod = !empty($data['grace_period']) ? $data['grace_period'] : null;
+                $classSemesterModel ->update($class_semesterId,[
+                    'grace_period' => $gracePeriod,
+                    'clock_in' => $data['clock_in'],
+                    'clock_out' => $data['clock_out'],
+                    'updated_by_id' => session()->get('user')['id'],
+                ]);
+            }
             
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/class/'.$id.'/class-hour/'))->with('success', 'Data berhasil diupdate.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$id.'/class-hour/'))->with('success', 'Data berhasil diupdate.');
         }
 
         return view('admin/classes/class_semester/class_hour', [
             'academic_year' => $academic_year,
-            'class_semester' => $classSemester,
-            'semester' => $semester,
+            'class_semesters' => $class_semesters,
+            'class_semester_year' => $class_semester_year,
             'viewing' => 'classes',
             'viewing_sub' => 'classes',
         ]);

@@ -65,6 +65,9 @@ class ClassSemesterModel extends Model
         return $this
             ->select('
                 class_semester.id,
+                class_semester.grace_period,
+                class_semester.clock_in,
+                class_semester.clock_out,
                 class_semester_year.code as class_code,
                 class_semester_year.grade_id,
                 grade.name as grade_name,
