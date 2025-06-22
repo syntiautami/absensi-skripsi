@@ -84,7 +84,8 @@ $routes->group('admin/subject', ['filter' => 'auth'], function($routes) {
     // class
     $routes->get('/', 'Admin\Subject\Main::index');
     $routes->get('class/', 'Admin\Subject\Classes::index');
-    $routes->get('class/academic-year/(:num)/', 'Admin\Subject\Classes::classes');
+    $routes->get('class/academic-year/(:num)/', 'Admin\Subject\Classes::classes/$1');
+    $routes->match(['get','post'],'class/academic-year/(:num)/class/(:num)/', 'Admin\Subject\Classes::class_subjects/$1/$2');
     
     // teacher
     $routes->get('teacher/', 'Admin\Subject\Teacher::index');

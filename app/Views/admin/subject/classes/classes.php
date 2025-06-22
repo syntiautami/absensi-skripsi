@@ -10,7 +10,7 @@
             <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/report/attendance/') ?>">Laporan Absensi</a>
+            <a href="<?= base_url('admin/report/attendance/') ?>">Mata Pelajaran Kelas</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page"><?= $academic_year['name'] ?></li>
     </ol>
@@ -35,7 +35,7 @@
                                 <td class="text-center"><?= esc($class_semester['kelas']) ?></td>
                                 <?php $no = 1; foreach ($semesters as $semester): ?>
                                     <td class="text-center">
-                                        <a href="<?= base_url('admin/report/attendance/'.$class_semester[$semester]['cs_id'].'/download/') ?>" class="btn btn-sm btn-primary">Unduh</a>
+                                        <a href="<?= base_url('admin/subject/class/academic-year/'.$academic_year['id'].'/class/'.$class_semester[$semester]['cs_id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                     </td>
                                 <?php endforeach ?>
                             </tr>

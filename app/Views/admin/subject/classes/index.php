@@ -45,7 +45,7 @@
                                 <?php endif; ?>
                             </td>
                             <td class="text-center">
-                                <a href="<?= base_url('admin/subject/teacher/academic-year/'.$item['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                <a href="<?= base_url('admin/subject/class/academic-year/'.$item['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                             </td>
                         </tr>
                         <?php endforeach ?>

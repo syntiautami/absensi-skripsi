@@ -92,37 +92,6 @@ a,
     font-weight: bold;
 }
 
-.user-pic img.border.absent{
-    border: 3px solid var(--danger) !important;
-}
-.user-pic img.border.late{
-    border: 3px solid var(--warning) !important;
-}
-.user-pic img.border.sick{
-    border: 3px solid var(--color-sick) !important;
-}
-.user-pic img.border.excused{
-    border: 3px solid var(--info) !important;
-}
-.user-pic img.border.present{
-    border: 3px solid var(--primary) !important;
-}
-
-
-/* breadcrumb */
-.breadcrumb{
-    background-color: initial !important;
-    padding-bottom: 0;
-}
-.breadcrumb-item.active{
-    color: black;
-    font-weight: bold;
-}
-.breadcrumb-item a{
-    color: var(--font-color-bg) !important;
-}
-/* breadcrumb */
-
 /* legend attendance */
 .status-box{
     width: 10px;
@@ -149,6 +118,38 @@ a,
     background-color: var(--info) !important;
 }
 
+.user-pic img.border.absent{
+    border: 3px solid var(--danger) !important;
+}
+.user-pic img.border.late{
+    border: 3px solid var(--warning) !important;
+}
+.user-pic img.border.sick{
+    border: 3px solid var(--color-sick) !important;
+}
+.user-pic img.border.excused{
+    border: 3px solid var(--info) !important;
+}
+.user-pic img.border.present{
+    border: 3px solid var(--primary) !important;
+}
+
+/* legend attendance */
+
+
+/* breadcrumb */
+.breadcrumb{
+    background-color: initial !important;
+    padding-bottom: 0;
+}
+.breadcrumb-item.active{
+    color: black;
+    font-weight: bold;
+}
+.breadcrumb-item a{
+    color: var(--font-color-bg) !important;
+}
+/* breadcrumb */
 
 /* paging table */
 .page-item.active .page-link{
@@ -158,32 +159,6 @@ a,
 }
 /* paging table */
 
-/* form */
-.form-check input.form-check-input[type=checkbox]{
-    height: 20px;
-    width: 20px;
-    border-radius: 3px;
-    -webkit-appearance:none;
-    background-color: var(--outline-border);
-}
-.form-check input.form-check-input[type=checkbox]:checked{
-    border-radius: 3px;
-    background:url(../img/icon/checked.png) no-repeat;
-    background-size: 15px;
-    background-position: 35% 3px;
-    background-color: var(--sidebar-active);
-}
-.form-check input.form-check-input[type=radio]{
-    height: 20px;
-    width: 20px;
-    border-radius: 3px;
-    accent-color:green;
-}
-.form-check label.form-check-label{
-    margin-top: 3px;
-    margin-left: 10px;
-}
-/* form */
 /* Ubah warna background & text saat hover */
 .tempus-dominus-widget .time-container .picker .list .list-item.active,
 .tempus-dominus-widget .time-container .picker .list .list-item:hover {
@@ -223,3 +198,50 @@ a,
     border-color: var(--primary) !important;
     background-color: var(--success);
 }
+
+
+/* input form */
+
+table.table-bordered td input[type=checkbox],
+table.table-bordered th input[type=checkbox]{
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    -webkit-appearance:none;
+    background-color: var(--sidebar-active);
+}
+table.table-bordered td input[type=checkbox]:checked,
+table.table-bordered th input[type=checkbox]:checked{
+    border-radius: 3px;
+    background:url(../img/icon/checked.png) no-repeat;
+    background-size: 15px;
+    background-position: 35% 3px;
+    background-color: var(--sidebar-active);
+}
+
+.form-check input.form-check-input[type=checkbox]{
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    -webkit-appearance:none;
+    background-color: var(--sidebar-active);
+}
+.form-check input.form-check-input[type=checkbox]:checked{
+    border-radius: 3px;
+    background:url(../img/icon/checked.png) no-repeat;
+    background-size: 15px;
+    background-position: 35% 3px;
+    background-color: var(--sidebar-active);
+}
+.form-check input.form-check-input[type=radio]{
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    accent-color:green;
+}
+.form-check label.form-check-label{
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
+/* input form */

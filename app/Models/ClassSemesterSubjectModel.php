@@ -44,4 +44,22 @@ class ClassSemesterSubjectModel extends Model
             ->orderBy('subject.name')
             ->findAll();
     }
+
+    public function getExistingSubjectsById($csId){
+        return $this
+            ->select('
+                subject_id,
+                active
+            ')
+            ->where('class_semester_id', $csId)
+            ->findAll();
+    }
+
+    public function getActiveExistingSubjectByCsId($csId){
+        return $this
+            ->select('subject_id')
+            ->where('class_semester_id', $csId)
+            ->where('active', 1)
+            ->findAll();
+    }
 }
