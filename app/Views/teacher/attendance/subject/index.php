@@ -20,11 +20,11 @@
                 <table id="subjectTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center boder-radius-left">Mata Pelajaran</th>
+                            <th class="text-center">Mata Pelajaran</th>
                             <th class="text-center" style="width: 150px;">Tahun Pelajaran</th>
                             <th class="text-center" style="width: 150px;">Semester</th>
                             <th class="text-center" style="width: 150px;">Kelas</th>
-                            <th class="text-center boder-radius-right" style="width: 150px;">Aksi</th>
+                            <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

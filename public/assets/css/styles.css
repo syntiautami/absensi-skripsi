@@ -266,7 +266,9 @@ td div.user-pic img{
 table{
     border-bottom:1px solid var(--primary) !important;
     border-radius: 14px 14px 0 0 !important;
-    border:none !important;
+    border-top:hidden !important;
+    border-right:hidden !important;
+    border-left:hidden !important;
 }
 tr.odd td{
     background-color: transparent !important;
@@ -281,5 +283,18 @@ tr.even td{
 }
 .boder-radius-right{
     border-radius: 0 14px 0 0 !important;
+}
+table.table-bordered.dataTable th:last-child, 
+table.table-bordered.dataTable th:last-child, 
+table.table-bordered.dataTable td:last-child, 
+table.table-bordered.dataTable td:last-child{
+    border-right-width: 0px !important;
+}
+table th:first-child {
+    border-top-left-radius: 14px;
+}
+
+table th:last-child {
+    border-top-right-radius: 14px;
 }
 /* datatable style */
