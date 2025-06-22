@@ -18,7 +18,7 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$class_semester['grade_name']} {$class_semester['name']}") ?></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></li>
     </ol>
 <?= $this->endSection() ?>
 
@@ -31,7 +31,7 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <label>Nama</label>
-                            <p class="form-control-plaintext"><?= esc("{$class_semester['grade_name']} {$class_semester['name']}") ?></p>
+                            <p class="form-control-plaintext"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></p>
                         </div>
                     </div>
                 </div>

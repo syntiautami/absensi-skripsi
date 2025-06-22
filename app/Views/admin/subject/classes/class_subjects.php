@@ -15,7 +15,7 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/subject/class/academic-year/'.$academic_year['id'].'/') ?>"><?= $academic_year['name'] ?></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$class_semester['grade_name']} {$class_semester['name']}") ?></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></li>
     </ol>
 <?= $this->endSection() ?>
 

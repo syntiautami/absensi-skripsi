@@ -43,7 +43,7 @@
                     <tbody>
                         <?php $no = 1; foreach ($class_semesters as $item): ?>
                             <tr href="<?= base_url('admin/classes/') ?>">
-                                <td class="text-center"><?= esc("{$item['grade_name']} {$item['name']}") ?></td>
+                                <td class="text-center"><?= esc("{$item['grade_name']} {$item['class_code']}") ?></td>
                                 <td class="text-center">
                                     <?php if (!empty($class_homeroom[$item['id']])): ?>
                                         <?php foreach ($class_homeroom[$item['id']] as $teacher): ?>
