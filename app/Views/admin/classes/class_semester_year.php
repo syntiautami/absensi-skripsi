@@ -23,24 +23,18 @@
                 <table id="semesterTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Semester</th>
-                            <th class="text-center" style="width: 200px;">Sedang Berjalan</th>
+                            <th class="text-center">Kelas</th>
+                            <th class="text-center" style="width: 200px;">Wali Kelas</th>
                             <th class="text-center" style="width: 100px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; foreach ($semesters as $item): ?>
+                        <?php $no = 1; foreach ($class_semester_years as $class_semester_year): ?>
                         <tr href="<?= base_url('admin/classes/') ?>">
-                            <td class="text-center"><?= esc($item['name']) ?></td>
+                            <td class="text-left"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></td>
+                            <td class="text-center"></td>
                             <td class="text-center">
-                                <?php if ($item['in_session']): ?>
-                                    <i class="fas fa-check text-success"></i>
-                                <?php else: ?>
-                                    <i class="fas fa-times text-danger"></i>
-                                <?php endif; ?>
-                            </td>
-                            <td class="text-center">
-                                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$item['id'].'/class/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                             </td>
                         </tr>
                         <?php endforeach ?>

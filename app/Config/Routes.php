@@ -57,7 +57,7 @@ $routes->group('admin/classes', ['filter' => 'auth'], function($routes) {
     $routes->get('academic-year/(:num)/', 'Admin\Classes\Main::class_academic_year/$1');
 
     // Class Semester
-    $routes->group('academic-year/(:num)/semester/(:num)/class', function($routes) {
+    $routes->group('academic-year/(:num)/class_semester_year/(:num)/', function($routes) {
         $routes->get('/', 'Admin\Classes\ClassSemester::index/$1/$2');
         $routes->match(['get', 'post'], 'create/', 'Admin\Classes\ClassSemester::create/$1/$2');
         

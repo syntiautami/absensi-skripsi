@@ -208,7 +208,7 @@ class Main extends BaseController
                 try{
                     send_email([
                         'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
-                        'kelas' => $studentData['grade_name'].' '.$studentData['code'],
+                        'kelas' => $studentData['grade_name'].' '.$studentData['class_code'],
                         'parent_email' => $studentProfile['parent_email'],
                         'time' => date('H:i:s',strtotime($studentTappingTime)),
                         'status' => $status
@@ -223,7 +223,7 @@ class Main extends BaseController
                 'data' => [
                     'id' => $studentData['id'],
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
-                    'kelas' => $studentData['grade_name'].' '.$studentData['code'],
+                    'kelas' => $studentData['grade_name'].' '.$studentData['class_code'],
                     'img' => base_url(($studentProfile['profile_photo'] ?: 'assets/img/users/default.jpg')),
                     'timestamp' => $studentTappingTime,
                     'time' => date('H:i:s',strtotime($studentTappingTime)),

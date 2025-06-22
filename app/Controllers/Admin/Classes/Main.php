@@ -4,6 +4,7 @@ namespace App\Controllers\Admin\Classes;
 
 use App\Controllers\BaseController;
 use App\Models\AcademicYearModel;
+use App\Models\ClassSemesterYearModel;
 use App\Models\SemesterModel;
 
 class Main extends BaseController
@@ -27,12 +28,13 @@ class Main extends BaseController
         if (!$academic_year) {
             return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
         }
-        $semesterModel = new SemesterModel();
-        $semesters = $semesterModel ->getSemesters_from_academic_year_id($academic_year['id']);
 
-        return view('admin/classes/semesters', [
+        $csyModel = new ClassSemesterYearModel();
+        $csyList = $csyModel-> getClassSemesterYearByAcademicYearId($id);
+
+        return view('admin/classes/class_semester_year', [
             'academic_year' => $academic_year,
-            'semesters' => $semesters,
+            'class_semester_years' => $csyList,
             'viewing' => 'classes',
         ]);
     }

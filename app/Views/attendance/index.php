@@ -42,7 +42,7 @@
                           </div>
                           <div>
                               <strong class="student-name"><?= esc("{$item['first_name']} {$item['last_name']}") ?></strong><br>
-                              <small class="student-class"><?= esc("{$student_data[$item['profile_id']]['grade_name']} {$student_data[$item['profile_id']]['code']}") ?></small><br>
+                              <small class="student-class"><?= esc("{$student_data[$item['profile_id']]['grade_name']} {$student_data[$item['profile_id']]['class_code']}") ?></small><br>
                               <span class="student-time text-success d-flex align-items-center">
                                 <span class="status-box <?= $item['status'] ?> me-2" style="width: 10px; height: 10px; display: inline-block; border-radius: 2px;"></span>
                                 <?= $timeFormatted ?>

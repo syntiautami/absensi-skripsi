@@ -27,4 +27,16 @@ class ClassSemesterYearModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
+    public function getClassSemesterYearByAcademicYearId($id){
+        return $this
+            ->select('
+                class_semester_year.id,
+                grade.name as grade_name,
+                class_semester_year.code as class_code,
+            ')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
+            ->where('academic_year_id', $id)
+            ->orderBy('code')
+            ->findAll();
+    }
 }
