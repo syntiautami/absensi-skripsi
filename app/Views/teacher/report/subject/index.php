@@ -36,7 +36,7 @@
                                 <td class="text-center"><?= esc("Semester {$teacher_class_semester_subject['semester_name']} {$teacher_class_semester_subject['academic_year_name']}") ?></td>
                                 <td class="text-center"><?= esc("{$teacher_class_semester_subject['grade_name']} {$teacher_class_semester_subject['class_code']}") ?></td>
                                 <td class="text-center">
-                                    <a href="<?= base_url('teacher/report/attendance/subject'.$teacher_class_semester_subject['css_id']. '/download/') ?>" class="btn btn-primary btn-sm">Unduh</a>
+                                    <a href="<?= base_url('teacher/report/attendance/subject/'.$teacher_class_semester_subject['css_id']. '/download/') ?>" class="btn btn-primary btn-sm">Unduh</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

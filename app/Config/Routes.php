@@ -129,5 +129,5 @@ $routes->group('teacher', ['filter' => 'auth'], function($routes) {
     // laporan absensi subject
     $routes->get('report/attendance/subject/', 'Teacher\Report\Subject::index');
     $routes->get('report/attendance/subject/(:num)/', 'Teacher\Report\Subject::subjects/$1');
-    $routes->get('report/attendance/subject/(:num)/download', 'Teacher\Report\Subject::exportData/$1');
+    $routes->get('report/attendance/subject/(:num)/download', 'Attendance\Report::attendance_subject/$1');
 });
