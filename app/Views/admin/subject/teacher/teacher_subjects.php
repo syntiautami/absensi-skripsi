@@ -46,7 +46,7 @@
                                     $exsist_subjects = $existing_teacher_subjects[$teacher['id']] ?? [];
                                     foreach ($subjects_data as $key => $subject) : ?>
                                         <td class="text-center">
-                                            <input type="checkbox" class="input-subject" name="teachers[<?=$teacher['id']?>]" value="<?= $subject['id'] ?>" <?= in_array($subject['id'], $exsist_subjects) ? 'checked' : '' ?> >
+                                            <input type="checkbox" class="input-subject" name="teachers[<?=$teacher['id']?>][]" value="<?= $subject['id'] ?>" <?= in_array($subject['id'], $exsist_subjects) ? 'checked' : '' ?> >
                                         </td>
                                     <?php endforeach ?>
                                 </tr>

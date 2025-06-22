@@ -105,7 +105,7 @@ class Teacher extends BaseController
 
         if ($this->request->getMethod() == 'POST'){
             $data = $this->request->getPost();
-            
+
             $teachersSubjectData = $data['teachers'] ?? [];
 
             $csModel = new ClassSemesterModel();
@@ -117,36 +117,37 @@ class Teacher extends BaseController
             $userId = session()->get('user')['id'];
             if (!empty($teachersSubjectData)) {
                 $checkedDataTeacherClassSemesterSubject = [];
-                foreach ($teachersSubjectData as $teacherId => $subjectId) {
-                    $existingSubjects = $existing_teacher_subjects[$teacherId] ?? [];
+                foreach ($teachersSubjectData as $teacherId => $subjectIds) {
+                    foreach ($subjectIds as $subjectId) {
+                        $existingSubjects = $existing_teacher_subjects[$teacherId] ?? [];
+                        if (!isset($checkedDataTeacherClassSemesterSubject[$teacherId])) {
+                            $checkedDataTeacherClassSemesterSubject[$teacherId] = [];
+                        }
+                        foreach ($class_semesters as $class_semester) {
+                            $class_semester_id = $class_semester['id'];
+                            
+                            // Ambil class_semester_subject_id dari mapping
+                            if (isset($classSemesterSubjectMapping[$class_semester_id][$subjectId])) {
+                                $classSemesterSubjectId = $classSemesterSubjectMapping[$class_semester_id][$subjectId];
 
-                    if (!isset($checkedDataTeacherClassSemesterSubject[$teacherId])) {
-                        $checkedDataTeacherClassSemesterSubject[$teacherId] = [];
-                    }
-                    foreach ($class_semesters as $class_semester) {
-                        $class_semester_id = $class_semester['id'];
-                        
-                        // Ambil class_semester_subject_id dari mapping
-                        if (isset($classSemesterSubjectMapping[$class_semester_id][$subjectId])) {
-                            $classSemesterSubjectId = $classSemesterSubjectMapping[$class_semester_id][$subjectId];
-
-                            $checkedDataTeacherClassSemesterSubject[$teacherId][] = $classSemesterSubjectId;
-                            // Cek apakah sudah ada di table
-                            $existing = in_array($classSemesterSubjectId, $existingSubjects);
-                            if ($existing) {
-                                // Kalau ada → update
-                                $updateBatch[] = [
-                                    'id'               => $existing['id'],
-                                    'active'           => 1,
-                                ];
-                            } else {
-                                // Kalau belum ada → insert
-                                $insertBatch[] = [
-                                    'teacher_id'                 => $teacherId,
-                                    'class_semester_subject_id'  => $classSemesterSubjectId,
-                                    'active'                     => 1,
-                                    'created_by_id'              => $userId,
-                                ];
+                                $checkedDataTeacherClassSemesterSubject[$teacherId][] = $classSemesterSubjectId;
+                                // Cek apakah sudah ada di table
+                                $existing = in_array($classSemesterSubjectId, $existingSubjects);
+                                if ($existing) {
+                                    // Kalau ada → update
+                                    $updateBatch[] = [
+                                        'id'               => $existing['id'],
+                                        'active'           => 1,
+                                    ];
+                                } else {
+                                    // Kalau belum ada → insert
+                                    $insertBatch[] = [
+                                        'teacher_id'                 => $teacherId,
+                                        'class_semester_subject_id'  => $classSemesterSubjectId,
+                                        'active'                     => 1,
+                                        'created_by_id'              => $userId,
+                                    ];
+                                }
                             }
                         }
                     }
