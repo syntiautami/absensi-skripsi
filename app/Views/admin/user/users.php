@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">Nama</th>
-                            <th class="text-center" style="width: 300px;">Username</th>
+                            <th class="text-center" style="width: 300px;">Nama Pengguna</th>
                             <th class="text-center" style="width: 150px;">Kelas</th>
                             <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>

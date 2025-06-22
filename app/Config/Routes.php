@@ -87,8 +87,8 @@ $routes->group('admin/subject', ['filter' => 'auth'], function($routes) {
     
     // teacher
     $routes->get('teacher/', 'Admin\Subject\Teacher::index');
-    $routes->get('teacher/academic-year/(:num)/', 'Admin\Subject\Teacher::teachers/$1');
-    $routes->match(['get','post'], 'teacher/academic-year/(:num)/user/(:num)/', 'Admin\Subject\Teacher::teacher_subjects/$1/$2');
+    $routes->get('teacher/academic-year/(:num)/', 'Admin\Subject\Teacher::classes/$1');
+    $routes->match(['get','post'], 'teacher/academic-year/(:num)/class_semester_year/(:num)/', 'Admin\Subject\Teacher::teacher_subjects/$1/$2');
 });
 
 // admin report attendance

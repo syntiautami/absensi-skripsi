@@ -23,16 +23,16 @@
                 <table id="teacherTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Nama</th>
+                            <th class="text-center">Kelas</th>
                             <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; foreach ($teachers as $item): ?>
+                        <?php $no = 1; foreach ($class_semester_years as $class_semester_year): ?>
                         <tr>
-                            <td><?= esc("{$item['first_name']} {$item['last_name']}") ?></td>
+                            <td class="text-center"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></td>
                             <td class="text-center">
-                                <a href="<?= base_url('admin/subject/teacher/academic-year/'.$academic_year['id'].'/user/'.$item['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                <a href="<?= base_url('admin/subject/teacher/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                             </td>
                         </tr>
                         <?php endforeach ?>
@@ -51,6 +51,8 @@
             "responsive": true,
             "lengthChange" : false,
             "info" : false,
+            searching: false,
+            paging: false
         });
     });
 </script>

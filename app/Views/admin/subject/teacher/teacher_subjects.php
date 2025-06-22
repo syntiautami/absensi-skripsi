@@ -13,39 +13,49 @@
             <a href="<?= base_url('admin/subject/teacher/') ?>">Mata Pelajaran Guru</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/subject/teacher/') ?>"><?= $academic_year['name'] ?></a>
+            <a href="<?= base_url('admin/subject/teacher/academic-year/'.$academic_year['id'].'/') ?>"><?= $academic_year['name'] ?></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$teacher['first_name']} {$teacher['last_name']}") ?></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></li>
     </ol>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
     <section class="content">
         <div class="card">
-            <div class="card-body">
-                <table id="teacherTable" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Nama</th>
-                            <?php $no = 1; foreach ($classSemesters as $key => $class_semester): ?>
-                                <th class="text-center" style="width: 70px;"><?= $class_semester['kelas'] ?></th>
+            <form action="" method="post">
+                <div class="card-body">
+                    <table id="teacherSubjectTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 300px;">Nama Guru</th>
+                                <?php foreach ($subjects_data as $key => $subject) : ?>
+                                    <th class="text-center" style="width: 100px;"><?= $subject['name'] ?></th>
+                                <?php endforeach ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1; foreach ($teachers as $teacher): ?>
+                                <tr>
+                                    <td class=""><?= esc("{$teacher['first_name']} {$teacher['last_name']}") ?></td>
+                                    
+                                    <?php 
+                                    $exsist_subjects = $existing_teacher_subjects[$teacher['id']] ?? [];
+                                    foreach ($subjects_data as $key => $subject) : ?>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="input-subject" name="teachers[<?=$teacher['id']?>]" value="<?= $subject['id'] ?>" <?= in_array($subject['id'], $exsist_subjects) ? 'checked' : '' ?> >
+                                        </td>
+                                    <?php endforeach ?>
+                                </tr>
                             <?php endforeach ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1; foreach ($subjects as $subject): ?>
-                        <tr>
-                            <td><?= esc($subject['name']) ?></td>
-                            <?php $no = 1; foreach ($classSemesters as $key => $class_semester): ?>
-                                <td class="text-center">
-                                    <input type="checkbox" class="">
-                                </td>
-                            <?php endforeach ?>
-                        </tr>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -54,14 +64,14 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#teacherTable').DataTable({
+        $('#teacherSubjectTable').DataTable({
             "responsive": true,
             "lengthChange" : false,
             "paging" : false,
             "searching" : false,
             "info" : false,
             ordering: false,
-            "autowidth" : true,
+            scrollX: true,
             "fixedHeader" : true,
             "fixedColumns" : {
                 "leftColumns" : 1,
