@@ -24,11 +24,11 @@
     ];
 
 
-    $hariInggris = date('l');
+    $hariInggris = $selected_date->format('l');
     $hari = $hariList[$hariInggris];
-    $tanggal = date('d');
-    $bulan = $bulanList[date('m')];
-    $tahun = date('Y');
+    $tanggal = $selected_date->format('d');
+    $bulan = $bulanList[$selected_date->format('m')];
+    $tahun = $selected_date->format('Y');
 ?>
 <header class="navbar navbar-expand navbar-white navbar-light">
     <div class="d-flex align-items-center p-2 w-100">

@@ -75,7 +75,7 @@
                                                     <div class="col mb-3 day-section" data-day-index="<?= $dayIndex ?>">
                                                         <h5><?= esc($day['name']) ?> <small>(<span class="day-date"><?= $date ?></span>)</small></h5>
                                                         <?php foreach ($day['periods'] as $period): ?>
-                                                            <a href="<?= base_url('attendance/subject/'.$teacher_class_semester_subject['css_id'].'/year/'.date('Y', strtotime($date)).'/month/'.date('m', strtotime($date)).'/day/'.date('d', strtotime($date)).'/period/'.$period['id']) ?>"
+                                                            <a href="<?= base_url('teacher/attendance/subject/'.$period['id'].'/year/'.date('Y', strtotime($date)).'/month/'.date('n', strtotime($date)).'/day/'.date('j', strtotime($date)).'/') ?>"
                                                                 class="btn btn-block btn-primary mb-2 text-left attendance-link" data-period="<?= $period['id'] ?>">
                                                                 <?= esc($period['start_time']) ?> - <?= esc($period['end_time']) ?>
                                                             </a>
@@ -122,12 +122,12 @@
             // Pecah newDate jadi Y M D
             const dateObj = new Date(newDate);
             const year = dateObj.getFullYear();
-            const month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
-            const dayNum = ('0' + dateObj.getDate()).slice(-2);
+            const month = parseInt(('0' + (dateObj.getMonth() + 1)).slice(-2));
+            const dayNum = parseInt(('0' + dateObj.getDate()).slice(-2));
 
             $(this).find('.attendance-link').each(function() {
                 const periodId = $(this).data('period');
-                const newHref = `/attendance/subject/${cssId}/year/${year}/month/${month}/day/${dayNum}/period/${periodId}`;
+                const newHref = "<?= base_url('teacher/attendance/subject/')?>"+`${periodId}/year/${year}/month/${month}/day/${dayNum}/`;
                 $(this).attr('href', newHref);
             });
         });

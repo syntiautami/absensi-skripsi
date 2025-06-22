@@ -25,11 +25,11 @@
     ];
 
 
-    $hariInggris = date('l');
+    $hariInggris = $selected_date->format('l');
     $hari = $hariList[$hariInggris];
-    $tanggal = date('d');
-    $bulan = $bulanList[date('m')];
-    $tahun = date('Y');
+    $tanggal = $selected_date->format('d');
+    $bulan = $bulanList[$selected_date->format('m')];
+    $tahun = $selected_date->format('Y');
 ?>
 <?= $this->section('styles') ?>
     <style>
@@ -46,7 +46,12 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('teacher/') ?>">Sistem Absensi</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Absensi</li>
+        <li class="breadcrumb-item">
+            <a href="<?= base_url('teacher/attendance/subject/') ?>">Absensi Mata Pelajaran</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <?= esc("{$class_timetable_period['subject_name']} - {$class_timetable_period['grade_name']} {$class_timetable_period['class_code']}") ?>
+        </li>
     </ol>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
@@ -55,16 +60,6 @@
         <div class="card">
             <form action="" method="post">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <select class="form-control" name="class" id="" disabled>
-                                    <option value=""><?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
                     <div class="row">
                         <?php $no = 1; foreach ($student_class_semesters as $scs): ?>
                             <?php

@@ -4,8 +4,11 @@ namespace App\Controllers\Teacher\Attendance;
 
 use App\Controllers\Admin\AcademicYear\Semester;
 use App\Controllers\BaseController;
+use App\Models\AttendanceSubjectModel;
+use App\Models\ClassSemesterSubjectModel;
 use App\Models\ClassTimetablePeriodModel;
 use App\Models\SemesterModel;
+use App\Models\StudentClassSemesterModel;
 use App\Models\TeacherClassSemesterSubjectModel;
 use App\Models\TeacherModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -18,57 +21,63 @@ class Subject extends BaseController
         $endDate = new DateTime($semesterEndDate);
 
         $diffDays = $startDate->diff($endDate)->days;
-        return ceil($diffDays / 7); // total weeks
+
+        return ceil(($diffDays + 1) / 7); // +1 biar hari pertama dihitung
     }
 
     function getCurrentWeek($semesterStartDate, $semesterEndDate) {
-        $startDate = new DateTime($semesterStartDate);
-        $today = new DateTime();
+        $datesPerWeek = $this->getDatesPerWeek($semesterStartDate, $semesterEndDate);
+        $today = (new DateTime())->format('Y-m-d');
 
-        if ($today < $startDate) {
-            return 1;
+        foreach ($datesPerWeek as $weekNumber => $weekDates) {
+            if (in_array($today, $weekDates)) {
+                return $weekNumber;
+            }
         }
 
-        if ($today > new DateTime($semesterEndDate)) {
-            return $this->getSemesterWeeks($semesterStartDate, $semesterEndDate);
-        }
-
-        $diffDays = $startDate->diff($today)->days;
-        return floor($diffDays / 7) + 1;
+        // fallback kalau sudah lewat semester
+        return count($datesPerWeek);
     }
 
     function getDatesPerWeek($semesterStartDate, $semesterEndDate) {
-        $weeks = $this->getSemesterWeeks($semesterStartDate, $semesterEndDate);
         $startDate = new DateTime($semesterStartDate);
+        $endDate = new DateTime($semesterEndDate);
 
         $dates = [];
-        for ($w = 1; $w <= $weeks; $w++) {
+        $weekNum = 1;
+
+        $currentDate = clone $startDate;
+
+        while ($currentDate <= $endDate) {
             $weekDates = [];
 
-            // Set to Monday of current week
-            $weekStart = clone $startDate;
-            $weekStart->modify('Monday this week');
-            $weekStart->modify('+' . (($w - 1) * 7) . ' days');
-
-            for ($i = 0; $i < 7; $i++) {
-                $date = clone $weekStart;
-                $date->modify("+{$i} days");
-
-                // Jika tanggal melewati semesterEndDate → stop
-                if ($date > new DateTime($semesterEndDate)) {
-                    break;
+            // week pertama → dari startDate sampai Sabtu minggu itu
+            if ($weekNum == 1) {
+                while ($currentDate->format('N') <= 6 && $currentDate <= $endDate) { // N=1..7 (Mon=1, Sun=7)
+                    $weekDates[] = $currentDate->format('Y-m-d');
+                    $currentDate->modify('+1 day');
+                }
+            } else {
+                // week berikutnya → Minggu ke Sabtu
+                // Geser ke Minggu
+                if ($currentDate->format('N') != 7) {
+                    $currentDate->modify('next sunday');
                 }
 
-                $weekDates[] = $date->format('Y-m-d');
+                for ($i = 0; $i < 7 && $currentDate <= $endDate; $i++) {
+                    $weekDates[] = $currentDate->format('Y-m-d');
+                    $currentDate->modify('+1 day');
+                }
             }
 
-            $dates[$w] = $weekDates;
+            $dates[$weekNum] = $weekDates;
+            $weekNum++;
         }
 
         return $dates;
     }
 
-    function getMappingWeekInfo($startDate, $endDate){
+    function getMappingWeekInfo($startDate, $endDate) {
         $weeks = $this->getSemesterWeeks($startDate, $endDate);
         $currentWeek = $this->getCurrentWeek($startDate, $endDate);
         $datesPerWeek = $this->getDatesPerWeek($startDate, $endDate);
@@ -104,7 +113,7 @@ class Subject extends BaseController
                 $startTime = $ctp['start_time'];
                 $endTime = $ctp['end_time'];
                 $day = $ctp['day'];
-                $tpId = $ctp['timetable_period_id'];
+                $ctpId = $ctp['ctp_id'];
     
                 if (!isset($ctpData[$cssId])){
                     $ctpData[$cssId] = [];
@@ -118,7 +127,7 @@ class Subject extends BaseController
     
                 }
                 $ctpData[$cssId][$day]['periods'][] = [
-                    'id' => $tpId,
+                    'id' => $ctpId,
                     'start_time' => $startTime,
                     'end_time' => $endTime,
                 ];
@@ -147,7 +156,116 @@ class Subject extends BaseController
         ]);
     }
 
-    public function class_subject_attendance($id, $day, $month, $year, $period){
-        // class semester subject id
+    public function class_subject_attendance($ctpId, $year, $month, $day){
+        $ctpModel = new ClassTimetablePeriodModel();
+        $class_timetable_period = $ctpModel->getById($ctpId);
+
+        if (!$class_timetable_period){
+            return redirect()->to(base_url('teacher/attendance/subject/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        
+        $scsModel = new StudentClassSemesterModel();
+        $students = $scsModel -> getByClassSemesterId($class_timetable_period['cs_id']);
+        $scsIds = array_column($students,'id');
+        
+        $date = new DateTime();
+        $date->setDate($year, $month, $day);
+        
+        $selectedDate = $date;
+        $tappingDate = $date->format('Y-m-d');
+        
+        $attSubjectModel = new AttendanceSubjectModel();
+        $existing = $attSubjectModel-> getAttendanceSubjectExisting($scsIds, $ctpId ,$tappingDate);
+        $studentAttendance = [];
+        
+        if (!empty($existing)) {
+            foreach ($existing as $row) {
+                $typeStr = '';
+                switch ($row['attendance_type_id']) {
+                    case 1:
+                        $typeStr = 'absent';
+                        break;
+                    case 2:
+                        $typeStr = 'sick';
+                        break;
+                    case 3:
+                        $typeStr = 'excused';
+                        break;
+                    case 4:
+                        $typeStr = 'late';
+                        break;
+                }
+                $studentAttendance[$row['student_class_semester_id']] = $typeStr;
+            }
+        }
+
+        if ($this->request->getMethod() == 'POST') {
+            $existingIds = !empty($existing) ? array_column($existing, 'student_class_semester_id') : [];
+            $existingMap = [];
+            if (!empty($existing)) {
+                foreach ($existing as $row) {
+                    $existingMap[$row['student_class_semester_id']] = $row['id'];
+                }
+            }
+
+            $studentAttendanceList = $this->request->getPost('absence_type');
+            $result = array_filter($studentAttendanceList, function($value) {
+                return $value !== '';
+            });
+
+            $dataInsert = [];
+            $dataUpdate = [];
+            $deleteIds = [];
+            foreach ($result as $key => $value) {
+                if ($value == 'present') {
+                    // kalau ada existing dan dia 'present' → delete
+                    if (in_array($key, $existingIds)) {
+                        $deleteIds[] = $existingMap[$key];
+                    }
+                    continue; // lanjut next loop
+                }
+                $attendanceTypeId = ($value == 'absent') ? 1 : (($value == 'sick') ? 2 : (($value == 'excused') ? 3 : 4));
+                $row = [
+                    'student_class_semester_id' => $key,
+                    'class_timetable_period_id' => $ctpId,
+                    'attendance_type_id' => $attendanceTypeId,
+                    'date' => $tappingDate,
+                ];
+                
+                if (in_array($key, $existingIds)) {
+                    // Untuk update
+                    $row['updated_by_id'] = session()->get('user')['id'];
+                    $row['id'] = $existingMap[$key];
+                    $dataUpdate[] = $row;
+                } else {
+                    // Untuk insert
+                    $row['created_by_id'] = session()->get('user')['id'];
+                    $dataInsert[] = $row;
+                }
+            }
+            if (!empty($dataUpdate)) {
+                $attSubjectModel->updateBatch($dataUpdate, 'id');
+            }
+
+            if (!empty($dataInsert)) {
+                $attSubjectModel->insertBatch($dataInsert);
+            }
+
+            if (!empty($deleteIds)) {
+                $attSubjectModel->whereIn('id', $deleteIds)->delete();
+            }
+
+            return redirect()->to(base_url('teacher/attendance/subject/'.$ctpId.'/year/'.$year.'/month/'.$month.'/day/'.$day.'/'))->with('success', 'Data berhasil diupdate.');
+        }
+
+        return view('teacher/attendance/subject/attendance_subject', [
+            'class_timetable_period' => $class_timetable_period,
+            'date' => $tappingDate,
+            'selected_date' => $selectedDate,
+            'student_class_semesters' => $students,
+            'studentAttendance' => $studentAttendance,
+            'viewing' => 'attendance'
+        ]);
     }
 }

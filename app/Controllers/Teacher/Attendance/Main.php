@@ -6,12 +6,15 @@ use App\Controllers\BaseController;
 use App\Models\AttendanceModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\StudentClassSemesterModel;
+use DateTime;
+use DateTimeZone;
 
 class Main extends BaseController
 {
     public function index()
     {
 
+        $today = new DateTime();
         $dateToday = date('Y-m-d');
         $walas = session()->get('homeroom_teacher');
         if (empty($walas)) {
@@ -108,6 +111,7 @@ class Main extends BaseController
 
         return view('teacher/attendance/index', [
             'date' => $dateToday,
+            'selected_date' => $today,
             'student_class_semesters' => $students,
             'studentAttendance' => $studentAttendance,
             'viewing' => 'attendance'

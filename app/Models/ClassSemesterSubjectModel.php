@@ -82,4 +82,21 @@ class ClassSemesterSubjectModel extends Model
             ->where('class_semester_subject.active', 1)
             ->findAll();
     }
+
+    public function getById($id){
+        return $this
+            ->select('
+                subject_id,
+                subject.name as subject_name,
+                class_semester_subject.id as css_id,
+                class_semester.class_semester_year_id,
+                class_semester.id as cs_id
+            ')
+            ->join('class_semester', 'class_semester.id = class_semester_subject.class_semester_id', 'left')
+            ->join('subject','subject.id = class_semester_subject.subject_id')
+            ->where('id', $id)
+            ->where('class_semester.active', 1)
+            ->where('class_semester_subject.active', 1)
+            ->findAll();
+    }
 }
