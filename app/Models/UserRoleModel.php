@@ -38,6 +38,7 @@ class UserRoleModel extends Model
             ->select('
                 user.id as user_id,
                 profile.id as profile_id,
+                profile.profile_photo,
                 user.first_name,
                 user.last_name,
                 user.username,

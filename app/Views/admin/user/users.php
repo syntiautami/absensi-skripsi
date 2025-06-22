@@ -32,7 +32,12 @@
                     <tbody>
                         <?php $no = 1; foreach ($user_roles as $item): ?>
                         <tr>
-                            <td><?= esc("{$item['first_name']} {$item['last_name']}") ?></td>
+                            <td>
+                                <div class="user-pic">
+                                    <img src="<?= base_url($item['profile_photo'] ?? 'assets/img/users/default.jpg') ?>" alt="<?= esc("{$item['first_name']} {$item['last_name']}") ?>">
+                                    <span><?= esc("{$item['first_name']} {$item['last_name']}") ?></span>
+                                </div>
+                            </td>
                             <td><?= esc($item['username']) ?></td>
                             <td class="text-center">-</td>
                             <td class="text-center">

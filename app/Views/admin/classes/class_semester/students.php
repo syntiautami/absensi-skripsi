@@ -41,7 +41,12 @@
                             <?php $no = 1; foreach ($student_data as $key => $student): ?>
                             <tr href="<?= base_url('admin/classes/') ?>">
                                 <td class="text-center"><?= $no++ ?></td>
-                                <td class=""><?= esc($student['name']) ?></td>
+                                <td class="">
+                                    <div class="user-pic">
+                                        <img src="<?= base_url($student['profile_photo'] ?? 'assets/img/users/default.jpg') ?>" alt="<?= esc($student['name']) ?>">
+                                        <span><?= esc($student['name']) ?></span>
+                                    </div>
+                                </td>
                                 <td class="text-center">
                                     <input type="text" name="barcode_number[<?= $student['profile_id'] ?>]" 
                                     value="<?= esc($student['barcode_number'] ?? '') ?>"

@@ -23,20 +23,40 @@
                 <table id="semesterTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Kelas</th>
-                            <th class="text-center" style="width: 200px;">Wali Kelas</th>
-                            <th class="text-center" style="width: 100px;">Aksi</th>
+                            <th class="text-center" rowspan="2">Kelas</th>
+                            <th class="text-center" rowspan="2" style="width: 300px;">Wali Kelas</th>
+                            <th class="text-center" colspan="2" style="width: 200px;">Total Siswa</th>
+                            <th class="text-center" rowspan="2" style="width: 100px;">Aksi</th>
+                        </tr>
+                        <tr>
+                            <?php foreach ($semesters as $semester): ?>
+                                <th class="text-center" style="width: 100px;">Semester <?= $semester['name'] ?></th>
+                            <?php endforeach ?>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 1; foreach ($class_semester_years as $class_semester_year): ?>
-                        <tr href="<?= base_url('admin/classes/') ?>">
-                            <td class="text-left"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></td>
-                            <td class="text-center"></td>
-                            <td class="text-center">
-                                <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
-                            </td>
-                        </tr>
+                            <tr href="<?= base_url('admin/classes/') ?>">
+                                <td class="text-center"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></td>
+                                <td class="">
+                                    <?php if (isset($form_teacher_data[$class_semester_year['id']])) : ?>
+                                        <?php foreach ($form_teacher_data[$class_semester_year['id']] as $teacher): ?>
+                                            <div class="user-pic">
+                                                <img src="<?= base_url($teacher['profile_photo'] ?? 'assets/img/users/default.jpg') ?>" alt="<?= esc($teacher['name']) ?>">
+                                                <span><?= esc($teacher['name']) ?></span>
+                                            </div>
+                                        <?php endforeach ?>
+                                    <?php endif ?>
+                                </td>
+                                <?php foreach ($semesters as $semester): ?>
+                                    <td class="text-center">
+                                        <?= $student_data[$class_semester_year['id']][$semester['id']] ?? 0 ?>
+                                    </td>
+                                <?php endforeach ?>
+                                <td class="text-center">
+                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                </td>
+                            </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>

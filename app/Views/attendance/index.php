@@ -60,7 +60,7 @@
             <div class="student-container">
               <div class="card flex-grow-1 p-4 text-center mb-0" style="border-radius: 7px 7px 0 0;">
                 <div class="text-center">
-                  <img src="<?= base_url('/default.jpg') ?>" class="rounded-circle mb-3" height="420" width="420">
+                  <img src="<?= base_url('assets/img/users/default.jpg') ?>" class="rounded-circle mb-3" height="420" width="420">
                 </div>
                 <h3 class="student-name">Nama</h3>
                 <h5 class="text-muted student-class">Kelas</h5>

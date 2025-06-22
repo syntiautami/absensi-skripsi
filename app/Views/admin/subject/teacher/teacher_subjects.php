@@ -36,8 +36,12 @@
                         <tbody>
                             <?php $no = 1; foreach ($teachers as $teacher): ?>
                                 <tr>
-                                    <td class=""><?= esc("{$teacher['first_name']} {$teacher['last_name']}") ?></td>
-                                    
+                                    <td class="">
+                                        <div class="user-pic">
+                                            <img src="<?= base_url($teacher['profile_photo'] ?? 'assets/img/users/default.jpg') ?>" alt="<?= esc("{$teacher['first_name']} {$teacher['last_name']}") ?>">
+                                            <span><?= esc("{$teacher['first_name']} {$teacher['last_name']}") ?></span>
+                                        </div>
+                                    </td>
                                     <?php 
                                     $exsist_subjects = $existing_teacher_subjects[$teacher['id']] ?? [];
                                     foreach ($subjects_data as $key => $subject) : ?>

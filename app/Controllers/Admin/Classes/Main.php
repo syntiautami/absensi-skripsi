@@ -36,9 +36,54 @@ class Main extends BaseController
         $csyModel = new ClassSemesterYearModel();
         $csyList = $csyModel-> getClassSemesterYearByAcademicYearId($id);
 
+        $csyIds = array_column($csyList, 'id');
+        $tcssHomeroomModel = new TeacherClassSemesterHomeroomModel();
+        $form_teachers = $tcssHomeroomModel -> getFromCsyIds($csyIds);
+
+        $form_teacher_data = [];
+        foreach ($form_teachers as $form_teacher) {
+            $csyId = $form_teacher['class_semester_year_id'];
+            $teacherId = $form_teacher['teacher_id'];
+
+            if (!isset($form_teacher_data[$csyId])){
+                $form_teacher_data[$csyId] = [];
+            }
+
+            if (!isset($form_teacher_data[$csyId][$teacherId])){
+                $form_teacher_data[$csyId][$teacherId] = [
+                    'name' => $form_teacher['first_name'].' '.$form_teacher['last_name'],
+                    'profile_photo' => $form_teacher['profile_photo']
+                ];
+            }
+        }
+
+        $csModel = new ClassSemesterModel();
+        $class_semesters = $csModel -> getByCsyId($csyIds);
+        
+        $studentTotalData = [];
+        foreach ($class_semesters as $class_semester) {
+            $csyId = $class_semester['class_semester_year_id'];
+            $semesterId = $class_semester['semester_id'];
+
+            if (!isset($studentTotalData[$csyId])){
+                $studentTotalData[$csyId] = [];
+            }
+            
+            if (!isset($studentTotalData[$csyId][$semesterId])){
+                $studentTotalData[$csyId][$semesterId] = $class_semester['total_students'];
+            }
+        }
+
+        $semesterModel = new SemesterModel();
+        $semesters = $semesterModel->getSemesters_from_academic_year_id($id);
+
         return view('admin/classes/class_semester_year', [
             'academic_year' => $academic_year,
+            'class_semesters' => $class_semesters,
             'class_semester_years' => $csyList,
+            'student_data' => $studentTotalData,
+            'form_teacher_data' => $form_teacher_data,
+            'semesters' => $semesters,
             'viewing' => 'classes',
         ]);
     }

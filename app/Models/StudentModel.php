@@ -34,6 +34,7 @@ class StudentModel extends Model
                 'student.id, 
                 student.profile_id, 
                 profile.user_id,
+                profile.profile_photo, 
                 profile.barcode_number, 
                 user.first_name, 
                 user.last_name'
@@ -59,7 +60,8 @@ class StudentModel extends Model
                 'student.id, 
                 student.profile_id, 
                 profile.user_id,
-                profile.barcode_number, 
+                profile.barcode_number,
+                profile.profile_photo,  
                 user.first_name, 
                 user.last_name'
             )

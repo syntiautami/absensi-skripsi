@@ -59,6 +59,7 @@ class TeacherClassSemesterHomeroomModel extends Model
             ])
             ->first();
     }
+    
     public function getFromClassSemesterId($id)
     {
         return $this->select('
@@ -76,6 +77,7 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->where('class_semester_id',$id)
             ->findAll();
     }
+
     public function getFromClassSemesterIdFirst($id)
     {
         return $this->select('
@@ -104,6 +106,7 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->where('class_semester_id',$id)
             ->first();
     }
+
     public function getFromClassSemesterIds($id)
     {
         return $this->select('
@@ -119,6 +122,25 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->join('profile', 'profile.id = teacher.profile_id', 'left')
             ->join('user', 'user.id = profile.user_id', 'left')
             ->whereIn('class_semester_id',$id)
+            ->findAll();
+    }
+
+    public function getFromCsyIds($ids)
+    {
+        return $this->select('
+                teacher_class_semester_homeroom.id,
+                teacher_class_semester_homeroom.class_semester_id,
+                teacher_class_semester_homeroom.teacher_id,
+                class_semester.class_semester_year_id,
+                user.first_name,
+                user.last_name,
+                profile.profile_photo,
+            ')
+            ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
+            ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')
+            ->join('profile', 'profile.id = teacher.profile_id', 'left')
+            ->join('user', 'user.id = profile.user_id', 'left')
+            ->whereIn('class_semester.class_semester_year_id',$ids)
             ->findAll();
     }
 

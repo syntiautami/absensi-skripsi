@@ -32,6 +32,7 @@ class TeacherModel extends Model
                 teacher.id,
                 teacher.profile_id,
                 profile.user_id,
+                profile.profile_photo,
                 user.id as user_id,
                 user.first_name,
                 user.last_name
