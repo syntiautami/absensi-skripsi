@@ -35,7 +35,7 @@ class ClassSemesterSubjectModel extends Model
     public function getAllSubjectByClassSemesterId($id){
         return $this
             ->select('
-                subject.id,
+                class_semester_subject.id,
                 subject.name
             ')
             ->join('subject', 'subject.id = class_semester_subject.subject_id')

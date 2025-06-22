@@ -41,4 +41,15 @@ class ClassTimetablePeriodModel extends Model
             ->where('active',1)
             ->findAll();
     }
+
+    public function getActiveByCssIds($ids){
+        return $this
+            ->select('
+                class_semester_subject_id,
+                timetable_period_id,
+            ')
+            ->whereIn('class_semester_subject_id', $ids)
+            ->where('active',1)
+            ->findAll();
+    }
 }

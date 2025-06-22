@@ -61,4 +61,22 @@ class TeacherModel extends Model
             -> where('teacher.id', $id)
             -> first();
     }
+
+    public function getDataByProfileId($id){
+        return $this
+            ->select('
+                teacher.id,
+                teacher.profile_id,
+                profile.user_id,
+                user.id as user_id,
+                user.first_name,
+                user.last_name
+            ')
+            -> join('profile', 'profile.id = teacher.profile_id', 'left')
+            -> join('user', 'user.id = profile.user_id', 'left')
+            -> orderBy('user.first_name','user.last_name')
+            -> where('active', 1)
+            -> where('teacher.profile_id', $id)
+            -> first();
+    }
 }

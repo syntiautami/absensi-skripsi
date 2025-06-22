@@ -106,7 +106,6 @@ class Timetable extends BaseController
         if ($this->request->getMethod() == 'POST'){
             $data = $this->request->getPost('period');
             
-            
             $today = date('Y-m-d');
             $existingClassTimetablePeriod = $classTimetablePeriodModel -> getClassTimetableByTimetableIds($timetableIds);
             $existingMap = [];
