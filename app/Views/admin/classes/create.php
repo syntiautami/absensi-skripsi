@@ -10,13 +10,10 @@
             <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/') ?>">Kelas</a>
+            <a href="<?= base_url('admin/classes') ?>">Kelas</a>
         </li>
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Buat Kelas</li>
     </ol>
@@ -41,34 +38,42 @@
                         </div>
                     </div>
                     <div class=" row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Nama</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                <label for="code" class="col-form-label">Nama</label>
+                                <input type="text" class="form-control" id="code" name="code" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="wali-kelas">Wali Kelas</label>
-                                <select name="form_teacher" id="wali-kelas" class="form-control">
-                                    <?php foreach ($teachers as $teacher): ?>
-                                        <option value="<?= $teacher['id'] ?>">
-                                            <?= $teacher['first_name'] ?> <?= $teacher['last_name'] ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
+                        <?php foreach ($semesters as $semester) : ?>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="wali-kelas">Wali Kelas Semester <?= $semester['name'] ?></label>
+                                    <select name="form_teacher[<?= $semester['id'] ?>]" id="wali-kelas" class="form-control">
+                                        <?php foreach ($teachers as $teacher): ?>
+                                            <option value="<?= $teacher['id'] ?>">
+                                                <?= $teacher['first_name'] ?> <?= $teacher['last_name'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        <?php endforeach ?>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
     </section>
 
+<?= $this->endSection() ?>
+<?= $this->section('scripts') ?>
+<script>
+    $(function(){
+        $('form').validate({});
+    })
+</script>
 <?= $this->endSection() ?>

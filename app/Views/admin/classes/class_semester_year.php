@@ -40,6 +40,11 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-end mt-3">
+                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/create/') ?>" class="btn btn-primary">
+                        Buat Kelas
+                    </a>
+                </div>
             </div>
         </div>
     </section>

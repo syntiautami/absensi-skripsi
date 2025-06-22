@@ -63,4 +63,9 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
+<script>
+    $(function(){
+        $('form').validate({});
+    })
+</script>
 <?= $this->endSection() ?>

@@ -43,7 +43,7 @@ class Main extends BaseController
         ]);
     }
 
-    public function create($academic_year_id, $id)
+    public function create($academic_year_id)
     {
         $model = new AcademicYearModel();
         $classSemesterModel = new ClassSemesterModel();
@@ -53,32 +53,41 @@ class Main extends BaseController
         if (!$academic_year) {
             return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
         }
-        $semester = $semesterModel ->getSemesterById($id);
-        if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
-        }
+
+        $semesterModel = new SemesterModel();
+        $semesters = $semesterModel->getSemesters_from_academic_year_id($academic_year_id);
 
         if ($this->request->getMethod() === 'POST'){
             $rules = [
-                'name' => 'required',
+                'code' => 'required',
             ];
             $data = $this->request->getPost();
             if ($this->validate($rules)) {
+
+                $csyModel = new ClassSemesterYearModel();
+                $csyId = $csyModel->insert([
+                    'academic_year_id' => $academic_year_id,
+                    'code' => $data['code'],
+                    'created_by_id' => session()->get('user')['id'],
+                    'grade_id' => $data['grade_id']
+                ]);
+
                 $classSemesterModel = new ClassSemesterModel();
-                $csId = $classSemesterModel-> insert([
-                    'name' => $data['name'],
-                    'grade_id' => $data['grade_id'],
-                    'semester_id' =>$semester['id'],
-                    'created_by_id' => session()->get('user')['id']
-                ]);
-                
-                $homeroomModel = new TeacherClassSemesterHomeroomModel();
-                $homeroomModel -> insert([
-                    'class_semester_id' => $csId,
-                    'teacher_id' => $data['form_teacher'],
-                    'created_by_id' => session()->get('user')['id']
-                ]);
-                return redirect()->to('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/')->with('success', 'Data Kelas berhasil ditambahkan.');
+                foreach ($semesters as $semester) {
+                    $csId = $classSemesterModel-> insert([
+                        'class_semester_year_id' => $csyId,
+                        'semester_id' =>$semester['id'],
+                        'created_by_id' => session()->get('user')['id']
+                    ]);
+                    
+                    $homeroomModel = new TeacherClassSemesterHomeroomModel();
+                    $homeroomModel -> insert([
+                        'class_semester_id' => $csId,
+                        'teacher_id' => $data['form_teacher'],
+                        'created_by_id' => session()->get('user')['id']
+                    ]);
+                }
+                return redirect()->to('admin/classes/academic-year/'.$academic_year['id'].'/')->with('success', 'Data Kelas berhasil ditambahkan.');
             }
         }
 
@@ -86,10 +95,10 @@ class Main extends BaseController
         $grades = $gradeModel -> withSection();
         $teacherModel = new TeacherModel();
         $teachers = $teacherModel -> getAllData();
-        return view('admin/classes/class_semester/create', [
+        return view('admin/classes/create', [
             'academic_year' => $academic_year,
             'grades' => $grades,
-            'semester' => $semester,
+            'semesters' => $semesters,
             'teachers' => $teachers,
             'viewing' => 'classes',
             'viewing_sub' => 'classes',
