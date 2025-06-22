@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\AcademicYearModel;
 use App\Models\ClassSemesterModel;
 use App\Models\GradeModel;
+use App\Models\SemesterModel;
 use App\Models\SubjectModel;
 use App\Models\TeacherClassSemesterSubjectModel;
 use App\Models\TeacherModel;
@@ -53,18 +54,22 @@ class Teacher extends BaseController
         }
 
         $teachercssModel = new TeacherClassSemesterSubjectModel();
+
         $csModel = new ClassSemesterModel();
-
-        $gradeModel = new GradeModel();
-        $grades = $gradeModel-> getAllData();
-
+        $classSemesters = $csModel->getPivotClassSemesterByAcademicYear($academicYearId);
+        
         $subjectModel = new SubjectModel();
         $subjects = $subjectModel-> getAllData();
+
+        $semesterModel = new SemesterModel();
+        $semesters = $semesterModel-> getSemesters_from_academic_year_id($academicYearId);
 
 
         return view('admin/subject/teacher/teacher_subjects', [
             'academic_year' =>$academicYear,
-            'grades' => $grades,
+            'classSemesters' => $classSemesters['tableData'],
+            'semesters' => $classSemesters['semesterList'],
+            'semesters' => $semesters,
             'subjects' => $subjects,
             'teacher' => $teacher,
             'viewing' => 'teacher-subject',

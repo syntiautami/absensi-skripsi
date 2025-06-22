@@ -27,8 +27,8 @@
                     <thead>
                         <tr>
                             <th class="text-center">Nama</th>
-                            <?php $no = 1; foreach ($grades as $grade): ?>
-                                <th class="text-center" style="width: 50px;"><?= $grade['name'] ?></th>
+                            <?php $no = 1; foreach ($classSemesters as $key => $class_semester): ?>
+                                <th class="text-center" style="width: 70px;"><?= $class_semester['kelas'] ?></th>
                             <?php endforeach ?>
                         </tr>
                     </thead>
@@ -36,9 +36,9 @@
                         <?php $no = 1; foreach ($subjects as $subject): ?>
                         <tr>
                             <td><?= esc($subject['name']) ?></td>
-                            <?php $no = 1; foreach ($grades as $grade): ?>
+                            <?php $no = 1; foreach ($classSemesters as $key => $class_semester): ?>
                                 <td class="text-center">
-                                    <input type="checkbox" class="form-control">
+                                    <input type="checkbox" class="">
                                 </td>
                             <?php endforeach ?>
                         </tr>
@@ -60,6 +60,7 @@
             "paging" : false,
             "searching" : false,
             "info" : false,
+            ordering: false,
             "autowidth" : true,
             "fixedHeader" : true,
             "fixedColumns" : {

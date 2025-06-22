@@ -42,13 +42,14 @@ class ClassSemesterModel extends Model
         return $this
             ->select('
                 class_semester.id as cs_id,
-                class_semester.name as class_code,
+                class_semester_year.code as class_code,
                 grade.id as grade_id,
                 grade.name AS grade_name,
                 semester.id AS semester_id,
                 semester.name AS semester_name
             ')
-            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('semester', 'semester.id = class_semester.semester_id', 'left')
             ->where('semester.academic_year_id', $id)
             ->findAll();
@@ -58,8 +59,8 @@ class ClassSemesterModel extends Model
         return $this
             ->select('
                 class_semester.id,
-                class_semester.name,
-                class_semester.grade_id,
+                class_semester_year.code as name,
+                class_semester_year.grade_id,
                 grade.name as grade_name,
                 grade.section_id,
                 section.name as section_name,
@@ -74,16 +75,28 @@ class ClassSemesterModel extends Model
                         student_class_semester.class_semester_id = class_semester.id
                 ) AS total_students
             ')
-            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('section', 'grade.section_id = section.id', 'left')
             ->where('semester_id',$id)->findAll();
     }
     
     public function getClassSemesterById($id){
-        return $this->select('class_semester.id, class_semester.name, class_semester.grace_period, class_semester.clock_in, class_semester.clock_out, class_semester.grade_id, grade.name as grade_name, grade.section_id, section.name as section_name')
-                    ->join('grade', 'grade.id = class_semester.grade_id', 'left')
-                    ->join('section', 'grade.section_id = section.id', 'left')
-                    ->where('class_semester.id',$id)->first();
+        return $this
+            ->select('
+                class_semester.id,
+                class_semester_year.code as name,
+                class_semester.grace_period,
+                class_semester.clock_in,
+                class_semester.clock_out,
+                class_semester_year.grade_id,
+                grade.name as grade_name,
+                grade.section_id, section.name as section_name
+            ')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
+            ->join('section', 'grade.section_id = section.id', 'left')
+            ->where('class_semester.id',$id)->first();
     }
 
     public function getPivotClassSemesterByAcademicYear($id){
@@ -105,6 +118,7 @@ class ClassSemesterModel extends Model
                 $semesterList[] = $row['semester_name'];
             }
         }
+        ksort($tableData);
         return [
             'tableData' => $tableData,
             'semesterList' => $semesterList,
@@ -117,13 +131,14 @@ class ClassSemesterModel extends Model
                 class_semester.clock_in,
                 class_semester.clock_out,
                 class_semester.id as cs_id,
-                class_semester.name as class_code,
+                class_semester_year.code as class_code,
                 class_semester.grace_period,
                 grade.name as grade_name,
             ')
             ->join('semester', 'semester.id = class_semester.semester_id', 'left')
             ->join('academic_year', 'academic_year.id = semester.academic_year_id', 'left')
-            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->where('academic_year.in_session',1)
             ->where('academic_year.active',1)
             ->where('grade.active', 1)

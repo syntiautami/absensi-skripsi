@@ -38,14 +38,15 @@ class StudentClassSemesterModel extends Model
                 class_semester.id as cs_id,
                 section.name as section_name,
                 grade.name as grade_name,
-                class_semester.name as code,
+                class_semester_year.code as code,
                 class_semester.grace_period,
                 class_semester.clock_in,
                 class_semester.clock_out,
                 student.profile_id
             ')
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
-            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('section', 'section.id = grade.section_id', 'left')
             ->join('student', 'student.id = student_class_semester.student_id', 'left')
             ->where('student_class_semester.active',1)
@@ -86,14 +87,15 @@ class StudentClassSemesterModel extends Model
                 profile.parent_email,
                 user.first_name,
                 user.last_name,
-                class_semester.name as class_code,
+                class_semester_year.code as class_code,
                 grade.name as grade_name,
             ')
             ->join('student', 'student.id = student_class_semester.student_id', 'left')
             ->join('profile', 'profile.id = student.profile_id', 'left')
             ->join('user', 'user.id = profile.user_id', 'left')
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id','left')
-            ->join('grade', 'grade.id = class_semester.grade_id','left')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->where('student_class_semester.active',1)
             ->whereIn('class_semester_id',$ids)
             ->where('student_class_semester.student_id is not null')
@@ -129,48 +131,18 @@ class StudentClassSemesterModel extends Model
                 class_semester.id as cs_id,
                 section.name as section_name,
                 grade.name as grade_name,
-                class_semester.name as code,
+                class_semester_year.code as code,
                 class_semester.grace_period,
                 class_semester.clock_in,
                 class_semester.clock_out,
             ')
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
-            ->join('grade', 'grade.id = class_semester.grade_id', 'left')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('section', 'section.id = grade.section_id', 'left')
             ->where('student_class_semester.active',1)
             ->where('student_class_semester.student_id',$id)
             ->first();
-    }
-
-    /**
-     * Join dengan data class_semester
-     */
-    public function withClassSemester()
-    {
-        return $this->select('
-                student_class_semester.*,
-                class_semester.name AS class_name,
-                class_semester.semester_id
-            ')
-            ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left');
-    }
-
-    /**
-     * Ambil data lengkap dengan profile (user) & class_semester
-     */
-    public function withAll()
-    {
-        return $this->select('
-                student_class_semester.*,
-                profile.nisn,
-                user.first_name,
-                user.last_name,
-                class_semester.name AS class_name,
-                class_semester.semester_id
-            ')
-            ->join('student', 'student.id = student_class_semester.student_id', 'left')
-            ->join('user', 'user.id = profile.user_id', 'left')
-            ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left');
     }
 
     public function getCountByClassSemesterId($id){

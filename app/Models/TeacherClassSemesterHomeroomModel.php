@@ -37,7 +37,7 @@ class TeacherClassSemesterHomeroomModel extends Model
                 teacher.profile_id,
                 section.name as section_name,
                 grade.name as grade_name,
-                class_semester.name as class_code,
+                class_semester_year.code as class_code,
                 semester.name as semester_name,
                 semester.start_date as semester_start_date,
                 semester.end_date as semester_end_date,
@@ -50,7 +50,8 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->join('profile','profile.id = teacher.profile_id')
             ->join('user','user.id = profile.user_id')
             ->join('class_semester','class_semester.id = teacher_class_semester_homeroom.class_semester_id')
-            ->join('grade','grade.id = class_semester.grade_id')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('semester','semester.id = class_semester.semester_id')
             ->join('academic_year','academic_year.id = semester.academic_year_id')
             ->join('section','section.id = grade.section_id')
@@ -86,7 +87,7 @@ class TeacherClassSemesterHomeroomModel extends Model
                 teacher.profile_id,
                 section.name as section_name,
                 grade.name as grade_name,
-                class_semester.name as class_code,
+                class_semester_year.code as class_code,
                 semester.name as semester_name,
                 semester.start_date as semester_start_date,
                 semester.end_date as semester_end_date,
@@ -99,7 +100,8 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->join('profile','profile.id = teacher.profile_id')
             ->join('user','user.id = profile.user_id')
             ->join('class_semester','class_semester.id = teacher_class_semester_homeroom.class_semester_id')
-            ->join('grade','grade.id = class_semester.grade_id')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('semester','semester.id = class_semester.semester_id')
             ->join('academic_year','academic_year.id = semester.academic_year_id')
             ->join('section','section.id = grade.section_id')
