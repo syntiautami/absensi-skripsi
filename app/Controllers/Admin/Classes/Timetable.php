@@ -6,51 +6,70 @@ use App\Controllers\BaseController;
 use App\Models\AcademicYearModel;
 use App\Models\ClassSemesterModel;
 use App\Models\ClassSemesterSubjectModel;
+use App\Models\ClassSemesterYearModel;
 use App\Models\ClassTimetablePeriodModel;
-use App\Models\GradeModel;
-use App\Models\ProfileModel;
 use App\Models\SemesterModel;
-use App\Models\StudentClassSemesterModel;
-use App\Models\StudentModel;
-use App\Models\SubjectModel;
-use App\Models\TeacherClassSemesterHomeroomModel;
-use App\Models\TeacherModel;
 use App\Models\TimetablePeriodModel;
 
 class Timetable extends BaseController
 {
-    public function index($academic_year_id, $semester_id, $id){
+    public function index($academic_year_id, $id){
         $model = new AcademicYearModel();
-        $classSemesterModel = new ClassSemesterModel();
-        $semesterModel = new SemesterModel();
 
         $academic_year = $model->getAcademicYearById($academic_year_id);
         if (!$academic_year) {
             return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
         }
-        $semester = $semesterModel ->getSemesterById($semester_id);
-        if (!$semester) {
+
+        $csyModel = new ClassSemesterYearModel();
+        $class_semester_year = $csyModel-> getById($id);
+        if (!$class_semester_year) {
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        $semesterModel = new SemesterModel();
+        $semesters = $semesterModel -> getSemesters_from_academic_year_id($academic_year_id);
+
+        return view('admin/classes/class_semester/timetable/index', [
+            'academic_year' => $academic_year,
+            'class_semester_year' => $class_semester_year,
+            'semesters' => $semesters,
+            'viewing' => 'classes',
+            'viewing_sub' => 'timetable',
+        ]);
+    }
+
+    public function days($academic_year_id, $class_semester_year_id, $id){
+        $model = new AcademicYearModel();
+
+        $academic_year = $model->getAcademicYearById($academic_year_id);
+        if (!$academic_year) {
+            return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        $csyModel = new ClassSemesterYearModel();
+        $class_semester_year = $csyModel-> getById($class_semester_year_id);
+        if (!$class_semester_year) {
             return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
         
-        $classSemester = $classSemesterModel->getClassSemesterById($id);
-        if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+        $semesterModel = new SemesterModel();
+        $semester = $semesterModel -> getSemesterById($id);
+        
+        if (!$semester) {
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/timetable/'))->with('error', 'Data tidak ditemukan.');
         }
 
-        $homeroomModel = new TeacherClassSemesterHomeroomModel();
-        $homeroomTeachers = $homeroomModel -> getFromClassSemesterId($classSemester['id']);
-        return view('admin/classes/class_semester/timetable/index', [
+        return view('admin/classes/class_semester/timetable/days', [
             'academic_year' => $academic_year,
-            'class_semester' => $classSemester,
-            'class_homeroom' => $homeroomTeachers,
+            'class_semester_year' => $class_semester_year,
             'semester' => $semester,
             'viewing' => 'classes',
             'viewing_sub' => 'timetable',
         ]);
     }
 
-    public function class_timetable_period($academic_year_id, $semester_id, $class_semesterId, $day){
+    public function class_timetable_period($academic_year_id, $class_semester_year_id, $semester_id, $day){
         $model = new AcademicYearModel();
         $classSemesterModel = new ClassSemesterModel();
         $semesterModel = new SemesterModel();
@@ -59,25 +78,28 @@ class Timetable extends BaseController
         if (!$academic_year) {
             return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
         }
-        $semester = $semesterModel ->getSemesterById($semester_id);
-        if (!$semester) {
+        $csyModel = new ClassSemesterYearModel();
+        $class_semester_year = $csyModel-> getById($class_semester_year_id);
+        if (!$class_semester_year) {
             return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
         
-        $classSemester = $classSemesterModel->getClassSemesterById($class_semesterId);
-        if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
+        $semesterModel = new SemesterModel();
+        $semester = $semesterModel -> getSemesterById($semester_id);
+        
+        if (!$semester) {
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/timetable/'))->with('error', 'Data tidak ditemukan.');
         }
 
-        $homeroomModel = new TeacherClassSemesterHomeroomModel();
-        $homeroomTeachers = $homeroomModel -> getFromClassSemesterId($classSemester['id']);
+        $csModel = new ClassSemesterModel();
+        $class_semester = $csModel-> getBySemesterIdAndCsyId($semester_id, $class_semester_year_id);
 
         $periodModel = new TimetablePeriodModel();
         $timetablePeriod = $periodModel->getTimetable($day);
         $timetableIds = array_column($timetablePeriod, 'id');
         
         $classSubjectModel = new ClassSemesterSubjectModel();
-        $classSubjects = $classSubjectModel-> getAllSubjectByClassSemesterId($class_semesterId);
+        $classSubjects = $classSubjectModel-> getAllSubjectByClassSemesterId($class_semester['id']);
         
         $classTimetablePeriodModel = new ClassTimetablePeriodModel();
 
@@ -148,8 +170,7 @@ class Timetable extends BaseController
                 $classTimetablePeriodModel->updateBatch($toDeactivate, 'id');
             }
 
-            return redirect()->to('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semesterId.'/timetable/'.$day.'/')->with('success', 'Data Jam Masuk berhasil diperbarui.');
-
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/timetable/'.$semester_id.'/day/'.$day.'/'))->with('success', 'Data berhasil diperbarui.');
         }
 
         $classTimetablePeriodList = $classTimetablePeriodModel->getActiveClassTimetableList($timetableIds);
@@ -160,8 +181,8 @@ class Timetable extends BaseController
 
         return view('admin/classes/class_semester/timetable/class_period', [
             'academic_year' => $academic_year,
-            'class_semester' => $classSemester,
-            'class_homeroom' => $homeroomTeachers,
+            'class_semester' => $class_semester,
+            'class_semester_year' => $class_semester_year,
             'existing_css_data' => $existingClassSemesterSubjectData,
             'day' => $day,
             'semester' => $semester,

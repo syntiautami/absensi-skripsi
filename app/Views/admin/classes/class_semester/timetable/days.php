@@ -21,13 +21,7 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/timetable/') ?>">Jadwal Pelajaran</a>
         </li>
-        <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/timetable/'.$semester['id'].'/') ?>">Semester <?= $semester['name'] ?></a>
-        </li>
-        <?php
-            helper('day')
-        ?>
-        <li class="breadcrumb-item active" aria-current="page"><?= day_indonesian($day) ?></li>
+        <li class="breadcrumb-item active" aria-current="page">Semester <?= $semester['name'] ?></li>
     </ol>
 <?= $this->endSection() ?>
 
@@ -40,39 +34,23 @@
                     <table id="timetableTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="text-center">Periode</th>
-                                <th class="text-center">Waktu</th>
-                                <th class="text-center">Mata Pelajaran</th>
+                                <th class="text-center">Hari</th>
+                                <th class="text-center" style="width:100px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($timetable_list as $timetable_period) : ?>
-                                <?php 
-                                    // ambil timetable id yang lagi diloop
-                                    $tid = $timetable_period['id'];
-
-                                    // cek apakah existing data ada
-                                    $selected_subject_id = isset($existing_css_data[$tid]) ? $existing_css_data[$tid] : '';
-                                ?>
+                            <?php
+                                helper('day');
+                            for ($no = 1; $no <= 5; $no++): ?>
                                 <tr>
-                                    <td class="text-center"><?= $timetable_period['period'] ?></td>
-                                    <td class="text-center"><?= date('H:i', strtotime($timetable_period['start_time'])) ?> - <?= date('H:i', strtotime($timetable_period['end_time'])) ?></td>
-                                    <td>
-                                        <select name="period[<?= $tid ?>]" id="" class="form-control">
-                                            <option value="">-----</option>
-                                            <?php foreach ($subjects as $subject): ?>
-                                                existing_css_data
-                                                <option value="<?= $subject['id'] ?>" <?= ($subject['id'] == $selected_subject_id) ? 'selected' : '' ?> ><?= $subject['name'] ?></option>
-                                            <?php endforeach ?>
-                                        </select>
+                                    <td class="text-center" data-order="<?= $no ?>"><?= day_indonesian($no) ?></td>
+                                    <td class="text-center">
+                                        <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/timetable/'.$semester['id'].'/day/'.$no.'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                     </td>
                                 </tr>
-                            <?php endforeach ?>
+                            <?php endfor ?>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-end mt-3">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
                 </div>
             </form>
         </div>

@@ -71,7 +71,8 @@ $routes->group('admin/classes', ['filter' => 'auth'], function($routes) {
 
         // Timetable
         $routes->get('timetable/', 'Admin\Classes\Timetable::index/$1/$2');
-        $routes->match(['get', 'post'], 'timetable/(:num)/', 'Admin\Classes\Timetable::class_timetable_period/$1/$2/$3');
+        $routes->get('timetable/(:num)/', 'Admin\Classes\Timetable::days/$1/$2/$3');
+        $routes->match(['get', 'post'], 'timetable/(:num)/day/(:num)/', 'Admin\Classes\Timetable::class_timetable_period/$1/$2/$3/$4');
     });
 });
 

@@ -16,10 +16,7 @@
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/') ?>"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></a>
+            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Jadwal Pelajaran</li>
     </ol>
@@ -34,21 +31,19 @@
                     <table id="timetableTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="text-center">Hari</th>
+                                <th class="text-center">Semester</th>
                                 <th class="text-center" style="width:100px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                                helper('day');
-                            for ($no = 1; $no <= 5; $no++): ?>
+                            <?php foreach ($semesters as $semester) : ?>
                                 <tr>
-                                    <td class="text-center" data-order="<?= $no ?>"><?= day_indonesian($no) ?></td>
+                                    <td >Semester <?= $semester['name'] ?></td>
                                     <td class="text-center">
-                                        <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/timetable/'.$no.'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                        <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/timetable/'.$semester['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                     </td>
                                 </tr>
-                            <?php endfor ?>
+                            <?php endforeach ?>
                         </tbody>
                     </table>
                 </div>
