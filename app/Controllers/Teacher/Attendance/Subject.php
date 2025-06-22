@@ -2,16 +2,13 @@
 
 namespace App\Controllers\Teacher\Attendance;
 
-use App\Controllers\Admin\AcademicYear\Semester;
 use App\Controllers\BaseController;
 use App\Models\AttendanceSubjectModel;
-use App\Models\ClassSemesterSubjectModel;
 use App\Models\ClassTimetablePeriodModel;
 use App\Models\SemesterModel;
 use App\Models\StudentClassSemesterModel;
 use App\Models\TeacherClassSemesterSubjectModel;
 use App\Models\TeacherModel;
-use CodeIgniter\HTTP\ResponseInterface;
 use DateTime;
 
 class Subject extends BaseController

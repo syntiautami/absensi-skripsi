@@ -23,19 +23,17 @@
                 <table id="teacherReport" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Tahun Pelajaran</th>
-                            <th class="text-center">Semester</th>
                             <th class="text-center">Kelas</th>
-                            <th class="text-center">Aksi</th>
+                            <th class="text-center" style="width: 200px;">Semester</th>
+                            <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-center"><?= esc($homeroom['academic_year_name'] ?? '-') ?></td>
-                            <td class="text-center"><?= esc($homeroom['semester_name'] ?? '-') ?></td>
                             <td class="text-center">
                                 <?= esc($homeroom['grade_name'] ?? '-') ?> <?= esc($homeroom['class_code'] ?? '-') ?>
                             </td>
+                            <td class="text-center"><?= esc("Semester {$homeroom['semester_name']} {$homeroom['academic_year_name']}") ?></td>
                             <td class="text-center">
                                 <a href="<?= base_url('teacher/report/attendance/'.$homeroom['class_semester_id']. '/download/') ?>" class="btn btn-primary btn-sm">Unduh</a>
                             </td>
@@ -51,14 +49,7 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#teacherReport').DataTable({
-            "responsive": true,
-            "autoWidth": false,
-            "searching" : false,
-            "lengthChange" : false,
-            "paging": false,
-            "info" : false,
-        });
+        $('#teacherReport').DataTable();
     });
 </script>
 <?= $this->endSection() ?>

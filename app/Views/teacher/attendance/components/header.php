@@ -24,7 +24,7 @@
     ];
 
 
-    $hariInggris = $selected_date->format('l');
+$hariInggris = $selected_date->format('l');
     $hari = $hariList[$hariInggris];
     $tanggal = $selected_date->format('d');
     $bulan = $bulanList[$selected_date->format('m')];
