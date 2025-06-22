@@ -43,6 +43,8 @@ class Report extends BaseController
             'end_date' => $walas['semester_end_date'],
         ];
 
+        $className = $walas['grade_name'].' '.$walas['class_code'];
+
         $startDate = new DateTime($semester['start_date']);
         $endDate = new DateTime($semester['end_date']);
         
@@ -63,7 +65,10 @@ class Report extends BaseController
 
         $profileIds = array_column($students, 'profile_id');
         $attDailyEntryModel = new AttendanceDailyEntryModel();
-        $tappingMap = $attDailyEntryModel -> buildTappingMap($profileIds, $semester['start_date'], $semester['end_date']);
+        $tappingMap = [];
+        if (!empty($profileIds)) {
+            $tappingMap = $attDailyEntryModel -> buildTappingMap($profileIds, $semester['start_date'], $semester['end_date']);
+        }
 
         // 3. Buat Spreadsheet
         $spreadsheet = new Spreadsheet();
@@ -93,7 +98,7 @@ class Report extends BaseController
 
             $sheet->setCellValue('B2', 'Laporan Kehadiran Siswa');
             $sheet->getStyle('B2')->getFont()->setSize(18);
-            $sheet->setCellValue('B3', 'Kelas: '.$walas['grade_name'].' '.$walas['class_code']);
+            $sheet->setCellValue('B3', 'Kelas: '.$className);
             $sheet->setCellValue('B4', 'Semester: '.$walas['semester_name'].' ' .$walas['academic_year_name']);
             $sheet->setCellValue('B5', 'Walikelas: '.$walas['first_name']. ' '.$walas['last_name']);
 
@@ -435,7 +440,7 @@ class Report extends BaseController
         $spreadsheet->removeSheetByIndex($sheetIndex);
 
         // Export ke file Excel
-        $filename = 'Laporan_Kehadiran_Siswa_' . date('Ymd') . '.xlsx';
+        $filename = 'Laporan Kehadiran Siswa Kelas '.$className.' Semester '.$walas['semester_name'].' '.$walas['academic_year_name'].'.xlsx';
 
         // header download
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

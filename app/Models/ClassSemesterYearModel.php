@@ -36,7 +36,7 @@ class ClassSemesterYearModel extends Model
             ')
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->where('academic_year_id', $id)
-            ->orderBy('code')
+            ->orderBy('grade_name','code')
             ->findAll();
     }
 

@@ -68,6 +68,7 @@ class ClassSemesterModel extends Model
                 class_semester.grace_period,
                 class_semester.clock_in,
                 class_semester.clock_out,
+                class_semester.class_semester_year_id as csy_id,
                 class_semester_year.code as class_code,
                 class_semester_year.grade_id,
                 grade.name as grade_name,
@@ -79,6 +80,24 @@ class ClassSemesterModel extends Model
             ->join('semester', 'semester.id = class_semester.semester_id', 'left')
             ->where('class_semester_year_id',$id)
             ->orderBy('semester_name')
+            ->findAll();
+    }
+
+    public function getCsByCsyIds($ids){
+        return $this
+            ->select('
+                class_semester.id as cs_id,
+                class_semester.class_semester_year_id as csy_id,
+                class_semester_year.code as class_code,
+                grade.name as grade_name,
+                semester.id as semester_id,
+                semester.name as semester_name,
+            ')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
+            ->join('semester', 'semester.id = class_semester.semester_id', 'left')
+            ->whereIn('class_semester_year_id',$ids)
+            ->where('class_semester.active',1)
             ->findAll();
     }
 

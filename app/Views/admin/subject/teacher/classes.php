@@ -47,13 +47,7 @@
 <?= $this->section('scripts') ?>
 <script>
     $(function () {
-        $('#teacherTable').DataTable({
-            "responsive": true,
-            "lengthChange" : false,
-            "info" : false,
-            searching: false,
-            paging: false
-        });
+        $('#teacherTable').DataTable();
     });
 </script>
 <?= $this->endSection() ?>
