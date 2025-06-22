@@ -73,19 +73,19 @@
             <!-- Statistik kotak bawah -->
             <div class="d-flex justify-content-between mt-4">
                 <div class="card flex-fill mr-2 p-3 bg-success text-white text-center">
-                    <h2 class="text-present"><?= $present ?></h2>
+                    <h2 class="text-present"><?= $studentStatisticData['present'] ?></h2>
                     <p class="m-0">Tepat Waktu</p>
                 </div>
                 <div class="card flex-fill mr-2 p-3 bg-warning text-white text-center">
-                    <h2 class="text-late"><?= $late ?></h2>
+                    <h2 class="text-late"><?= $studentStatisticData['late'] ?></h2>
                     <p class="m-0">Terlambat</p>
                 </div>
                 <div class="card flex-fill mr-2 p-3 bg-danger text-white text-center">
-                    <h2 class="text-absent"><?= $absent ?></h2>
+                    <h2 class="text-absent"><?= $studentStatisticData['absent'] ?></h2>
                     <p class="m-0">Alpa</p>
                 </div>
                 <div class="card flex-fill p-3 bg-primary text-white text-center">
-                    <h2 class="text-total"><?= $total ?></h2>
+                    <h2 class="text-total"><?= $studentStatisticData['total'] ?></h2>
                     <p class="m-0">Total</p>
                 </div>
             </div>
@@ -140,6 +140,7 @@
         document.getElementById('day-date').textContent = `${dayName}, ${dayNumber} ${monthName} ${year}`;
         serverTimestamp += 1000;
     }
+
     function addStudentCard(data) {
       // Clone template
       const existingCard = document.querySelector(`.card[data-id="${data.id}"]`);
@@ -179,7 +180,6 @@
     }
 
     function showNotif(data){
-      if (['home'].includes(data['status'])) return;
       let type = 'success';
       let title = 'INFO';
       let text = `
@@ -189,7 +189,8 @@
 
       if (data.status == 'home'){
         text = `
-        ${data.name} ${data.kelas} <br> <br>
+          ${data.name} ${data.kelas} <br> <br>
+          Anda telah melakukan absensi pulang hari ini pada pukul ${data.time}
         `
       }else if (data.status == 'absent'){
         type = 'info';
@@ -200,6 +201,11 @@
         `;
       }else if (data.status == 'late'){
         type = 'warning';
+        text = `
+          ${data.name} ${data.kelas} <br> <br>
+          Anda terlambat!!! <br> 
+          Anda telah melakukan absensi <br>hari ini pada pukul ${data.time}
+        `;
       }
 
       Swal.fire({

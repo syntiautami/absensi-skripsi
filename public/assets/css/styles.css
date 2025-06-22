@@ -146,7 +146,7 @@ a,
     background-color: var(--primary) !important;
 }
 .student-time .status-box.home{
-    background-color: var(--primary) !important;
+    background-color: var(--info) !important;
 }
 
 

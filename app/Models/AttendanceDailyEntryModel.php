@@ -76,7 +76,7 @@ class AttendanceDailyEntryModel extends Model
             ->findAll();
     }
 
-    public function getTodayEntries()
+    public function getTodayEntries($order='clock_in')
     {
         return $this
             ->select('
@@ -93,7 +93,7 @@ class AttendanceDailyEntryModel extends Model
             ->join('user','user.id = profile.user_id')
             ->where('DATE(clock_in)', date('Y-m-d'))
             ->orWhere('DATE(clock_out)', date('Y-m-d'))
-            ->orderBy('clock_in', 'desc')
+            ->orderBy($order, 'desc')
             ->findAll();
     }
     public function countTotalEntries($date = null)

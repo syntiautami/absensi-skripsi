@@ -21,6 +21,18 @@ if (!function_exists('send_email')) {
             <b>Sistem Absensi SMA IT Alia Tangerang</b>
         ";
 
+        $lateMsg = "
+            Kami informasikan bahwa anak Anda:
+            <br><br>
+            <b>Nama Siswa:</b> {$data['name']}<br>
+            <b>Kelas:</b> {$data['kelas']}<br>
+            <b>Telah meninggalkan sekolah pada pukul:</b> {$data['time']} dengan status terlambat.<br><br>
+
+            Terima kasih atas perhatian Bapak/Ibu.  
+            Salam hormat,  
+            <b>Sistem Absensi SMA IT Alia Tangerang</b>
+        ";
+
         $presentMsg = "
             Yth. Bapak/Ibu Wali Murid,<br><br>
             Kami informasikan bahwa anak Anda:
@@ -52,6 +64,8 @@ if (!function_exists('send_email')) {
             $emailMsg = $homeMsg;
         }elseif($data['status'] == 'absent'){
             $emailMsg = $absentMsg;
+        }elseif($data['status'] == 'late'){
+            $emailMsg = $lateMsg;
         }
         $email->setFrom($fromEmail, $fromName);
         $email->setTo($data['parent_email']);

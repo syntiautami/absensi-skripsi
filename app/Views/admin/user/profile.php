@@ -129,38 +129,9 @@
                 .html(inputFile.files[0].name);
         });
         $('form').validate({
-            rules: {
-                username: {
-                    remote: {
-                        url: '<?= base_url('admin/users/check-username/') ?>',
-                        type: "post",
-                        data:{
-                            email: function() {
-                                return $("#id_email").val();
-                            },
-                            user_id: '<?= $user['id'] ?? 0 ?>'
-                        },
-                        dataType: 'json',
-                        dataFilter: (response)=>{
-                            console.log(response)
-                            if (response == 'false') {
-                                return false
-                            }
-                            return true
-                        },
-                        delay: 5000,
-                    }
-                },
-                email : {
-                    email: true
-                },
-                confirm_password: {
-                    equalTo: '#password'
-                }
-            },
-            messages : {
-                username: {
-                    remote : "Nama pengguna sudah digunakan"
+            rules :{
+                gender: {
+                    required: true,
                 }
             }
         })

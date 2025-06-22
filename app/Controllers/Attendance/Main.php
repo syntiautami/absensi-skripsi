@@ -3,6 +3,7 @@
 namespace App\Controllers\Attendance;
 
 use App\Controllers\BaseController;
+use App\Helpers\AttendanceHelper;
 use App\Models\Attendance;
 use App\Models\AttendanceDailyEntryModel;
 use App\Models\AttendanceModel;
@@ -21,39 +22,55 @@ class Main extends BaseController
         $totalEntries = $dailyEntryModel->countTotalEntries();
         $attModel = new AttendanceModel();
         $todayAttendance = $attModel -> getTodayAttendanceList();
-        $studentAttendance = [];
-        foreach ($todayAttendance as $entry) {
-            $studentAttendance[$entry['profile_id']] = $entry;
-        }
-        $total = 0;
-        $late = 0;
-        $absent = 0;
-        $present = 0;
+        
+        $studentStatisticData = [
+            'total' => 0,
+            'present' =>0,
+            'late' => 0,
+            'absent' => 0,
+        ];
 
+        $studentAttendanceToday = [];
+        $AttendancestudentLate = [];
+        foreach ($todayAttendance as $item) {
+            $status = $item['attendance_type_id'];
+            $profileId = $item['profile_id'];
+
+            if (!isset($studentAttendanceToday[$status])) {
+                $studentAttendanceToday[$status] = [];
+            }
+
+            $studentAttendanceToday[$status][] = $profileId;
+
+            if ($status == 4) {
+                $AttendancestudentLate[] = $profileId;
+            }
+
+            $studentStatisticData[AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]]++;
+            $studentStatisticData['total']++;
+
+        }
         $listStudentHome = [];
-        $count = 0;
         foreach ($todayEntries as $entry) {
-            if (isset($studentAttendance[$entry['profile_id']]) && $studentAttendance[$entry['profile_id']]['attendance_type_id'] == 1) {
-                // Kalau ada di studentAttendance DAN attendance_type_id == 1 → status jadi 'absent'
-                $entry['status'] = 'absent';
-                $total++;
-                $absent++;
-            }elseif (isset($studentAttendance[$entry['profile_id']]) && $studentAttendance[$entry['profile_id']]['attendance_type_id'] == 4) {
-                // Kalau ada di studentAttendance DAN attendance_type_id == 4 → status jadi 'late'
-                $entry['status'] = 'late';
-                $late++;
-                $total++;
-            }else{
+            if (!isset($studentAttendance[$entry['profile_id']])) {
                 $entry['status'] = 'present';
-                $present++;
-                $total++;
+                $studentStatisticData['present']++;
+                $studentStatisticData['total']++;
+            }else if (in_array($entry['profile_id'], $AttendancestudentLate)){
+                $entry['status'] = 'late';
             }
 
-            if (in_array($entry['status'], ['present', 'late']) && $count < 4) {
-                $listStudentHome[] = $entry;
-                $count++;
+            if ($entry['clock_out']) {
+                $entry['status'] = 'home';
             }
+            $time = $entry['clock_out'] ? $entry['clock_out']: $entry['clock_in'];
+            $listStudentHome[] = array_merge($entry, ['time' => $time]);
         }
+        usort($listStudentHome, function ($a, $b) {
+            return strtotime($b['time']) - strtotime($a['time']);
+        });
+
+        $listStudentHome = array_slice($listStudentHome, 0, 4);
 
         $studentIds = array_column($todayEntries,'student_id');
         $scsModel = new StudentClassSemesterModel();
@@ -69,11 +86,8 @@ class Main extends BaseController
             'date' => Time::now('Asia/Jakarta', 'en_ID')->getTimestamp(),
             'daily_entries' => $listStudentHome,
             'student_data' => $studentClass,
-            'late' => $late,
-            'absent' => $absent,
+            'studentStatisticData' => $studentStatisticData,
             'present' => $totalEntries,
-            'total' => $total,
-            'present' => $present,
         ]);
     }
 
@@ -140,15 +154,17 @@ class Main extends BaseController
                     // tapping pulang
                     $dailyEntryModel->update($todayEntry['id'], [
                         'updated_by_id' => session()->get('user')['id'],
-                        'clock_out' => $currentTap,
+                        'clock_out' => date('Y-m-d H:i:s'),
                     ]);
+                    $studentTappingTime = $currentTap;
+                }else{
+                    $studentTappingTime = $todayEntry['clock_in'];
                 }
                 if ($attendanceStatus && $attendanceStatus != 'late'){
                     $sendEmail = false;
                     $status = $attendanceStatus;
                 }
 
-                $studentTappingTime = $todayEntry['clock_in'];
             } else {
                 // tapping masuk
                 if($attendanceStatus && in_array($attendanceStatus,['sick','excused'])){
@@ -211,7 +227,9 @@ class Main extends BaseController
                     'img' => base_url(($studentProfile['profile_photo'] ?: 'assets/img/users/default.jpg')),
                     'timestamp' => $studentTappingTime,
                     'time' => date('H:i:s',strtotime($studentTappingTime)),
-                    'status' => $status
+                    'status' => $status,
+                    'blocking' => $blockingPeriodTime,
+
                 ]
             ]);
         } 
