@@ -41,9 +41,10 @@
                                 <div class="form-group">
                                     <label for="wali-kelas">Wali Kelas Semester <?= $class_semester['semester_name'] ?></label>
                                     <select name="form_teacher[<?= $class_semester['id'] ?>]" id="wali-kelas" class="form-control">
+                                        <option value="">---</option>
                                         <?php foreach ($teachers as $teacher): ?>
                                             <option value="<?= $teacher['id'] ?>"
-                                            <?= $teacher['id'] == $class_homeroom[$class_semester['id']] ? 'selected' : '' ?>>
+                                            <?= isset($class_homeroom[$class_semester['id']]) && $teacher['id'] == $class_homeroom[$class_semester['id']] ? 'selected' : '' ?>>
                                             <?= $teacher['first_name'] ?> <?= $teacher['last_name'] ?>
                                         </option>
                                         <?php endforeach; ?>

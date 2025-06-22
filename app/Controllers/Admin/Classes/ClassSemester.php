@@ -76,6 +76,9 @@ class ClassSemester extends BaseController
             $homeroomData = $data['form_teacher'];
 
             foreach ($homeroomData as $class_semester_id => $teacher_id) {
+                if ($teacher_id == '') {
+                    continue;
+                }
                 $existing = $homeroomModel-> getFromCsId($class_semester_id);
 
                 if ($existing) {
