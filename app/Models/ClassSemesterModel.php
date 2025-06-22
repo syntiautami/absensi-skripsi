@@ -14,13 +14,11 @@ class ClassSemesterModel extends Model
     protected $useSoftDeletes   = false;
 
     protected $allowedFields    = [
-        'name',
         'clock_in',
         'clock_out',
         'blocking_period',
         'grace_period',
         'active',
-        'grade_id',
         'semester_id',
         'created_by_id',
         'created_at',
@@ -59,7 +57,7 @@ class ClassSemesterModel extends Model
         return $this
             ->select('
                 class_semester.id,
-                class_semester_year.code as name,
+                class_semester_year.code as class_code,
                 class_semester_year.grade_id,
                 grade.name as grade_name,
                 grade.section_id,
@@ -85,7 +83,7 @@ class ClassSemesterModel extends Model
         return $this
             ->select('
                 class_semester.id,
-                class_semester_year.code as name,
+                class_semester_year.code as class_code,
                 class_semester.grace_period,
                 class_semester.clock_in,
                 class_semester.clock_out,
