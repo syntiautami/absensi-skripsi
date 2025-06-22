@@ -64,7 +64,7 @@ $routes->group('admin/classes', ['filter' => 'auth'], function($routes) {
 
         // Students
         $routes->match(['get', 'post'], 'students/', 'Admin\Classes\ClassSemester::students/$1/$2');
-        $routes->get('students/(:num)/delete/', 'Admin\Classes\ClassSemester::delete/$1/$2/$4');
+        $routes->get('students/(:num)/delete/', 'Admin\Classes\ClassSemester::delete/$1/$2/$3');
 
         // Class Hour
         $routes->match(['get', 'post'], 'class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2');

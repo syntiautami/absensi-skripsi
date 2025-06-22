@@ -80,6 +80,7 @@ class StudentClassSemesterModel extends Model
             ->select('
                 student_class_semester.id,
                 student_class_semester.student_id,
+                student_class_semester.class_semester_id,
                 student.profile_id,
                 profile.barcode_number,
                 profile.parent_email,
@@ -121,6 +122,7 @@ class StudentClassSemesterModel extends Model
             ->orderBy('first_name, last_name')
             ->first();
     }
+
     public function getByStudentId($id)
     {
         return $this
@@ -136,7 +138,6 @@ class StudentClassSemesterModel extends Model
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
             ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
-            ->where('student_class_semester.active',1)
             ->where('student_class_semester.student_id',$id)
             ->first();
     }

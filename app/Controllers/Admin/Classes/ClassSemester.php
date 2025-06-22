@@ -133,7 +133,7 @@ class ClassSemester extends BaseController
         ]);
     }
     
-    public function students($academic_year_id, $semester_id, $id){
+    public function students($academic_year_id, $id){
         $model = new AcademicYearModel();
         $classSemesterModel = new ClassSemesterModel();
         $scsModel = new StudentClassSemesterModel();
@@ -144,51 +144,61 @@ class ClassSemester extends BaseController
         if (!$academic_year) {
             return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
         }
-        $semester = $semesterModel ->getSemesterById($semester_id);
-        if (!$semester) {
+        
+        $csyModel = new ClassSemesterYearModel();
+        $class_semester_year = $csyModel-> getById($id);
+        if (!$class_semester_year) {
             return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
         
-        $classSemester = $classSemesterModel->getClassSemesterById($id);
-        if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
-        }
+        $csModel = new ClassSemesterModel();
+        $class_semesters = $csModel->getCsByCsyId($id);
+        $csIds = array_column($class_semesters, 'id');
         
         if ($this->request->getMethod() === 'POST'){
+
             $barcodeNumbers = $this->request->getPost('barcode_number');
             $newStudents = $this->request->getPost('students');
 
             if (!empty($newStudents)) {
+                $insertBatch = [];
                 foreach ($newStudents as $student_id) {
-                    // Cek apakah sudah ada di student_class_semester
-                    $existing = $scsModel
-                        ->where('student_id', $student_id)
-                        ->where('class_semester_id', $id)
-                        ->first();
+                    foreach ($class_semesters as $class_semester) {
+                        // Cek apakah sudah ada di student_class_semester
+                        $existing = $scsModel
+                            ->where('student_id', $student_id)
+                            ->where('class_semester_id', $class_semester['id'])
+                            ->first();
 
-                    if ($existing) {
-                        if (!$existing['active']) {
-                            // Kalau sudah ada tapi inactive, aktifkan
-                            $scsModel->update($existing['id'], [
+                        if ($existing) {
+                            if (!$existing['active']) {
+                                // Kalau sudah ada tapi inactive, aktifkan
+                                $scsModel->update($existing['id'], [
+                                    'active' => true,
+                                    'updated_by_id' => session()->get('user')['id'],
+                                ]);
+                            }
+                            // Kalau sudah active, skip saja
+                        } else {
+                            // Kalau belum ada, insert baru
+                            $insertBatch[] = [
+                                'student_id' => $student_id,
+                                'class_semester_id' => $class_semester['id'],
                                 'active' => true,
-                                'updated_by_id' => session()->get('user')['id'],
-                            ]);
+                                'created_by_id' => session()->get('user')['id'],
+                            ];
                         }
-                        // Kalau sudah active, skip saja
-                    } else {
-                        // Kalau belum ada, insert baru
-                        $scsModel->insert([
-                            'student_id' => $student_id,
-                            'class_semester_id' => $id,
-                            'active' => true,
-                            'created_by_id' => session()->get('user')['id'],
-                        ]);
                     }
+                }
+
+                // Insert batch kalau ada data
+                if (!empty($insertBatch)) {
+                    $scsModel->insertBatch($insertBatch);
                 }
             }
             
-            $pModel = new ProfileModel();
             if (!empty($barcodeNumbers)) {
+                $pModel = new ProfileModel();
                 foreach ($barcodeNumbers as $profile_id => $barcode) {
                     $pModel->update($profile_id, [
                         'barcode_number' => $barcode,
@@ -196,11 +206,24 @@ class ClassSemester extends BaseController
                     ]);
                 }
             }
-                
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/class/'.$id.'/students/'))->with('success', 'Data berhasil diupdate.');
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$id.'/students/'))->with('success', 'Data berhasil diupdate.');
         }
         
-        $scs_list = $scsModel -> getByClassSemesterId($id);
+        $scs_list = $scsModel -> getByClassSemesterIds($csIds);
+        $studentData = [];
+        foreach ($scs_list as $row) {
+            $studentId = $row['student_id'];
+            if (!isset($studentData[$studentId])) {
+                $studentData[$studentId] = [
+                    'name' => $row['first_name'] . ' ' . $row['last_name'],
+                    'barcode_number' => $row['barcode_number'],
+                    'class_semester_id' => [],
+                    'profile_id' => $row['profile_id'],
+                ];
+            }
+            $studentData[$studentId]['class_semester_id'][] = $row['class_semester_id'];
+        }
+
         $studentIds = array_column($scs_list, 'student_id');
 
         if (!empty($studentIds)) {
@@ -211,19 +234,51 @@ class ClassSemester extends BaseController
 
         return view('admin/classes/class_semester/students', [
             'academic_year' => $academic_year,
-            'class_semester' => $classSemester,
-            'semester' => $semester,
+            'class_semesters' => $class_semesters,
+            'class_semester_year' => $class_semester_year,
             'students' => $students,
+            'student_data' => $studentData,
             'student_class_semesters' => $scs_list,
             'viewing' => 'classes',
             'viewing_sub' => 'classes',
         ]);
     }
 
+    // post
+    public function delete($academic_year_id, $class_semester_year_id, $id){
+        $model = new AcademicYearModel();
+        $scsModel = new StudentClassSemesterModel();
+
+        $academic_year = $model->getAcademicYearById($academic_year_id);
+        if (!$academic_year) {
+            return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
+        }
+        $csyModel = new ClassSemesterYearModel();
+        $class_semester_year = $csyModel-> getById($class_semester_year_id);
+        if (!$class_semester_year) {
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
+        }
+        
+
+        $studentClassSemester = $scsModel -> getByStudentId($id);
+        if (!$studentClassSemester) {
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/students/'))->with('success', 'Data berhasil diupdate.');
+        }
+
+        $scsModel
+            ->where('student_id', $id)
+            ->set([
+                'active' => 0,
+                'updated_by_id' => session()->get('user')['id'],
+            ])
+            ->update();
+        
+        return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/students/'))->with('success', 'Data berhasil diupdate.');
+    }
+
     public function class_hour($academic_year_id, $id){
         $model = new AcademicYearModel();
         $classSemesterModel = new ClassSemesterModel();
-        $semesterModel = new SemesterModel();
 
         $academic_year = $model->getAcademicYearById($academic_year_id);
         if (!$academic_year) {
@@ -277,42 +332,5 @@ class ClassSemester extends BaseController
             'viewing' => 'classes',
             'viewing_sub' => 'classes',
         ]);
-    }
-
-    // post
-    public function delete($academic_year_id, $semester_id, $class_semester_id, $id){
-        $model = new AcademicYearModel();
-        $classSemesterModel = new ClassSemesterModel();
-        $scsModel = new StudentClassSemesterModel();
-        $semesterModel = new SemesterModel();
-
-        $academic_year = $model->getAcademicYearById($academic_year_id);
-        if (!$academic_year) {
-            return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
-        }
-        $semester = $semesterModel ->getSemesterById($semester_id);
-        if (!$semester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
-        }
-        
-        $classSemester = $classSemesterModel->getClassSemesterById($class_semester_id);
-        if (!$classSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/'))->with('error', 'Data tidak ditemukan.');
-        }
-
-        $studentClassSemester = $scsModel -> getById($id);
-        if (!$studentClassSemester) {
-            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/class/'.$class_semester_id.'/students/'))->with('error', 'Data tidak ditemukan.');
-        }
-
-        $scsModel -> update(
-            $id,
-            [
-                'active' => 0,
-                'updated_by_id' => session()->get('user')['id'],
-            ]
-        );
-        
-        return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/semester/'.$semester_id.'/class/'.$class_semester_id.'/students/'))->with('success', 'Data berhasil diupdate.');
     }
 }

@@ -16,10 +16,7 @@
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/') ?>"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></a>
+            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year_id/'.$class_semester_year['id'].'/') ?>"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Siswa</li>
     </ol>
@@ -41,17 +38,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1; foreach ($student_class_semesters as $student): ?>
+                            <?php $no = 1; foreach ($student_data as $key => $student): ?>
                             <tr href="<?= base_url('admin/classes/') ?>">
                                 <td class="text-center"><?= $no++ ?></td>
-                                <td class="text-center"><?= esc("{$student['first_name']} {$student['last_name']}") ?></td>
+                                <td class=""><?= esc($student['name']) ?></td>
                                 <td class="text-center">
                                     <input type="text" name="barcode_number[<?= $student['profile_id'] ?>]" 
                                     value="<?= esc($student['barcode_number'] ?? '') ?>"
                                     class="form-control" />
                                 </td>
                                 <td class="text-center">
-                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/students/'.$student['id'].'/delete/') ?>" class="btn btn-sm btn-danger">Hapus</a>
+                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/students/'.$key.'/delete/') ?>" class="btn btn-sm btn-danger">Hapus</a>
                                 </td>
                             </tr>
                             <?php endforeach ?>
