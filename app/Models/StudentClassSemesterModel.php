@@ -74,6 +74,7 @@ class StudentClassSemesterModel extends Model
             ->orderBy('first_name, last_name')
             ->findAll();
     }
+
     public function getByClassSemesterIds($ids)
     {
         return $this
@@ -144,5 +145,38 @@ class StudentClassSemesterModel extends Model
 
     public function getCountByClassSemesterId($id){
         return $this->where('class_semester_id',$id)->countAllResults();
+    }
+
+
+    public function getByCsyIds($ids)
+    {
+        return $this
+            ->select('
+                student_class_semester.id,
+                student_class_semester.student_id,
+                student_class_semester.class_semester_id,
+                student.profile_id,
+                profile.barcode_number,
+                profile.parent_email,
+                user.first_name,
+                user.last_name,
+                class_semester_year.code as class_code,
+                grade.name as grade_name,
+                class_semester.class_semester_year_id
+            ')
+            ->join('student', 'student.id = student_class_semester.student_id', 'left')
+            ->join('profile', 'profile.id = student.profile_id', 'left')
+            ->join('user', 'user.id = profile.user_id', 'left')
+            ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id','left')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
+            ->where('student_class_semester.active',1)
+            ->where('class_semester.active',1)
+            ->whereIn('class_semester.class_semester_year_id',$ids)
+            ->where('student_class_semester.student_id is not null')
+            ->where('student.profile_id is not null')
+            ->where('profile.user_id is not null')
+            ->orderBy('first_name, last_name')
+            ->findAll();
     }
 }

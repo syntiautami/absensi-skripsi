@@ -43,7 +43,9 @@
                                         <?php endforeach ?>
                                     <?php endif ?>
                                 </td>
-                                <td class="text-center">0</td>
+                                <td class="text-center">
+                                    <?= count($student_data[$class_semester_year['id']]) ?? '0' ?>
+                                </td>
                                 <td class="text-center">
                                     <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                 </td>

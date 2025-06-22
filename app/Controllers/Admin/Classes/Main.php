@@ -10,6 +10,7 @@ use App\Models\GradeModel;
 use App\Models\TeacherModel;
 use App\Models\TeacherClassSemesterHomeroomModel;
 use App\Models\SemesterModel;
+use App\Models\StudentClassSemesterModel;
 
 class Main extends BaseController
 {
@@ -57,21 +58,19 @@ class Main extends BaseController
             }
         }
 
-        $csModel = new ClassSemesterModel();
-        $class_semesters = $csModel -> getByCsyId($csyIds);
-        
-        $studentTotalData = [];
-        foreach ($class_semesters as $class_semester) {
-            $csyId = $class_semester['class_semester_year_id'];
-            $semesterId = $class_semester['semester_id'];
+        $scsModel = new StudentClassSemesterModel();
+        $student_class_semesters = $scsModel-> getByCsyIds($csyIds);
 
-            if (!isset($studentTotalData[$csyId])){
+        $studentTotalData = [];
+        foreach ($student_class_semesters as $student_class_semester) {
+            $csyId = $student_class_semester['class_semester_year_id'];
+            $studentId = $student_class_semester['student_id'];
+            
+            if(!isset($studentTotalData[$csyId])){
                 $studentTotalData[$csyId] = [];
             }
             
-            if (!isset($studentTotalData[$csyId][$semesterId])){
-                $studentTotalData[$csyId][$semesterId] = $class_semester['total_students'];
-            }
+            $studentTotalData[$csyId][] = $studentId;
         }
 
         $semesterModel = new SemesterModel();
@@ -79,7 +78,6 @@ class Main extends BaseController
 
         return view('admin/classes/class_semester_year', [
             'academic_year' => $academic_year,
-            'class_semesters' => $class_semesters,
             'class_semester_years' => $csyList,
             'student_data' => $studentTotalData,
             'form_teacher_data' => $form_teacher_data,
