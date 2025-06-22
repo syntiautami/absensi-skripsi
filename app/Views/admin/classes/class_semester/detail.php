@@ -15,10 +15,7 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
         </li>
-        <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></li>
     </ol>
 <?= $this->endSection() ?>
 
@@ -31,7 +28,7 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <label>Nama</label>
-                            <p class="form-control-plaintext"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></p>
+                            <p class="form-control-plaintext"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></p>
                         </div>
                     </div>
                 </div>
@@ -52,7 +49,7 @@
                 <?php endforeach; ?>
                 <hr>
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/edit/') ?>" class="btn btn-primary">
+                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/edit/') ?>" class="btn btn-primary">
                         Ubah Kelas
                     </a>
                 </div>

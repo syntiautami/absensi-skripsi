@@ -39,4 +39,17 @@ class ClassSemesterYearModel extends Model
             ->orderBy('code')
             ->findAll();
     }
+
+    public function getById($id){
+        return $this
+            ->select('
+                class_semester_year.id,
+                grade.name as grade_name,
+                class_semester_year.code as class_code,
+            ')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
+            ->where('class_semester_year.id', $id)
+            ->orderBy('code')
+            ->first();
+    }
 }

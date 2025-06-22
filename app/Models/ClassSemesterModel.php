@@ -19,6 +19,7 @@ class ClassSemesterModel extends Model
         'blocking_period',
         'grace_period',
         'active',
+        'class_semester_year_id',
         'semester_id',
         'created_by_id',
         'created_at',
@@ -53,7 +54,14 @@ class ClassSemesterModel extends Model
             ->findAll();
     }
 
-    public function getClassSemesterBySemesterId($id){
+    public function getBySemesterIdAndCsyId($semester_id, $csy_id){
+        return $this
+            ->where('semester_id',$semester_id)
+            ->where('class_semester_year_id',$csy_id)
+            ->first();
+    }
+
+    public function getCsByCsyId($id){
         return $this
             ->select('
                 class_semester.id,
@@ -61,7 +69,24 @@ class ClassSemesterModel extends Model
                 class_semester_year.grade_id,
                 grade.name as grade_name,
                 grade.section_id,
-                section.name as section_name,
+                semester.name as semester_name
+            ')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
+            ->join('semester', 'semester.id = class_semester.semester_id', 'left')
+            ->where('class_semester_year_id',$id)
+            ->orderBy('semester_name')
+            ->findAll();
+    }
+
+    public function getClassSemesterByClassSemesterYearId($id){
+        return $this
+            ->select('
+                class_semester.id,
+                class_semester_year.code as class_code,
+                class_semester_year.grade_id,
+                grade.name as grade_name,
+                grade.section_id,
                 (
                     SELECT COUNT(*) FROM student_class_semester 
                     JOIN student on student.id = student_class_semester.student_id
@@ -75,7 +100,31 @@ class ClassSemesterModel extends Model
             ')
             ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
-            ->join('section', 'grade.section_id = section.id', 'left')
+            ->where('class_semester_year_id',$id)
+            ->findAll();
+    }
+
+    public function getClassSemesterBySemesterId($id){
+        return $this
+            ->select('
+                class_semester.id,
+                class_semester_year.code as class_code,
+                class_semester_year.grade_id,
+                grade.name as grade_name,
+                grade.section_id,
+                (
+                    SELECT COUNT(*) FROM student_class_semester 
+                    JOIN student on student.id = student_class_semester.student_id
+                    JOIN profile on profile.id = student.profile_id
+                    WHERE 
+                        student_class_semester.student_id is not null and
+                        student.profile_id is not null and
+                        profile.user_id is not null and
+                        student_class_semester.class_semester_id = class_semester.id
+                ) AS total_students
+            ')
+            ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->where('semester_id',$id)->findAll();
     }
     
@@ -89,11 +138,10 @@ class ClassSemesterModel extends Model
                 class_semester.clock_out,
                 class_semester_year.grade_id,
                 grade.name as grade_name,
-                grade.section_id, section.name as section_name
+                grade.section_id,
             ')
             ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
-            ->join('section', 'grade.section_id = section.id', 'left')
             ->where('class_semester.id',$id)->first();
     }
 

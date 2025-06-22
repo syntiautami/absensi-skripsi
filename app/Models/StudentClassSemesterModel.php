@@ -36,7 +36,6 @@ class StudentClassSemesterModel extends Model
             ->select('
                 student_class_semester.id,
                 class_semester.id as cs_id,
-                section.name as section_name,
                 grade.name as grade_name,
                 class_semester_year.code as class_code,
                 class_semester.grace_period,
@@ -47,7 +46,6 @@ class StudentClassSemesterModel extends Model
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
             ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
-            ->join('section', 'section.id = grade.section_id', 'left')
             ->join('student', 'student.id = student_class_semester.student_id', 'left')
             ->where('student_class_semester.active',1)
             ->whereIn('student_class_semester.student_id',$ids)
@@ -129,7 +127,6 @@ class StudentClassSemesterModel extends Model
             ->select('
                 student_class_semester.id,
                 class_semester.id as cs_id,
-                section.name as section_name,
                 grade.name as grade_name,
                 class_semester_year.code as class_code,
                 class_semester.grace_period,
@@ -139,7 +136,6 @@ class StudentClassSemesterModel extends Model
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
             ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
-            ->join('section', 'section.id = grade.section_id', 'left')
             ->where('student_class_semester.active',1)
             ->where('student_class_semester.student_id',$id)
             ->first();

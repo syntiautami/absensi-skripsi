@@ -58,24 +58,20 @@ $routes->group('admin/classes', ['filter' => 'auth'], function($routes) {
 
     // Class Semester
     $routes->group('academic-year/(:num)/class_semester_year/(:num)/', function($routes) {
-        $routes->get('/', 'Admin\Classes\ClassSemester::index/$1/$2');
+        $routes->get('/', 'Admin\Classes\ClassSemester::detail/$1/$2');
         $routes->match(['get', 'post'], 'create/', 'Admin\Classes\ClassSemester::create/$1/$2');
-        
-        $routes->group('(:num)', function($routes) {
-            $routes->get('/', 'Admin\Classes\ClassSemester::detail/$1/$2/$3');
-            $routes->match(['get', 'post'], 'edit/', 'Admin\Classes\ClassSemester::edit/$1/$2/$3');
+        $routes->match(['get', 'post'], 'edit/', 'Admin\Classes\ClassSemester::edit/$1/$2');
 
-            // Students
-            $routes->match(['get', 'post'], 'students/', 'Admin\Classes\ClassSemester::students/$1/$2/$3');
-            $routes->get('students/(:num)/delete/', 'Admin\Classes\ClassSemester::delete/$1/$2/$3/$4');
+        // Students
+        $routes->match(['get', 'post'], 'students/', 'Admin\Classes\ClassSemester::students/$1/$2');
+        $routes->get('students/(:num)/delete/', 'Admin\Classes\ClassSemester::delete/$1/$2/$4');
 
-            // Class Hour
-            $routes->match(['get', 'post'], 'class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2/$3');
+        // Class Hour
+        $routes->match(['get', 'post'], 'class-hour/', 'Admin\Classes\ClassSemester::class_hour/$1/$2');
 
-            // Timetable
-            $routes->get('timetable/', 'Admin\Classes\Timetable::index/$1/$2/$3');
-            $routes->match(['get', 'post'], 'timetable/(:num)/', 'Admin\Classes\Timetable::class_timetable_period/$1/$2/$3/$4');
-        });
+        // Timetable
+        $routes->get('timetable/', 'Admin\Classes\Timetable::index/$1/$2');
+        $routes->match(['get', 'post'], 'timetable/(:num)/', 'Admin\Classes\Timetable::class_timetable_period/$1/$2/$3');
     });
 });
 

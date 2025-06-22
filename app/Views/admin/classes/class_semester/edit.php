@@ -16,10 +16,7 @@
             <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>"><?= esc($academic_year['name']) ?></a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/') ?>">Semester <?= esc($semester['name']) ?></a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id'].'/') ?>"><?= esc("{$class_semester['grade_name']} {$class_semester['class_code']}") ?></a>
+            <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year_id/'.$class_semester_year['id'].'/') ?>"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Ubah</li>
     </ol>
@@ -33,29 +30,30 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Nama</label>
-                                <input type="text" class="form-control" name="name" value="<?= esc($class_semester['class_code']) ?>">
+                                <label for="code">Nama</label>
+                                <input type="text" id="code" class="form-control" name="code" value="<?= esc($class_semester_year['class_code']) ?>">
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="wali-kelas">Wali Kelas</label>
-                                <select name="form_teacher" id="wali-kelas" class="form-control">
-                                    <?php foreach ($teachers as $teacher): ?>
-                                        <option value="<?= $teacher['id'] ?>"
-                                            <?= in_array($teacher['id'], $class_homeroom) ? 'selected' : '' ?>>
+                        <?php foreach ($class_semesters as $class_semester) : ?>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="wali-kelas">Wali Kelas Semester <?= $class_semester['semester_name'] ?></label>
+                                    <select name="form_teacher[<?= $class_semester['id'] ?>]" id="wali-kelas" class="form-control">
+                                        <?php foreach ($teachers as $teacher): ?>
+                                            <option value="<?= $teacher['id'] ?>"
+                                            <?= $teacher['id'] == $class_homeroom[$class_semester['id']] ? 'selected' : '' ?>>
                                             <?= $teacher['first_name'] ?> <?= $teacher['last_name'] ?>
                                         </option>
-                                    <?php endforeach; ?>
-                                </select>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        <?php endforeach ?>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/semester/'.$semester['id'].'/class/'.$class_semester['id']) ?>" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>

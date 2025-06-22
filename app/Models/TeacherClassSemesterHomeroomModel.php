@@ -35,7 +35,6 @@ class TeacherClassSemesterHomeroomModel extends Model
                 teacher_class_semester_homeroom.class_semester_id,
                 teacher_class_semester_homeroom.teacher_id,
                 teacher.profile_id,
-                section.name as section_name,
                 grade.name as grade_name,
                 class_semester_year.code as class_code,
                 semester.name as semester_name,
@@ -54,7 +53,6 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('semester','semester.id = class_semester.semester_id')
             ->join('academic_year','academic_year.id = semester.academic_year_id')
-            ->join('section','section.id = grade.section_id')
             ->where([
                 'teacher.profile_id' => $id,
                 'semester.in_session' =>1,
@@ -85,7 +83,6 @@ class TeacherClassSemesterHomeroomModel extends Model
                 teacher_class_semester_homeroom.class_semester_id,
                 teacher_class_semester_homeroom.teacher_id,
                 teacher.profile_id,
-                section.name as section_name,
                 grade.name as grade_name,
                 class_semester_year.code as class_code,
                 semester.name as semester_name,
@@ -104,7 +101,6 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('semester','semester.id = class_semester.semester_id')
             ->join('academic_year','academic_year.id = semester.academic_year_id')
-            ->join('section','section.id = grade.section_id')
             ->where('class_semester_id',$id)
             ->first();
     }
@@ -113,6 +109,7 @@ class TeacherClassSemesterHomeroomModel extends Model
         return $this->select('
                 teacher_class_semester_homeroom.id,
                 teacher_class_semester_homeroom.class_semester_id,
+                teacher_class_semester_homeroom.teacher_id,
                 user.first_name,
                 user.last_name,
                 profile.profile_photo,
@@ -123,5 +120,30 @@ class TeacherClassSemesterHomeroomModel extends Model
             ->join('user', 'user.id = profile.user_id', 'left')
             ->whereIn('class_semester_id',$id)
             ->findAll();
+    }
+
+    public function getFromClassSemesterIdsDistictTeacher($id)
+    {
+        return $this->select('
+                teacher_class_semester_homeroom.id,
+                teacher_class_semester_homeroom.class_semester_id,
+                teacher_class_semester_homeroom.teacher_id,
+                user.first_name,
+                user.last_name,
+                profile.profile_photo,
+            ')
+            ->join('class_semester', 'class_semester.id = teacher_class_semester_homeroom.class_semester_id', 'left')
+            ->join('teacher', 'teacher.id = teacher_class_semester_homeroom.teacher_id', 'left')
+            ->join('profile', 'profile.id = teacher.profile_id', 'left')
+            ->join('user', 'user.id = profile.user_id', 'left')
+            ->whereIn('class_semester_id',$id)
+            ->groupBy('teacher_class_semester_homeroom.teacher_id')
+            ->findAll();
+    }
+
+    public function getFromCsId($csId){
+        return $this
+            ->where('class_semester_id', $csId)
+            ->first();
     }
 }
