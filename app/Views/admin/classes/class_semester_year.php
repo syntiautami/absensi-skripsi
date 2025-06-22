@@ -23,15 +23,10 @@
                 <table id="semesterTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center" rowspan="2">Kelas</th>
-                            <th class="text-center" rowspan="2" style="width: 300px;">Wali Kelas</th>
-                            <th class="text-center" colspan="2" style="width: 200px;">Total Siswa</th>
-                            <th class="text-center" rowspan="2" style="width: 100px;">Aksi</th>
-                        </tr>
-                        <tr>
-                            <?php foreach ($semesters as $semester): ?>
-                                <th class="text-center" style="width: 100px;">Semester <?= $semester['name'] ?></th>
-                            <?php endforeach ?>
+                            <th class="text-center">Kelas</th>
+                            <th class="text-center" style="width: 300px;">Wali Kelas</th>
+                            <th class="text-center" style="width: 200px;">Total Siswa</th>
+                            <th class="text-center" style="width: 100px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,11 +43,7 @@
                                         <?php endforeach ?>
                                     <?php endif ?>
                                 </td>
-                                <?php foreach ($semesters as $semester): ?>
-                                    <td class="text-center">
-                                        <?= $student_data[$class_semester_year['id']][$semester['id']] ?? 0 ?>
-                                    </td>
-                                <?php endforeach ?>
+                                <td class="text-center">0</td>
                                 <td class="text-center">
                                     <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
                                 </td>

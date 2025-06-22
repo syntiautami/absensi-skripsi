@@ -25,7 +25,6 @@
                         <tr>
                             <th class="text-center">Nama</th>
                             <th class="text-center" style="width: 300px;">Nama Pengguna</th>
-                            <th class="text-center" style="width: 150px;">Kelas</th>
                             <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
@@ -39,7 +38,6 @@
                                 </div>
                             </td>
                             <td><?= esc($item['username']) ?></td>
-                            <td class="text-center">-</td>
                             <td class="text-center">
                                 <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/user/') ?>" class="btn btn-sm btn-primary">Ubah</a>
                             </td>

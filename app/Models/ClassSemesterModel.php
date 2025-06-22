@@ -101,6 +101,7 @@ class ClassSemesterModel extends Model
                         student_class_semester.student_id is not null and
                         student.profile_id is not null and
                         profile.user_id is not null and
+                        student_class_semester.active = 1 and
                         student_class_semester.class_semester_id = class_semester.id
                 ) AS total_students
             ')
@@ -108,6 +109,7 @@ class ClassSemesterModel extends Model
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->join('semester', 'semester.id = class_semester.semester_id', 'left')
             ->whereIn('class_semester_year_id',$ids)
+            ->where('class_semester.active',1)
             ->findAll();
     }
 
