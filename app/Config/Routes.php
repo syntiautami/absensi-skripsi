@@ -112,7 +112,7 @@ $routes->group('teacher', ['filter' => 'auth'], function($routes) {
 
     $routes->match(['get', 'post'], 'attendance/', 'Teacher\Attendance\Main::index');
     $routes->get('attendance/subject/', 'Teacher\Attendance\Subject::index');
-    $routes->match(['post','get'],'attendance/subject/(:num)/year/(:num)/month/(:num)/day/(:num)/', 'Teacher\Attendance\Subject::subject_attendance/$1/$2/$3/$4');
+    $routes->match(['post','get'],'attendance/subject/(:num)/year/(:num)/month/(:num)/day/(:num)/period/(:num)', 'Teacher\Attendance\Subject::class_subject_attendance/$1/$2/$3/$4/$5');
 
     // laporan absensi
     $routes->get('report/attendance/', 'Teacher\Report\Main::index');

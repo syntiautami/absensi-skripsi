@@ -53,6 +53,7 @@ class TeacherClassSemesterSubjectModel extends Model
                 subject.name as subject_name,
                 academic_year.name as academic_year_name,
                 semester.name as semester_name,
+                semester.id as semester_id,
                 grade.name as grade_name,
                 class_semester_year.code as class_code,
                 teacher_id,

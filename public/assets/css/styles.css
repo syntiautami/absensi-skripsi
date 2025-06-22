@@ -55,6 +55,7 @@ a,
     background-color: var(--primary) !important;
     border-color: var(--primary) !important;
     color: var(--surface) !important;
+    border
 }
 
 .btn-secondary{
@@ -260,3 +261,26 @@ td div.user-pic img{
     border-radius: 50%;
     margin-right: 8px;
 }
+
+
+/* datatable style */
+table{
+    border-bottom:1px solid var(--primary) !important;
+    border-radius: 14px 14px 0 0 !important;
+    border:none !important;
+}
+tr.odd td{
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+tr.even td{
+    background-color: var(--sidebar-active) !important;
+}
+
+.boder-radius-left{
+    border-radius: 14px 0 0 0 !important;
+}
+.boder-radius-right{
+    border-radius: 0 14px 0 0 !important;
+}
+/* datatable style */

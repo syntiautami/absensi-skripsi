@@ -106,8 +106,7 @@ class Timetable extends BaseController
         if ($this->request->getMethod() == 'POST'){
             $data = $this->request->getPost('period');
             
-            $today = date('Y-m-d');
-            $existingClassTimetablePeriod = $classTimetablePeriodModel -> getClassTimetableByTimetableIds($timetableIds);
+            $existingClassTimetablePeriod = $classTimetablePeriodModel -> getClassTimetableByTimetableIds($timetableIds, $day);
             $existingMap = [];
             foreach ($existingClassTimetablePeriod as $row) {
                 $existingMap[$row['timetable_period_id']] = $row;
@@ -124,7 +123,7 @@ class Timetable extends BaseController
                     continue;
                 }
 
-                if (isset($existingMap[$timetableId])) {
+                if (isset($existingMap[$timetableId])){
                     // Ada record → update kalau beda subject_id atau aktifkan
                     if ($existingMap[$timetableId]['class_semester_subject_id'] != $classSemesterSubjectId
                         || $existingMap[$timetableId]['active'] != 1) {
@@ -132,6 +131,7 @@ class Timetable extends BaseController
                         $updateBatch[] = [
                             'id' => $existingMap[$timetableId]['id'],
                             'class_semester_subject_id' => $classSemesterSubjectId,
+                            'day' => $day,
                             'active' => 1,
                             'updated_by_id' => session()-> get('user')['id']
                         ];
@@ -144,6 +144,7 @@ class Timetable extends BaseController
                     $insertBatch[] = [
                         'timetable_period_id' => $timetableId,
                         'class_semester_subject_id' => $classSemesterSubjectId,
+                        'day' => $day,
                         'active' => 1,
                         'created_by_id' => session()-> get('user')['id']
                     ];
@@ -172,7 +173,7 @@ class Timetable extends BaseController
             return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/class_semester_year/'.$class_semester_year_id.'/timetable/'.$semester_id.'/day/'.$day.'/'))->with('success', 'Data berhasil diperbarui.');
         }
 
-        $classTimetablePeriodList = $classTimetablePeriodModel->getActiveClassTimetableList($timetableIds);
+        $classTimetablePeriodList = $classTimetablePeriodModel->getActiveClassTimetableList($timetableIds, $day);
         $existingClassSemesterSubjectData = [];
         foreach ($classTimetablePeriodList as $row) {
             $existingClassSemesterSubjectData[$row['timetable_period_id']] = $row['class_semester_subject_id'];

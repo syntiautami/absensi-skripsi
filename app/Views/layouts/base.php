@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/datatables-fixedcolumns/css/fixedColumns.bootstrap4.min.css') ?>">  
   
   <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.css') ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.css') ?>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
   
   <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
   <?= $this->renderSection('styles') ?>
@@ -118,6 +118,16 @@
               $(element).removeClass('is-invalid');
           }
       }
+  });
+
+  $.extend( true, $.fn.dataTable.defaults, {
+      responsive : true,
+      autowidth : false,     
+      ordering: false,
+      searching: false,
+      info: false,
+      lengthChange: false,
+      paging: false,
   });
 </script>
 <?= $this->renderSection('scripts') ?>
