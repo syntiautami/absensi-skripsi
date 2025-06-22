@@ -24,20 +24,16 @@
                     <thead>
                         <tr>
                             <th class="text-center">Kelas</th>
-                            <?php $no = 1; foreach ($semesters as $semester): ?>
-                                <th class="text-center" style="width: 100px;">Semester <?= $semester ?></th>
-                            <?php endforeach ?>
+                            <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; foreach ($classSemesters as $key => $class_semester): ?>
+                        <?php $no = 1; foreach ($class_semester_years as $class_semester_year): ?>
                             <tr>
-                                <td class="text-center"><?= esc($class_semester['kelas']) ?></td>
-                                <?php $no = 1; foreach ($semesters as $semester): ?>
-                                    <td class="text-center">
-                                        <a href="<?= base_url('admin/subject/class/academic-year/'.$academic_year['id'].'/class/'.$class_semester[$semester]['cs_id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
-                                    </td>
-                                <?php endforeach ?>
+                                <td class="text-center"><?= esc("{$class_semester_year['grade_name']} {$class_semester_year['class_code']}") ?></td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('admin/subject/class/academic-year/'.$academic_year['id'].'/class_semester_year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                </td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>

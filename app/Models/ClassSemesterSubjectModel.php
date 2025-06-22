@@ -45,21 +45,24 @@ class ClassSemesterSubjectModel extends Model
             ->findAll();
     }
 
-    public function getExistingSubjectsById($csId){
+    public function getExistingSubjectsByCsyId($csId){
         return $this
             ->select('
                 subject_id,
-                active
+                class_semester_id
             ')
-            ->where('class_semester_id', $csId)
+            ->join('class_semester', 'class_semester.id = class_semester_subject.class_semester_id', 'left')
+            ->where('class_semester.class_semester_year_id', $csId)
             ->findAll();
     }
 
-    public function getActiveExistingSubjectByCsId($csId){
+    public function getActiveExistingSubjectByCsyId($csyId){
         return $this
             ->select('subject_id')
-            ->where('class_semester_id', $csId)
-            ->where('active', 1)
+            ->join('class_semester', 'class_semester.id = class_semester_subject.class_semester_id', 'left')
+            ->where('class_semester.class_semester_year_id', $csyId)
+            ->where('class_semester.active', 1)
+            ->where('class_semester_subject.active', 1)
             ->findAll();
     }
 }
