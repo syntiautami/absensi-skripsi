@@ -265,6 +265,11 @@ td div.user-pic img{
     margin-right: 8px;
 }
 
+img.img-circle,
+td div.user-pic img{
+    border:  2px solid var(--primary); 
+}
+
 
 /* datatable style */
 table{
