@@ -147,7 +147,10 @@ class Main extends BaseController
             
             $studentTappingTime = $currentTap;
             $sendEmail = true;
-            if (!empty($todayEntry)) {
+            if ($attendanceStatus && in_array($attendanceStatus,['sick','excused'])) {
+                $status = $attendanceStatus;
+                $sendEmail = false;
+            }elseif (!empty($todayEntry)) {
                 $status = 'present';
                 $sendEmail = false;
                 if ($currentTap > $blockingPeriodTime) {
@@ -168,42 +171,35 @@ class Main extends BaseController
                 }
 
             } else {
-                // tapping masuk
-                if($attendanceStatus && in_array($attendanceStatus,['sick','excused'])){
-                    // sakit izin
-                    $status = $attendanceStatus;
-                    $sendEmail = false;
-                }else{
-                    $status = 'absent';
-                    if ($currentTap < $clockInTime) {
-                        $status = 'present';
-                    } elseif (!empty($gracePeriod) && $currentTap >= $clockInTime && $currentTap <= $gracePeriodTime) {
-                        $status = 'late';
-                        if (!$attendanceStatus){
-                            $attModel -> insert([
-                                'student_class_semester_id' => $studentData['id'],
-                                'attendance_type_id' => 4, //late
-                                'date'       => date('Y-m-d'),
-                                'created_by_id'  => session()->get('user')['id']
-                            ]);
-                        }
-                    } else {
-                        if (!$attendanceStatus) {
-                            $attModel -> insert([
-                                'student_class_semester_id' => $studentData['id'],
-                                'attendance_type_id' => 1, //absent
-                                'date'       => date('Y-m-d'),
-                                'created_by_id'  => session()->get('user')['id']
-                            ]);
-                        }
+                $status = 'absent';
+                if ($currentTap < $clockInTime) {
+                    $status = 'present';
+                } elseif (!empty($gracePeriod) && $currentTap >= $clockInTime && $currentTap <= $gracePeriodTime) {
+                    $status = 'late';
+                    if (!$attendanceStatus){
+                        $attModel -> insert([
+                            'student_class_semester_id' => $studentData['id'],
+                            'attendance_type_id' => 4, //late
+                            'date'       => date('Y-m-d'),
+                            'created_by_id'  => session()->get('user')['id']
+                        ]);
                     }
-                    // belum ada → insert baru
-                    $dailyEntryModel->insert([
-                        'profile_id'     => $studentProfile['id'],
-                        'clock_in'       => date('Y-m-d H:i:s'),
-                        'created_by_id'  => session()->get('user')['id'],
-                    ]);
+                } else {
+                    if (!$attendanceStatus) {
+                        $attModel -> insert([
+                            'student_class_semester_id' => $studentData['id'],
+                            'attendance_type_id' => 1, //absent
+                            'date'       => date('Y-m-d'),
+                            'created_by_id'  => session()->get('user')['id']
+                        ]);
+                    }
                 }
+                // belum ada → insert baru
+                $dailyEntryModel->insert([
+                    'profile_id'     => $studentProfile['id'],
+                    'clock_in'       => date('Y-m-d H:i:s'),
+                    'created_by_id'  => session()->get('user')['id'],
+                ]);
             }
 
             $emailResults = [];
