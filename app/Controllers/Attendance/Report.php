@@ -84,6 +84,12 @@ class Report extends BaseController
 
         // 3. Buat Spreadsheet
         $spreadsheet = new Spreadsheet();
+        $presentColor = '4CAF50';
+        $holidayColor = '607D8B';
+        $absentColor = 'D32F2F';
+        $sickColor = '9C27B0';
+        $excusedColor = '1976D2';
+        $lateColor =  'FFA000';
 
         // Loop setiap bulan
         while ($startDate <= $endDate) {
@@ -100,13 +106,6 @@ class Report extends BaseController
             foreach ($cellsToBold as $cell) {
                 $sheet->getStyle($cell)->getFont()->setBold(true);
             }
-
-            $presentColor = '2E7D32';
-            $holidayColor = '29434e';
-            $absentColor = 'D32F2F';
-            $sickColor = '17a2b8';
-            $excusedColor = '1976D2';
-            $lateColor =  'FFA000';
 
             $sheet->setCellValue('B2', 'Laporan Kehadiran Siswa');
             $sheet->getStyle('B2')->getFont()->setSize(18);
@@ -552,6 +551,12 @@ class Report extends BaseController
         // 3. Buat Spreadsheet
         $spreadsheet = new Spreadsheet();
 
+        $presentColor = '4CAF50';
+        $holidayColor = '607D8B';
+        $absentColor = 'D32F2F';
+        $sickColor = '9C27B0';
+        $excusedColor = '1976D2';
+        $lateColor =  'FFA000';
         // Loop setiap bulan
         while ($startDate <= $endDate) {
             $bulan = $startDate->format('F'); // Nama bulan (ex: June)
@@ -567,13 +572,6 @@ class Report extends BaseController
             foreach ($cellsToBold as $cell) {
                 $sheet->getStyle($cell)->getFont()->setBold(true);
             }
-
-            $presentColor = '2E7D32';
-            $holidayColor = '29434e';
-            $absentColor = 'D32F2F';
-            $sickColor = '17a2b8';
-            $excusedColor = '1976D2';
-            $lateColor =  'FFA000';
 
             $sheet->setCellValue('B2', 'Laporan Kehadiran Mata Pelajaran '.$subjectName);
             $sheet->getStyle('B2')->getFont()->setSize(18);

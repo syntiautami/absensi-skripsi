@@ -21,6 +21,7 @@
     --color-absent: #D32F2F;
     --color-late: #FFA000;
     --color-present: #4CAF50;
+    --color-holiday: #607D8B;
 }
 
 [class*="sidebar-dark-"]{
