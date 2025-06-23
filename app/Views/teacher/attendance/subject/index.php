@@ -50,12 +50,12 @@
                                     <div class="modal-content">
 
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalLabel<?= $teacher_class_semester_subject['css_id'] ?>">
+                                            <h5 class="modal-title text-center w-100" id="modalLabel<?= $teacher_class_semester_subject['css_id'] ?>">
                                                 <?= esc($teacher_class_semester_subject['subject_name'] ?? '-') ?> 
                                                 - <?= esc($teacher_class_semester_subject['grade_name'] ?? '-') ?> 
                                                 <?= esc($teacher_class_semester_subject['class_code'] ?? '-') ?>
                                             </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close position-absolute" style="right: 1rem;" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
