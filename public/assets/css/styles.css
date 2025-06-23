@@ -198,10 +198,6 @@ table thead th{
     color: var(--sidebar-active) !important;
 }
 
-.table-striped tbody tr:nth-of-type(odd){
-    background-color: none;
-}
-
 .table-striped tbody tr:nth-of-type(even){
     background-color: var(--sidebar-active);
 }
@@ -279,7 +275,7 @@ table{
     border-left:hidden !important;
 }
 tr.odd td{
-    background-color: transparent !important;
+    background-color: var(--surface) !important;
     box-shadow: none !important;
 }
 tr.even td{
