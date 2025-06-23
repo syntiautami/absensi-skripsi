@@ -53,10 +53,19 @@ class ClassTimetablePeriodModel extends Model
                 day,
                 timetable_period.start_time,
                 timetable_period.end_time,
+                subject.name as subject_name,
+                grade.name as grade_name,
+                class_semester_year.code as class_code
             ')
             ->join('timetable_period','timetable_period.id = class_timetable_period.timetable_period_id')
+            ->join('class_semester_subject','class_semester_subject.id = class_timetable_period.class_semester_subject_id')
+            ->join('class_semester','class_semester.id = class_semester_subject.class_semester_id')
+            ->join('class_semester_year','class_semester_year.id = class_semester.class_semester_year_id')
+            ->join('grade','grade.id = class_semester_year.grade_id')
+            ->join('subject','subject.id = class_semester_subject.subject_id')
             ->whereIn('class_semester_subject_id', $ids)
-            ->where('active',1)
+            ->where('class_semester_subject.active',1)
+            ->where('class_timetable_period.active',1)
             ->findAll();
     }
 

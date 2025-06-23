@@ -366,3 +366,6 @@ div.col .small-box.total{
 
 
 /* dashboard */
+.subjects-row .col{
+    max-width: 400px;
+}

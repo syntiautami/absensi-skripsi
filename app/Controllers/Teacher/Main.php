@@ -6,9 +6,11 @@ use App\Controllers\BaseController;
 use App\Helpers\AttendanceHelper;
 use App\Models\AttendanceDailyEntryModel;
 use App\Models\AttendanceModel;
+use App\Models\ClassTimetablePeriodModel;
 use App\Models\ProfileModel;
 use App\Models\StudentClassSemesterModel;
 use App\Models\TeacherClassSemesterSubjectModel;
+use App\Models\TeacherModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Main extends BaseController
@@ -67,10 +69,31 @@ class Main extends BaseController
             }
         }
 
+        $profileId = session()->get('user')['profile_id'];
+        $teacherModel = new TeacherModel();
+        $teacher = $teacherModel->getDataByProfileId($profileId);
+
         $tcssModel = new TeacherClassSemesterSubjectModel();
-        
+        $classTimetablePeriodList = [];
+        $teacher_class_semester_subjects = $tcssModel-> getInSessionTcssByTeacher($teacher['id']);
+        if (!empty($teacher_class_semester_subjects)) {
+            $cssIds = array_column($teacher_class_semester_subjects, 'css_id');
+            $ctpModel = new ClassTimetablePeriodModel();
+            $ctpList = $ctpModel-> getActiveByCssIds($cssIds);
+
+            foreach ($ctpList as $data) {
+                $day = $data['day'];
+                
+                if (!isset($classTimetablePeriodList[$day])) {
+                    $classTimetablePeriodList[$day] = [];
+                }
+                $classTimetablePeriodList[$day][] = $data;
+            }
+        }
+
         return view('teacher/home', [
             'attendance_data' => $studentStatisticData,
+            'ctp_data' => $classTimetablePeriodList,
             'viewing' => 'dashboard',
             'walas' => $walas,
         ]);

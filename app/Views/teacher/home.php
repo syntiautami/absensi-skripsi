@@ -19,8 +19,34 @@
                 <h5 class="mb-0 font-weight-bold">JADWAL PELAJARAN</h5>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col"></div>
+                <div class="row subjects-row">
+                    <?php helper('day') ?>
+                    <?php foreach ($ctp_data as $day => $ctpList): ?>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-header font-weight-bold text-center">
+                                    <h5 class="mb-0 font-weight-bold"><?= day_indonesian($day) ?></h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <?php foreach ($ctpList as $ctp): ?>
+                                            <div class="col-sm-12 mb-2">
+                                                <div class="d-flex justify-content-between align-items-center p-3 bg-success text-white rounded">
+                                                    <div>
+                                                        <div class="font-weight-bold"><?= $ctp['subject_name'] ?></div>
+                                                        <div class="small"><?= esc("{$ctp['grade_name']} {$ctp['class_code']}") ?></div>
+                                                    </div>
+                                                    <div class="font-weight-bold">
+                                                        <?= $ctp['start_time'] ?> - <?= $ctp['end_time'] ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
                 </div>
             </div>
             <div class="card-header">
