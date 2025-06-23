@@ -35,4 +35,14 @@ class AttendanceSubjectModel extends Model
             ->whereIn('student_class_semester_id', $ids)
             ->findAll();
     }
+
+    public function getByCssId($id){
+        return $this
+            ->join('class_timetable_period', 'class_timetable_period.id = attendance_subject.class_timetable_period_id','left')
+            ->join('class_semester_subject','class_semester_subject.id = class_timetable_period.class_semester_subject_id', 'left')
+            ->where('class_semester_subject.id',$id)
+            ->where('class_timetable_period.active',1)
+            ->where('class_semester_subject.active',1)
+            ->findAll();
+    }
 }

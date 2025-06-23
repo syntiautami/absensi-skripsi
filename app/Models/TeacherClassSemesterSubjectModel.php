@@ -27,6 +27,28 @@ class TeacherClassSemesterSubjectModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
+    public function getExistingCssId($cssId){
+        return $this
+            ->select('
+                teacher_class_semester_subject.id as tcss_id,
+                class_semester_subject.id as css_id,
+                class_semester_subject.subject_id,
+                teacher_id,
+                user.first_name,
+                user.last_name
+            ')
+            ->join('class_semester_subject','class_semester_subject.id = teacher_class_semester_subject.class_semester_subject_id', 'left')
+            ->join('class_semester','class_semester.id = class_semester_subject.class_semester_id', 'left')
+            ->join('teacher','teacher.id = teacher_class_semester_subject.teacher_id', 'left')
+            ->join('profile','profile.id = teacher.profile_id', 'left')
+            ->join('user','user.id = profile.user_id', 'left')
+            ->where('teacher_class_semester_subject.class_semester_subject_id', $cssId)
+            ->where('teacher_class_semester_subject.active',1)
+            ->where('class_semester_subject.active',1)
+            ->where('class_semester.active',1)
+            ->findAll();
+    }
+
     public function getExistingSubjectByCsyId($csyId){
         return $this
             ->select('

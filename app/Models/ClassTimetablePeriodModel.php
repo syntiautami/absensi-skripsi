@@ -60,6 +60,22 @@ class ClassTimetablePeriodModel extends Model
             ->findAll();
     }
 
+    public function getActiveByCssId($id){
+        return $this
+            ->select('
+                class_timetable_period.id as ctp_id,
+                class_semester_subject_id as css_id,
+                day,
+                timetable_period.start_time,
+                timetable_period.end_time,
+                timetable_period.period
+            ')
+            ->join('timetable_period','timetable_period.id = class_timetable_period.timetable_period_id')
+            ->where('class_semester_subject_id', $id)
+            ->where('active',1)
+            ->findAll();
+    }
+
     public function getById($id){
         return $this
             ->select('
