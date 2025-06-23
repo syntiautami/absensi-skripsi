@@ -147,4 +147,23 @@ class Main extends BaseController
             'viewing_sub' => 'classes',
         ]);
     }
+
+    public function delete($academic_year_id, $id){
+        $model = new AcademicYearModel();
+
+        $academic_year = $model->getAcademicYearById($academic_year_id);
+        if (!$academic_year) {
+            return redirect()->to(base_url('admin/classes/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        $csyModel = new ClassSemesterYearModel();
+        $class_semester_year = $csyModel-> getById($id);
+        if (!$class_semester_year) {
+            return redirect()->to(base_url('admin/classes/academic-year/'.$academic_year_id.'/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        $csyModel->delete($id);
+
+        return redirect()->to('admin/classes/academic-year/'.$academic_year['id'].'/')->with('success', 'Data Kelas berhasil dihapus.');
+    }
 }

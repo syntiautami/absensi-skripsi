@@ -23,10 +23,10 @@
                 <table id="semesterTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Kelas</th>
-                            <th class="text-center" style="width: 300px;">Wali Kelas</th>
+                            <th class="text-center" style="width: 300px;">Kelas</th>
+                            <th class="text-center">Wali Kelas</th>
                             <th class="text-center" style="width: 200px;">Total Siswa</th>
-                            <th class="text-center" style="width: 100px;">Aksi</th>
+                            <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +48,10 @@
                                 </td>
                                 <td class="text-center">
                                     <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/') ?>" class="btn btn-sm btn-primary">Lihat</a>
+                                    <a class="btn btn-sm btn-danger btn-delete-user"
+                                    data-url="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/delete/'.$class_semester_year['id'].'/') ?>">
+                                        Hapus
+                                    </a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -75,6 +79,25 @@
             "paging": false,
             "info" : false
         });
+
+        $('.btn-delete-user').click(function(){
+            const url = $(this).data('url');
+
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini ?',
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        })
     });
 </script>
 <?= $this->endSection() ?>
