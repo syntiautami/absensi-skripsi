@@ -204,21 +204,17 @@ class Main extends BaseController
                 }
             }
 
+            $emailResults = []
             if ($sendEmail && !empty($studentProfile['parent_email'])) {
-                try{
-                    send_email([
-                        'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
-                        'kelas' => $studentData['grade_name'].' '.$studentData['class_code'],
-                        'parent_email' => $studentProfile['parent_email'],
-                        'time' => date('H:i:s',strtotime($studentTappingTime)),
-                        'status' => $status
-                    ]);
-                }catch(Exception $e){
-                    // log error
-                    log_message('error','Gagal Kirim Email: '.$e->getMessage());
-                }
+                $dataSendEmail = [
+                    'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
+                    'kelas' => $studentData['grade_name'].' '.$studentData['class_code'],
+                    'parent_email' => $studentProfile['parent_email'],
+                    'time' => date('H:i:s',strtotime($studentTappingTime)),
+                    'status' => $status
+                ];
+                $emailResults = send_email($dataSendEmail);
             }
-
             return $this->response->setJSON([
                 'data' => [
                     'id' => $studentData['id'],
@@ -229,7 +225,7 @@ class Main extends BaseController
                     'time' => date('H:i:s',strtotime($studentTappingTime)),
                     'status' => $status,
                     'blocking' => $blockingPeriodTime,
-
+                    'email' =>$emailResults,
                 ]
             ]);
         } 

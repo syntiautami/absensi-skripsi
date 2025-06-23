@@ -67,15 +67,34 @@ if (!function_exists('send_email')) {
         }elseif($data['status'] == 'late'){
             $emailMsg = $lateMsg;
         }
-        $email->setFrom($fromEmail, $fromName);
-        $email->setTo($data['parent_email']);
-        $email->setSubject('Notifikasi Kehadiran Siswa - SMA IT Alia Tangerang');
-        $email->setMessage($emailMsg);
+        try {
+            $email->setFrom($fromEmail, $fromName);
+            $email->setTo($data['parent_email']);
+            $email->setSubject('Notifikasi Kehadiran Siswa - SMA IT Alia Tangerang');
+            $email->setMessage($emailMsg);
 
-        if ($email->send()) {
-            return true; // berhasil
+            if ($email->send()) {
+                return [
+                    'success' => true,
+                    'message' => 'Email berhasil dikirim.'
+                ];
+            } else {
+                $debugInfo = print_r($email->printDebugger(['headers', 'subject', 'body']), true);
+                log_message('error', 'Email gagal: ' . $debugInfo);
+
+                return [
+                    'success' => false,
+                    'message' => 'Gagal mengirim email.',
+                    'debug'   => $debugInfo
+                ];
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Exception saat kirim email: ' . $e->getMessage());
+
+            return [
+                'success' => false,
+                'message' => 'Exception: ' . $e->getMessage()
+            ];
         }
-        log_message('error', 'Email gagal: ' . print_r($email->printDebugger(['headers', 'subject', 'body']), true));
-        return false; // gagal
     }
 }
