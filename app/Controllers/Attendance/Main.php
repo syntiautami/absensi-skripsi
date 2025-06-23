@@ -164,8 +164,12 @@ class Main extends BaseController
                     $studentTappingTime = $currentTap;
                 }else{
                     $studentTappingTime = $todayEntry['clock_in'];
+                    if ($attendanceStatus && $attendanceStatus == 'late'){
+                        $sendEmail = false;
+                        $status = $attendanceStatus;
+                    }
                 }
-                if ($attendanceStatus){
+                if ($attendanceStatus && $attendanceStatus != 'late'){
                     $sendEmail = false;
                     $status = $attendanceStatus;
                 }
