@@ -204,7 +204,7 @@ class Main extends BaseController
                 }
             }
 
-            $emailResults = []
+            $emailResults = [];
             if ($sendEmail && !empty($studentProfile['parent_email'])) {
                 $dataSendEmail = [
                     'name' => $studentProfile['first_name'].' '.$studentProfile['last_name'],
