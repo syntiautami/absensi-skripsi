@@ -102,6 +102,7 @@ class Main extends BaseController
             'viewing' => 'user',
         ]);
     }
+    
     public function edit_user($role_id, $id)
     {
         $roleModel = new RoleModel();
@@ -165,6 +166,23 @@ class Main extends BaseController
         ]);
     }
 
+    public function delete_user($role_id, $id)
+    {
+        $roleModel = new RoleModel();
+        $role = $roleModel->where('id',$role_id)->first();
+        if (!$role) {
+            return redirect()->to(base_url('admin/users/'))->with('error', 'Data tidak ditemukan.');
+        }
+        $userModel = new UserModel();
+        $user = $userModel->getLoginDataById($id);
+        if (!$user) {
+            return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        $userModel->delete($id);
+        return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('success', 'Data berhasil dihapus.');
+    }
+    
     public function edit_profile($role_id, $id)
     {
         $roleModel = new RoleModel();

@@ -40,6 +40,10 @@
                             <td><?= esc($item['username']) ?></td>
                             <td class="text-center">
                                 <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/user/') ?>" class="btn btn-sm btn-primary">Ubah</a>
+                                <a class="btn btn-sm btn-danger btn-delete-user"
+                                data-url="<?= base_url('admin/users/'.$role['id'].'/delete/'.$item['user_id'].'/') ?>">
+                                    Hapus
+                                </a>
                             </td>
                         </tr>
                         <?php endforeach ?>
@@ -53,7 +57,6 @@
             </div>
         </div>
     </section>
-
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
@@ -63,6 +66,25 @@
             paging: true,
             searching: true
         });
+
+        $('.btn-delete-user').click(function(){
+            const url = $(this).data('url');
+
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini ?',
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        })
     });
 </script>
 <?= $this->endSection() ?>

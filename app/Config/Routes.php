@@ -36,6 +36,7 @@ $routes->group('admin/users', ['filter' => 'auth'], function($routes) {
     
     $routes->match(['get', 'post'], '(:num)/create/', 'Admin\User\Main::create/$1');
 
+    $routes->match(['get', 'post'], '(:num)/delete/(:num)/', 'Admin\User\Main::delete_user/$1/$2');
     $routes->match(['get', 'post'], '(:num)/edit/(:num)/user/', 'Admin\User\Main::edit_user/$1/$2');
     $routes->match(['get', 'post'], '(:num)/edit/(:num)/profile/', 'Admin\User\Main::edit_profile/$1/$2');
     $routes->match(['get', 'post'], '(:num)/edit/(:num)/additional/', 'Admin\User\Main::edit_additional/$1/$2');
@@ -108,8 +109,6 @@ $routes->group('admin/report', ['filter' => 'auth'], function($routes) {
     // download attendance subject
     $routes->get('attendance/subject/(:num)/download', 'Attendance\Report::attendance_subject/$1');
 });
-
-
 
 // teacher
 $routes->group('teacher', ['filter' => 'auth'], function($routes) {
