@@ -106,7 +106,6 @@ class Main extends BaseController
             ];
             $data = $this->request->getPost();
             if ($this->validate($rules)) {
-
                 $csyModel = new ClassSemesterYearModel();
                 $csyId = $csyModel->insert([
                     'academic_year_id' => $academic_year_id,
@@ -126,7 +125,7 @@ class Main extends BaseController
                     $homeroomModel = new TeacherClassSemesterHomeroomModel();
                     $homeroomModel -> insert([
                         'class_semester_id' => $csId,
-                        'teacher_id' => $data['form_teacher'],
+                        'teacher_id' => $data['form_teacher'][$semester['id']],
                         'created_by_id' => session()->get('user')['id']
                     ]);
                 }
