@@ -95,6 +95,7 @@ class Cron extends Controller
             $existingAttendanceScsId = array_column($attList, 'student_class_semester_id');
         }
 
+        $sendEmailData = [];
         $insertData = [];
         $emailRecipients = [];
         foreach ($scsList as $scs) {
@@ -115,6 +116,13 @@ class Cron extends Controller
                 continue;
             }
 
+            $sendEmailData[] = [
+                'name' => $full_name,
+                'kelas' => $className,
+                'parent_email' => $parentEmail,
+                'status' => 'auto-absent'
+            ];
+
             // jadiin absent dan kirim blast
             $insertData[] = [
                 'student_class_semester_id' => $scsId,
@@ -130,12 +138,15 @@ class Cron extends Controller
             ];
         }
 
-        // comment dulu pas testing aja coba lagi
-        // if (!empty($insertData)) {
-        //     $attModel->insertBatch($insertData);
-        // }
+        if (!empty($insertData)) {
+            $attModel->insertBatch($insertData);
+        }
 
         // send email later..
         echo 'Proses selesai.';
+
+        foreach ($sendEmailData as $data) {
+            send_email($data);
+        }
     }
 }
