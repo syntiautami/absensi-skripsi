@@ -76,6 +76,28 @@ class AttendanceDailyEntryModel extends Model
             ->findAll();
     }
 
+    public function getTodayEntriesByProfileIds($ids, $order='clock_in')
+    {
+        return $this
+            ->select('
+                attendance_daily_entry.clock_in,
+                attendance_daily_entry.clock_out,
+                student.id as student_id,
+                student.profile_id,
+                profile.profile_photo,
+                user.first_name,
+                user.last_name,
+            ')
+            ->join('student','student.profile_id = attendance_daily_entry.profile_id')
+            ->join('profile','profile.id = attendance_daily_entry.profile_id')
+            ->join('user','user.id = profile.user_id')
+            ->whereIn('profile.id', $ids)
+            ->where('DATE(clock_in)', date('Y-m-d'))
+            ->orWhere('DATE(clock_out)', date('Y-m-d'))
+            ->orderBy($order, 'desc')
+            ->findAll();
+    }
+
     public function getTodayEntries($order='clock_in')
     {
         return $this

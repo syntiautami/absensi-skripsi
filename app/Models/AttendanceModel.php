@@ -53,9 +53,16 @@ class AttendanceModel extends Model
 
     public function getTodayAttendanceByscsId($ids){
         return $this
-        ->whereIn('student_class_semester_id', $ids)
-        ->where('date', date('Y-m-d'))
-        ->findAll();
+            ->select('
+                    attendance_type_id,
+                    date,
+                    student.profile_id
+                ')
+            ->join('student_class_semester', 'student_class_semester.id = attendance.student_class_semester_id')
+            ->join('student', 'student_class_semester.student_id = student.id')
+            ->whereIn('student_class_semester_id', $ids)
+            ->where('date', date('Y-m-d'))
+            ->findAll();
     }
     public function getTodayAttendance($id){
         return $this->where('student_class_semester_id', $id)

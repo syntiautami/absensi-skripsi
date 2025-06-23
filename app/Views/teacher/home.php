@@ -14,11 +14,19 @@
 
 <?= $this->section('content') ?>
     <section class="content">
-        <!-- Card Grid -->
-        <div class="card">
-          <div class="card-body">
-            
-          </div>
+        <div class="container-fluid">
+            <div class="row">
+            <?php foreach ($attendance_data as $key => $value): ?>
+                <div class="col dashboard-<?= $key ?>">
+                    <div class="small-box <?= $key ?>">
+                        <div class="inner text-center">
+                            <h3><?= $value ?></h3>
+                            <p class="text-uppercase"><?= $key ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+            </div>
         </div>
     </section>
     <!-- /.content -->

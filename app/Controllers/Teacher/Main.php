@@ -3,30 +3,37 @@
 namespace App\Controllers\Teacher;
 
 use App\Controllers\BaseController;
+use App\Helpers\AttendanceHelper;
 use App\Models\AttendanceDailyEntryModel;
+use App\Models\AttendanceModel;
+use App\Models\StudentClassSemesterModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Main extends BaseController
 {
     public function index()
     {
-        $dateToday = date('Y-m-d');
         $walas = session()->get('homeroom_teacher');
 
-        $attendanceData = [];
+        $studentStatisticData = [
+            'present' =>0,
+            'late' => 0,
+            'sick' => 0,
+            'excused' => 0,
+            'absent' => 0,
+            'total' => 0,
+        ];
         if ($walas) {
+            $csId = $walas['class_semester_id'];
+            $scsModel = new StudentClassSemesterModel();
+            $scsData = $scsModel->getByClassSemesterId($csId);
+            $profileIds = array_column($scsData, 'profile_id');
+            $scsIds = array_column($scsData, 'id');
+
             $dailyEntryModel = new AttendanceDailyEntryModel();
-            $todayEntries = $dailyEntryModel->getTodayEntries();
-            $totalEntries = $dailyEntryModel->countTotalEntries();
+            $todayEntries = $dailyEntryModel->getTodayEntriesByProfileIds($profileIds);
             $attModel = new AttendanceModel();
-            $todayAttendance = $attModel -> getTodayAttendanceList();
-            
-            $studentStatisticData = [
-                'total' => 0,
-                'present' =>0,
-                'late' => 0,
-                'absent' => 0,
-            ];
+            $todayAttendance = $attModel -> getTodayAttendanceByscsId($scsIds);
 
             $studentAttendanceToday = [];
             $AttendancestudentLate = [];
@@ -50,41 +57,16 @@ class Main extends BaseController
                 $studentStatisticData['total']++;
 
             }
-            $listStudentHome = [];
             foreach ($todayEntries as $entry) {
                 if (!isset($studentAttendance[$entry['profile_id']])) {
                     $entry['status'] = 'present';
                     $studentStatisticData['present']++;
                     $studentStatisticData['total']++;
-                }else if (in_array($entry['profile_id'], $AttendancestudentLate)){
-                    $entry['status'] = 'late';
                 }
-
-                if ($entry['clock_out']) {
-                    $entry['status'] = 'home';
-                }
-                $time = $entry['clock_out'] ? $entry['clock_out']: $entry['clock_in'];
-                $listStudentHome[] = array_merge($entry, ['time' => $time]);
-            }
-            usort($listStudentHome, function ($a, $b) {
-                return strtotime($b['time']) - strtotime($a['time']);
-            });
-
-            $listStudentHome = array_slice($listStudentHome, 0, 4);
-
-            $studentIds = array_column($todayEntries,'student_id');
-            $scsModel = new StudentClassSemesterModel();
-            $scsList = [];
-            if (!empty($studentIds)) {
-                $scsList = $scsModel->getByStudentIds($studentIds);
-            }
-            $studentClass = [];
-            foreach ($scsList as $entry) {
-                $studentClass[$entry['profile_id']] = $entry;
             }
         }
         return view('teacher/home', [
-            'attendance_data' => $attendanceData,
+            'attendance_data' => $studentStatisticData,
             'viewing' => 'dashboard'
         ]);
     }
