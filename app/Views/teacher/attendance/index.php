@@ -46,7 +46,7 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('teacher/') ?>">Sistem Absensi</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Absensi</li>
+        <li class="breadcrumb-item active" aria-current="page">Absensi Kelas <?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></li>
     </ol>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
@@ -55,16 +55,6 @@
         <div class="card">
             <form action="" method="post">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <select class="form-control" name="class" id="" disabled>
-                                    <option value=""><?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
                     <div class="row">
                         <?php $no = 1; foreach ($student_class_semesters as $scs): ?>
                             <?php

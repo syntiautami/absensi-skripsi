@@ -111,19 +111,19 @@ a,
 }
 
 .user-pic img.border.absent{
-    border: 3px solid var(--color-absent) !important;
+    border: 5px solid var(--color-absent) !important;
 }
 .user-pic img.border.late{
-    border: 3px solid var(--color-late) !important;
+    border: 5px solid var(--color-late) !important;
 }
 .user-pic img.border.sick{
-    border: 3px solid var(--color-sick) !important;
+    border: 5px solid var(--color-sick) !important;
 }
 .user-pic img.border.excused{
-    border: 3px solid var(--color-excused) !important;
+    border: 5px solid var(--color-excused) !important;
 }
 .user-pic img.border.present{
-    border: 3px solid var(--primary) !important;
+    border: 5px solid var(--primary) !important;
 }
 
 .badge.attendance{
