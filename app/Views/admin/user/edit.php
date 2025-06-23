@@ -47,39 +47,50 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="username" class="col-form-label">Nama Pengguna</label>
-                                        <input type="text" class="form-control" id="username" name="username" value="<?= esc($user['username']) ?>" required>
+                            <?php if ($role['name'] != 'student') : ?>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="username" class="col-form-label">Nama Pengguna</label>
+                                            <input type="text" class="form-control" id="username" name="username" value="<?= esc($user['username']) ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email" class="col-form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="<?= esc($user['email']) ?>" required>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="email" class="col-form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="<?= esc($user['email']) ?>" required>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="section-header">KATA SANDI</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label class="section-header">KATA SANDI</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="password" class="col-form-label">Kata Sandi</label>
-                                        <input type="password" class="form-control" id="password" name="password">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="password" class="col-form-label">Kata Sandi</label>
+                                            <input type="password" class="form-control" id="password" name="password">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="confirm_password" class="col-form-label">Konfirmasi Kata Sandi</label>
+                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="confirm_password" class="col-form-label">Konfirmasi Kata Sandi</label>
-                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="">
+                            <?php else : ?>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email" class="col-form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="<?= esc($user['email']) ?>">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endif ?>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="section-header">TIPE AKUN</label>

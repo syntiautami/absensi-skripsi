@@ -24,7 +24,9 @@
                     <thead>
                         <tr>
                             <th class="text-center">Nama</th>
-                            <th class="text-center" style="width: 300px;">Nama Pengguna</th>
+                            <?php if ($role['name'] != 'student') : ?>
+                                <th class="text-center" style="width: 300px;">Nama Pengguna</th>
+                            <?php endif ?>
                             <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
@@ -37,7 +39,9 @@
                                     <span><?= esc("{$item['first_name']} {$item['last_name']}") ?></span>
                                 </div>
                             </td>
+                            <?php if ($role['name'] != 'student') : ?>
                             <td><?= esc($item['username']) ?></td>
+                            <?php endif ?>
                             <td class="text-center">
                                 <a href="<?= base_url('admin/users/'.$role['id'].'/edit/'.$item['user_id'].'/user/') ?>" class="btn btn-sm btn-primary">Ubah</a>
                                 <a class="btn btn-sm btn-danger btn-delete-user"

@@ -93,9 +93,6 @@ class Main extends BaseController
         $userRoleModel = new UserRoleModel();
         $userRoles = $userRoleModel-> getByRoleId($id);
 
-        $scsModel = new StudentClassSemesterModel();
-        $scsStudent = $scsModel;
-
         return view('admin/user/users', [
             'user_roles' => $userRoles,
             'role' => $role,
@@ -126,13 +123,21 @@ class Main extends BaseController
             $updateData = [
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
-                'username' => $data['username'],
-                'email' => $data['email'],
             ];
+
+            if (!empty($data['username'])){
+                $updateData['username'] = $data['username'];
+            }
+
+            if (!empty($data['email'])){
+                $updateData['email'] = $data['email'];
+            }
+
             if (!empty($data['password'])){
                 $updateData['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                 $updateData['confirm_password'] = password_hash($data['confirm_password'], PASSWORD_DEFAULT);
             }
+
             $userModel->update($id, $updateData);
             if (session()->get('user')['id'] == $id) {
                 session()->set('user', $userModel->getLoginDataById($id));
