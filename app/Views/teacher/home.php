@@ -49,40 +49,37 @@
                     <?php endforeach ?>
                 </div>
             </div>
-            <div class="card-header">
-                <h5 class="mb-0 font-weight-bold">KEHADIRAN HARI INI</h5>
-                <small class="text-muted" style="font-size: 1em;">Kelas <?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></small>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <?php
-                        $attendance_labels = [
-                            'present' => 'TEPAT WAKTU',
-                            'late'    => 'TERLAMBAT',
-                            'sick'    => 'SAKIT',
-                            'excused' => 'IZIN',
-                            'absent'  => 'ALPA',
-                            'total'   => 'TOTAL'
-                        ];
-                    ?>
-                    <?php foreach ($attendance_data as $key => $value): ?>
-                        <div class="col dashboard-<?= $key ?>">
-                            <div class="small-box <?= $key ?>">
-                                <div class="inner text-center">
-                                    <h3><?= $value ?></h3>
-                                    <p class="text-uppercase"><?= isset($attendance_labels[$key]) ? $attendance_labels[$key] : ucfirst($key) ?></p>
+            <?php if (session()->get('homeroom_teacher')) : ?>
+                <div class="card-header">
+                    <h5 class="mb-0 font-weight-bold">KEHADIRAN HARI INI</h5>
+                    <small class="text-muted" style="font-size: 1em;">Kelas <?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <?php
+                            $attendance_labels = [
+                                'present' => 'TEPAT WAKTU',
+                                'late'    => 'TERLAMBAT',
+                                'sick'    => 'SAKIT',
+                                'excused' => 'IZIN',
+                                'absent'  => 'ALPA',
+                                'total'   => 'TOTAL'
+                            ];
+                        ?>
+                        <?php foreach ($attendance_data as $key => $value): ?>
+                            <div class="col dashboard-<?= $key ?>">
+                                <div class="small-box <?= $key ?>">
+                                    <div class="inner text-center">
+                                        <h3><?= $value ?></h3>
+                                        <p class="text-uppercase"><?= isset($attendance_labels[$key]) ? $attendance_labels[$key] : ucfirst($key) ?></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach ?>
+                        <?php endforeach ?>
+                    </div>
                 </div>
-            </div>
+            <?php endif ?>
         </div>
     </section>
     <!-- /.content -->
-<?= $this->endSection() ?>
-
-<?= $this->section('scripts') ?>
-<script>
-</script>
 <?= $this->endSection() ?>
