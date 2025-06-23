@@ -78,7 +78,7 @@
                                 <table id="studentsTable-2" class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th style="width: 30px;"><input type="checkbox" id="checkAll"></th>
+                                            <th class="text-center" style="width: 30px;"><input type="checkbox" id="checkAll"></th>
                                             <th>Nama Siswa</th>
                                             <th>Nomor Barcode</th>
                                         </tr>
@@ -86,7 +86,7 @@
                                     <tbody>
                                         <?php foreach($students as $student): ?>
                                         <tr>
-                                            <td><input type="checkbox" name="students[]" value="<?= $student['id']; ?>"></td>
+                                            <td class="text-center"><input type="checkbox" name="students[]" value="<?= $student['id']; ?>"></td>
                                             <td><?= esc("{$student['first_name']} {$student['last_name']}"); ?></td>
                                             <td><?= esc($student['barcode_number']); ?></td>
                                         </tr>
@@ -111,19 +111,10 @@
 <script>
     $(function () {
         $('#studentsTable').DataTable({
-            "responsive": true,
-            "autoWidth": false,
-            "searching" : false,
-            "lengthChange" : false,
-            "paging": false,
-            "info" : false,
         });
         $('#studentsTable-2').DataTable({
-            "responsive": true,
-            "autoWidth": false,
-            "lengthChange" : false,
-            "paging": false,
-            "info" : false,
+            searching: true,
+            paging: true,
         });
         document.getElementById('checkAll').addEventListener('click', function(){
             const checkboxes = document.querySelectorAll('input[name="siswa_ids[]"]');

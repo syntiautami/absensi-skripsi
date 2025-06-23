@@ -239,6 +239,7 @@ table.table-bordered th input[type=checkbox]{
     border-radius: 3px;
     -webkit-appearance:none;
     background-color: var(--sidebar-active);
+    border: 1px solid #1A1C1E;
 }
 table.table-bordered td input[type=checkbox]:checked,
 table.table-bordered th input[type=checkbox]:checked{
@@ -247,6 +248,10 @@ table.table-bordered th input[type=checkbox]:checked{
     background-size: 15px;
     background-position: 35% 3px;
     background-color: var(--sidebar-active);
+}
+
+table.table-bordered tr.odd td input[type=checkbox]{
+    background-color: transparent;
 }
 
 .form-check input.form-check-input[type=checkbox]{
