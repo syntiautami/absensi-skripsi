@@ -12,7 +12,13 @@
         <select class="form-control form-control-sm ml-2" style="min-width: 120px;" onchange="location.href='<?= base_url('role/') ?>' + this.value;">
           <?php foreach ($roles as $role): ?>
             <option value="<?= $role ?>" <?= $currentRole == $role ? 'selected' : '' ?>>
-              <?= ucfirst($role) ?>
+              <?php if($role == 'teacher') : ?>
+                Guru
+              <?php elseif($role == 'attendance'): ?>
+                Absensi
+              <?php else: ?>
+                <?= ucfirst($role) ?>
+              <?php endif ?>
             </option>
           <?php endforeach; ?>
         </select>
