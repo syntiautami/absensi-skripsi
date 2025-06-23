@@ -22,7 +22,7 @@
             </div>
             <div class="text-muted">
                 <?= esc($displayRole) ?>
-                <?php if (session()->get('homeroom_teacher')) : ?>
+                <?php if (session()->get('homeroom_teacher') && $userRole == 'teacher') : ?>
                     (Wali Kelas <?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?>)
                 <?php endif ?>
             </div>
