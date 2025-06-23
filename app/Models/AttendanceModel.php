@@ -55,6 +55,7 @@ class AttendanceModel extends Model
         return $this
             ->select('
                     attendance_type_id,
+                    student_class_semester_id,
                     date,
                     student.profile_id
                 ')

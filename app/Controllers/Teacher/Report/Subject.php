@@ -69,7 +69,7 @@ class Subject extends BaseController
         return view('teacher/report/subject/index', [
             'teacher' => $teacher,
             'teacher_class_semester_subjects' => $teacher_class_semester_subjects,
-            'viewing' => 'report',
+            'viewing' => 'report-subject',
         ]);
     }
 }

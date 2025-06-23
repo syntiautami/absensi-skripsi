@@ -17,4 +17,11 @@ class Main extends BaseController
             'viewing' => 'subject',
         ]);
     }
+
+    public function create()
+    {
+        return view('admin/subject/create', [
+            'viewing' => 'subject',
+        ]);
+    }
 }
