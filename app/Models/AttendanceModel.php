@@ -54,6 +54,7 @@ class AttendanceModel extends Model
     public function getTodayAttendanceByscsId($ids){
         return $this
             ->select('
+                    attendance.id,
                     attendance_type_id,
                     student_class_semester_id,
                     date,
