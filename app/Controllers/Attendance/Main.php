@@ -46,7 +46,9 @@ class Main extends BaseController
                 $AttendancestudentLate[] = $profileId;
             }
 
-            $studentStatisticData[AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]]++;
+            if (isset($studentStatisticData[AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]])) {
+                $studentStatisticData[AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]]++;
+            }
             $studentStatisticData['total']++;
 
         }
