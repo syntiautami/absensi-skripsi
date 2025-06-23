@@ -60,10 +60,8 @@
 <script>
     $(function () {
         $('#usersTable').DataTable({
-            "responsive": true,
-            "lengthChange" : false,
-            "info" : false,
-            "order" : [['0', 'asc']]
+            paging: true,
+            searching: true
         });
     });
 </script>
