@@ -212,6 +212,7 @@
         icon: type,
         title: title,
         html: text,
+        timer: 2000,
         customClass : {
           confirmButton : 'btn-primary'
         }
@@ -280,6 +281,7 @@
               Swal.fire({
                 icon: 'error',
                 title: 'INFO',
+                timer: 2000,
                 html: xhr.responseJSON['message'],
                 customClass : {
                   confirmButton : 'btn-primary'
