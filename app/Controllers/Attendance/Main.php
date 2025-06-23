@@ -176,7 +176,16 @@ class Main extends BaseController
 
             } else {
                 $status = 'absent';
-                if ($currentTap < $clockInTime) {
+                $dataAttendance = [
+                    'profile_id'     => $studentProfile['id'],
+                    'clock_in'       => date('Y-m-d H:i:s'),
+                    'created_by_id'  => session()->get('user')['id'],
+                ];
+                if ($currentTap > $blockingPeriodTime) {
+                    $status = 'home';
+                    $dataAttendance['clock_in'] = null;
+                    $dataAttendance['clock_out'] = date('Y-m-d H:i:s');
+                }else if ($currentTap < $clockInTime) {
                     $status = 'present';
                 } elseif (!empty($gracePeriod) && $currentTap >= $clockInTime && $currentTap <= $gracePeriodTime) {
                     $status = 'late';
@@ -199,11 +208,7 @@ class Main extends BaseController
                     }
                 }
                 // belum ada → insert baru
-                $dailyEntryModel->insert([
-                    'profile_id'     => $studentProfile['id'],
-                    'clock_in'       => date('Y-m-d H:i:s'),
-                    'created_by_id'  => session()->get('user')['id'],
-                ]);
+                $dailyEntryModel->insert($dataAttendance);
             }
 
             $emailResults = [];
