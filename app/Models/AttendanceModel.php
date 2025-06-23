@@ -46,7 +46,7 @@ class AttendanceModel extends Model
             ')
             ->join('student_class_semester','student_class_semester.id = attendance.student_class_semester_id')
             ->whereIn('student_class_semester.class_semester_id', $ids)
-            ->where('DATE(date)', $date)
+            ->where('date', $date)
             ->where('attendance_type_id != ', 4)
             ->findAll();
     }
@@ -58,8 +58,8 @@ class AttendanceModel extends Model
         ->findAll();
     }
     public function getTodayAttendance($id){
-        $this->where('student_class_semester_id', $id)
-        ->where('DATE(date)', date('Y-m-d'))
+        return $this->where('student_class_semester_id', $id)
+        ->where('date', date('Y-m-d'))
         ->first();
     }
     

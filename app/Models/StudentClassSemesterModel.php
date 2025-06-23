@@ -137,9 +137,12 @@ class StudentClassSemesterModel extends Model
                 class_semester.clock_out,
             ')
             ->join('class_semester', 'class_semester.id = student_class_semester.class_semester_id', 'left')
+            ->join('semester', 'semester.id = class_semester.semester_id', 'left')
             ->join('class_semester_year', 'class_semester_year.id = class_semester.class_semester_year_id')
             ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
             ->where('student_class_semester.student_id',$id)
+            ->where('student_class_semester.active',1)
+            ->where('semester.in_session',1)
             ->first();
     }
 

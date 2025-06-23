@@ -197,7 +197,7 @@
         text = `
           ${data.name} ${data.kelas} <br> <br>
           Anda terhitung alfa hari ini. <br>
-          silahkan hubungi guru piket.
+          silahkan hubungi walikelas.
         `;
       }else if (data.status == 'late'){
         type = 'warning';
@@ -205,6 +205,21 @@
           ${data.name} ${data.kelas} <br> <br>
           Anda terlambat!!! <br> 
           Anda telah melakukan absensi <br>hari ini pada pukul ${data.time}
+        `;
+      }else if (data.status == 'excused'){
+        type = 'info';
+        text = `
+          ${data.name} ${data.kelas} <br> <br>
+          Anda sudah tercatat izin <br> 
+          silahkan hubungi walikelas.
+        `;
+      }
+      else if (data.status == 'sick'){
+        type = 'info';
+        text = `
+          ${data.name} ${data.kelas} <br> <br>
+          Anda sudah tercatat sakit <br> 
+          silahkan hubungi walikelas.
         `;
       }
 
@@ -267,7 +282,7 @@
             updateDashboard(data)
 
             // insert to students list
-            if (!['re-tap','absent'].includes(status)) {
+            if (!['re-tap','absent','sick','excused'].includes(status)) {
               addStudentCard(data)
             }
 

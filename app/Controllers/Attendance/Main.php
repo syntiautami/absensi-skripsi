@@ -96,7 +96,6 @@ class Main extends BaseController
     public function tapping()
     {
         $profileModel = new ProfileModel();
-        $attModel = new AttendanceModel();
         $BLOCKING_PERIOD = 15;
         
         $barcode = $this->request->getPost('barcode');
@@ -128,6 +127,7 @@ class Main extends BaseController
             $dailyEntryModel = new AttendanceDailyEntryModel();
             $todayEntry = $dailyEntryModel->getTodayEntry($studentProfile['id']);
 
+            $attModel = new AttendanceModel();
             $existingAttendance = $attModel ->getTodayAttendance($studentData['id']);
 
             $attendanceStatus = null;
@@ -224,6 +224,9 @@ class Main extends BaseController
                     'status' => $status,
                     'blocking' => $blockingPeriodTime,
                     'email' =>$emailResults,
+                    'attStatus' => $attendanceStatus,
+                    'attData' => $existingAttendance,
+                    'studentData' => $studentData,
                 ]
             ]);
         } 
