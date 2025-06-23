@@ -8,21 +8,24 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Util extends BaseController
 {
-    public function check_username()
+    public function user_check($slug)
     {
-        $username = $this->request->getPost('username');
+        $value = $this->request->getPost($slug); // ambil value sesuai slug
         $user_id = $this->request->getPost('user_id');
-        
+
+        if (!in_array($slug, ['username', 'email'])) {
+            return $this->response->setJSON(false); // slug ga valid
+        }
+
+        log_message('debug', "Remote check {$slug}={$value}, user_id={$user_id}");
+
         $userModel = new UserModel();
+
         $exists = $userModel
-            ->where('username', $username)
-            ->where('id !=',$user_id)
+            ->where($slug, $value)
+            ->where('id !=', $user_id)
             ->first();
 
-        if ($exists) {
-            return $this->response->setJSON(false);
-        } else {
-            return $this->response->setJSON(true);
-        }
+        return $this->response->setJSON($exists ? false : true);
     }
 }

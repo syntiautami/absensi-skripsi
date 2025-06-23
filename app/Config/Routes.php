@@ -31,7 +31,7 @@ $routes->get('admin/', 'Admin\Main::index', $auth_filters);
 // admin user
 $routes->group('admin/users', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'Admin\User\Main::index');
-    $routes->post('check-username/', 'Admin\User\Util::check_username');
+    $routes->post('check/(:any)/', 'Admin\User\Util::user_check/$1');
     $routes->get('(:num)/', 'Admin\User\Main::users/$1');
     
     $routes->match(['get', 'post'], '(:num)/create/', 'Admin\User\Main::create/$1');

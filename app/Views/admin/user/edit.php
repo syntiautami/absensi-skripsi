@@ -114,7 +114,7 @@
             rules: {
                 username: {
                     remote: {
-                        url: '<?= base_url('admin/users/check-username/') ?>',
+                        url: '<?= base_url('admin/users/check/username/') ?>',
                         type: "post",
                         data:{
                             username: function() {
@@ -133,7 +133,25 @@
                     }
                 },
                 email : {
-                    email: true
+                    email: true,
+                    remote: {
+                        url: '<?= base_url('admin/users/check/email/') ?>',
+                        type: "post",
+                        data:{
+                            email: function() {
+                                return $("#email").val();
+                            },
+                            user_id: '<?= $user['id'] ?? 0 ?>'
+                        },
+                        dataType: 'json',
+                        dataFilter: (response)=>{
+                            if (response == 'false') {
+                                return false
+                            }
+                            return true
+                        },
+                        delay: 5000,
+                    }
                 },
                 confirm_password: {
                     equalTo: '#password'
@@ -142,6 +160,9 @@
             messages : {
                 username: {
                     remote : "Nama pengguna sudah digunakan"
+                },
+                email: {
+                    remote : "Email sudah digunakan"
                 }
             }
         })
