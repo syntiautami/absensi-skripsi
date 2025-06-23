@@ -278,6 +278,7 @@ class Report extends BaseController
             ];
             foreach ($students as $student) {
                 $studentId = $student['id'];
+                $profileId = $student['profile_id'];
                 $summaryData = [
                     'sick'               => 0,
                     'excused'         => 0,
@@ -316,7 +317,7 @@ class Report extends BaseController
                     $clockOutTime = '';
                     $attendanceType = $attendanceMap[$studentId][$dateStr] ?? null;
                     // ambil tapping data
-                    $tapping = $tappingMap[$studentId][$dateStr] ?? null;
+                    $tapping = $tappingMap[$profileId][$dateStr] ?? null;
                     
                     if ($tapping) {
                         $clockInTime = $tapping['clock_in'];
@@ -351,6 +352,9 @@ class Report extends BaseController
                     $sheet->getStyle($col.$row)->applyFromArray([
                         'font' => [
                             'bold' => true,
+                            'color' => [
+                                'argb' => 'FFFFFFFF',
+                            ],
                         ],
                         'fill' => [
                             'fillType' => Fill::FILL_SOLID,
@@ -378,6 +382,9 @@ class Report extends BaseController
                     $sheet->getStyle($nextCol.$row)->applyFromArray([
                         'font' => [
                             'bold' => true,
+                            'color' => [
+                                'argb' => 'FFFFFFFF',
+                            ],
                         ],
                         'fill' => [
                             'fillType' => Fill::FILL_SOLID,
