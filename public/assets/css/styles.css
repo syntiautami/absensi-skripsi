@@ -14,9 +14,13 @@
     --sidebar-active: #c8e6c9;
     --secondary-2:#cfd8dc;
     --color-secondary-2:#29434e;
-    --color-sick: #17a2b8;
     --black-color : #1a1c1e;
-    --header-color : var(--sidebar-active),
+    --header-color : var(--sidebar-active);
+    --color-sick: #9C27B0;
+    --color-excused: #1976D2;
+    --color-absent: #D32F2F;
+    --color-late: #FFA000;
+    --color-present: #4CAF50;
 }
 
 [class*="sidebar-dark-"]{
@@ -88,38 +92,59 @@ a,
     border-radius: 2px;
 }
 .student-time .status-box.absent{
-    background-color: var(--danger) !important;
+    background-color: var(--color-absent) !important;
 }
 .student-time .status-box.late{
-    background-color: var(--warning) !important;
+    background-color: var(--color-late) !important;
 }
 .student-time .status-box.sick{
     background-color: var(--color-sick) !important;
 }
 .student-time .status-box.excused{
-    background-color: var(--info) !important;
+    background-color: var(--color-excused) !important;
 }
 .student-time .status-box.present{
     background-color: var(--primary) !important;
 }
 .student-time .status-box.home{
-    background-color: var(--info) !important;
+    background-color: var(--color-excused) !important;
 }
 
 .user-pic img.border.absent{
-    border: 3px solid var(--danger) !important;
+    border: 3px solid var(--color-absent) !important;
 }
 .user-pic img.border.late{
-    border: 3px solid var(--warning) !important;
+    border: 3px solid var(--color-late) !important;
 }
 .user-pic img.border.sick{
     border: 3px solid var(--color-sick) !important;
 }
 .user-pic img.border.excused{
-    border: 3px solid var(--info) !important;
+    border: 3px solid var(--color-excused) !important;
 }
 .user-pic img.border.present{
     border: 3px solid var(--primary) !important;
+}
+
+.badge.attendance{
+    width: 20px;
+    height: 20px;
+}
+
+.badge.attendance.absent{
+    background-color: var(--color-absent);
+}
+.badge.attendance.late{
+    background-color: var(--color-late);
+}
+.badge.attendance.sick{
+    background-color: var(--color-sick);
+}
+.badge.attendance.excused{
+    background-color: var(--color-excused);
+}
+.badge.attendance.present{
+    background-color: var(--primary);
 }
 
 /* legend attendance */

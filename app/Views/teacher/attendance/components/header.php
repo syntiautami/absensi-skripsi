@@ -46,12 +46,11 @@ $hariInggris = $selected_date->format('l');
 
         <!-- Kanan: Legend Bulat -->
         <div class="d-none d-md-flex align-items-center">
-            <span class="badge badge-success rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Hadir
-            <span class="ml-3 badge badge-danger rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Alpha
-            <span class="ml-3 badge badge-warning rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Terlambat
-            <span class="ml-3 badge badge-primary rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Izin
-            <span class="ml-3 badge badge-info rounded-circle mr-2" style="width: 20px; height: 20px;">&nbsp;</span> Sakit
+            <span class="attendance badge badge-success rounded-circle mr-2 present">&nbsp;</span> Hadir
+            <span class="ml-3 attendance badge badge-danger rounded-circle mr-2 absent">&nbsp;</span> Alpha
+            <span class="ml-3 attendance badge badge-warning rounded-circle mr-2 late">&nbsp;</span> Terlambat
+            <span class="ml-3 attendance badge badge-primary rounded-circle mr-2 excused">&nbsp;</span> Izin
+            <span class="ml-3 attendance badge badge-info rounded-circle mr-2 sick">&nbsp;</span> Sakit
         </div>
-
     </div>
 </header>
