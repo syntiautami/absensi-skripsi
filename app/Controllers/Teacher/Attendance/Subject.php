@@ -40,31 +40,24 @@ class Subject extends BaseController
         $startDate = new DateTime($semesterStartDate);
         $endDate = new DateTime($semesterEndDate);
 
+        // Geser ke hari Minggu sebelum startDate
+        if ($startDate->format('N') != 1) {
+            $startDate->modify('last monday');
+        }
+
         $dates = [];
         $weekNum = 1;
-
         $currentDate = clone $startDate;
 
         while ($currentDate <= $endDate) {
             $weekDates = [];
 
-            // week pertama → dari startDate sampai Sabtu minggu itu
-            if ($weekNum == 1) {
-                while ($currentDate->format('N') <= 6 && $currentDate <= $endDate) { // N=1..7 (Mon=1, Sun=7)
-                    $weekDates[] = $currentDate->format('Y-m-d');
-                    $currentDate->modify('+1 day');
+            for ($i = 0; $i < 7; $i++) {
+                if ($currentDate > $endDate) {
+                    break;
                 }
-            } else {
-                // week berikutnya → Minggu ke Sabtu
-                // Geser ke Minggu
-                if ($currentDate->format('N') != 7) {
-                    $currentDate->modify('next sunday');
-                }
-
-                for ($i = 0; $i < 7 && $currentDate <= $endDate; $i++) {
-                    $weekDates[] = $currentDate->format('Y-m-d');
-                    $currentDate->modify('+1 day');
-                }
+                $weekDates[] = $currentDate->format('Y-m-d');
+                $currentDate->modify('+1 day');
             }
 
             $dates[$weekNum] = $weekDates;
@@ -73,6 +66,7 @@ class Subject extends BaseController
 
         return $dates;
     }
+
 
     function getMappingWeekInfo($startDate, $endDate) {
         $weeks = $this->getSemesterWeeks($startDate, $endDate);
