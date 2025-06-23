@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Helpers\AttendanceHelper;
 use App\Models\AttendanceDailyEntryModel;
 use App\Models\AttendanceModel;
+use App\Models\ProfileModel;
 use App\Models\StudentClassSemesterModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -66,7 +67,8 @@ class Main extends BaseController
         }
         return view('teacher/home', [
             'attendance_data' => $studentStatisticData,
-            'viewing' => 'dashboard'
+            'viewing' => 'dashboard',
+            'walas' => $walas,
         ]);
     }
 }

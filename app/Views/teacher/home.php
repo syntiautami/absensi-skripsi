@@ -15,6 +15,18 @@
 <?= $this->section('content') ?>
     <section class="content">
         <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0 font-weight-bold">JADWAL PELAJARAN</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"></div>
+                </div>
+            </div>
+            <div class="card-header">
+                <h5 class="mb-0 font-weight-bold">KEHADIRAN HARI INI</h5>
+                <small class="text-muted">Kelas <?= esc(session()->get('homeroom_teacher')['grade_name'])  ?> <?= esc(session()->get('homeroom_teacher')['class_code'])  ?></small>
+            </div>
             <div class="card-body">
                 <div class="row">
                     <?php
