@@ -21,7 +21,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">Mata Pelajaran</th>
-                            <th class="text-center" style="width: 150px;">Tahun Pelajaran</th>
+                            <th class="text-center" style="width: 150px;">Tahun Ajaran</th>
                             <th class="text-center" style="width: 150px;">Semester</th>
                             <th class="text-center" style="width: 150px;">Kelas</th>
                             <th class="text-center" style="width: 150px;">Aksi</th>

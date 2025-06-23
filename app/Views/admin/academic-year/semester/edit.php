@@ -10,10 +10,10 @@
             <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/academic-year/') ?>">Tahun Pelajaran</a>
+            <a href="<?= base_url('admin/academic-year/') ?>">Tahun Ajaran</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/academic-year/'.$academic_year['id']) ?>">Tahun Pelajaran</a>
+            <a href="<?= base_url('admin/academic-year/'.$academic_year['id']) ?>">Tahun Ajaran</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Ubah Semester</li>
     </ol>

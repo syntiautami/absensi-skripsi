@@ -27,7 +27,7 @@
         <li class="nav-item">
           <a href="<?= base_url('admin/academic-year/') ?>" class="nav-link <?= ($viewing ?? '') === 'academic-year' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-solid fa-calendar"></i>
-            <p>Tahun Pelajaran</p>
+            <p>Tahun Ajaran</p>
           </a>
         </li>
         <li class="nav-item">

@@ -20,7 +20,7 @@
                 <table id="academicYearTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Tahun Pelajaran</th>
+                            <th class="text-center">Tahun Ajaran</th>
                             <th class="text-center" style="width: 200px;">Tanggal Mulai</th>
                             <th class="text-center" style="width: 200px;">Tanggal Akhir</th>
                             <th class="text-center" style="width: 200px;">Sedang Berjalan</th>

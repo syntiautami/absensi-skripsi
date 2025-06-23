@@ -10,9 +10,9 @@
             <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="<?= base_url('admin/academic-year/') ?>">Tahun Pelajaran</a>
+            <a href="<?= base_url('admin/academic-year/') ?>">Tahun Ajaran</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Buat Tahun Pelajaran</li>
+        <li class="breadcrumb-item active" aria-current="page">Buat Tahun Ajaran</li>
     </ol>
 <?= $this->endSection() ?>
 

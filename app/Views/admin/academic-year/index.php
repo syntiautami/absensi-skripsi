@@ -9,7 +9,7 @@
         <li class="breadcrumb-item">
             <a href="<?= base_url('admin/') ?>">Sistem Absensi</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Tahun Pelajaran</li>
+        <li class="breadcrumb-item active" aria-current="page">Tahun Ajaran</li>
     </ol>
 <?= $this->endSection() ?>
 
@@ -20,7 +20,7 @@
                 <table id="academicYearTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Tahun Pelajaran</th>
+                            <th class="text-center">Tahun Ajaran</th>
                             <th class="text-center" style="width: 200px;">Tanggal Mulai</th>
                             <th class="text-center" style="width: 200px;">Tanggal Akhir</th>
                             <th class="text-center" style="width: 200px;">Sedang Berjalan</th>
@@ -55,7 +55,7 @@
                 </table>
                 <div class="d-flex justify-content-end mt-3">
                     <a href="<?= base_url('admin/academic-year/create/') ?>" class="btn btn-primary">
-                        Buat Tahun Pelajaran
+                        Buat Tahun Ajaran
                     </a>
                 </div>
             </div>

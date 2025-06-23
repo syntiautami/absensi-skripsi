@@ -32,7 +32,7 @@ class SemesterModel extends Model
     protected $updatedField  = 'updated_at';
 
     /**
-     * Join ke tabel academic_year untuk ambil data Tahun Pelajaran
+     * Join ke tabel academic_year untuk ambil data Tahun Ajaran
      *
      * @return \CodeIgniter\Database\BaseBuilder
      */

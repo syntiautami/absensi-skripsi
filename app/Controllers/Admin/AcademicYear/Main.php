@@ -64,7 +64,7 @@ class Main extends BaseController
                     ],
                 ]);
 
-                return redirect()->to('admin/academic-year/')->with('success', 'Data Tahun Pelajaran berhasil ditambahkan.');
+                return redirect()->to('admin/academic-year/')->with('success', 'Data Tahun Ajaran berhasil ditambahkan.');
             }
         }
 
