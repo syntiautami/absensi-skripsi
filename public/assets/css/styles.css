@@ -337,7 +337,27 @@ table th:last-child {
     text-align: center !important;
 }
 /* datatable style */
-
+div.col .small-box {
+    color: var(--surface);
+}
+div.col .small-box.present{
+    background-color: var(--color-present);
+}
+div.col .small-box.late{
+    background-color: var(--color-late);
+}
+div.col .small-box.sick{
+    background-color: var(--color-sick);
+}
+div.col .small-box.excused{
+    background-color: var(--color-excused);
+}
+div.col .small-box.absent{
+    background-color: var(--color-absent);
+}
+div.col .small-box.total{
+    background-color: var(--info);
+}
 
 
 /* dashboard */

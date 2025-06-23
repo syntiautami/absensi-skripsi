@@ -21,7 +21,6 @@ class Main extends BaseController
             'sick' => 0,
             'excused' => 0,
             'absent' => 0,
-            'total' => 0,
         ];
         if ($walas) {
             $csId = $walas['class_semester_id'];
@@ -54,14 +53,14 @@ class Main extends BaseController
                 if (isset($studentStatisticData[AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]])) {
                     $studentStatisticData[AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]]++;
                 }
-                $studentStatisticData['total']++;
+                // $studentStatisticData['total']++;
 
             }
             foreach ($todayEntries as $entry) {
                 if (!isset($studentAttendance[$entry['profile_id']])) {
                     $entry['status'] = 'present';
                     $studentStatisticData['present']++;
-                    $studentStatisticData['total']++;
+                    // $studentStatisticData['total']++;
                 }
             }
         }

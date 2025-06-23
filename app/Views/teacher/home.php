@@ -14,18 +14,30 @@
 
 <?= $this->section('content') ?>
     <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-            <?php foreach ($attendance_data as $key => $value): ?>
-                <div class="col dashboard-<?= $key ?>">
-                    <div class="small-box <?= $key ?>">
-                        <div class="inner text-center">
-                            <h3><?= $value ?></h3>
-                            <p class="text-uppercase"><?= $key ?></p>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <?php
+                        $attendance_labels = [
+                            'present' => 'TEPAT WAKTU',
+                            'late'    => 'TERLAMBAT',
+                            'sick'    => 'SAKIT',
+                            'excused' => 'IZIN',
+                            'absent'  => 'ALPA',
+                            'total'   => 'TOTAL'
+                        ];
+                    ?>
+                    <?php foreach ($attendance_data as $key => $value): ?>
+                        <div class="col dashboard-<?= $key ?>">
+                            <div class="small-box <?= $key ?>">
+                                <div class="inner text-center">
+                                    <h3><?= $value ?></h3>
+                                    <p class="text-uppercase"><?= isset($attendance_labels[$key]) ? $attendance_labels[$key] : ucfirst($key) ?></p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    <?php endforeach ?>
                 </div>
-            <?php endforeach ?>
             </div>
         </div>
     </section>
