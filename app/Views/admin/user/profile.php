@@ -64,33 +64,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label class="section-header">DATA ORANG TUA</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="father_name" class="col-form-label">Nama Ayah</label>
-                                        <input type="text" class="form-control" id="father_name" name="father_name" value="<?= esc($profile['father_name']) ?>">
+                            <?php if ($role['name'] == 'student') : ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="section-header">DATA ORANG TUA</label>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="mother_name" class="col-form-label">Nama Ibu</label>
-                                        <input type="text" class="form-control" id="mother_name" name="mother_name" value="<?= esc($profile['mother_name']) ?>">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="father_name" class="col-form-label">Nama Ayah</label>
+                                            <input type="text" class="form-control" id="father_name" name="father_name" value="<?= esc($profile['father_name']) ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="mother_name" class="col-form-label">Nama Ibu</label>
+                                            <input type="text" class="form-control" id="mother_name" name="mother_name" value="<?= esc($profile['mother_name']) ?>">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="parent_email" class="col-form-label">Email Orang Tua</label>
-                                        <input type="text" class="form-control" id="parent_email" name="parent_email" value="<?= esc($profile['parent_email']) ?>">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="parent_email" class="col-form-label">Email Orang Tua</label>
+                                            <input type="text" class="form-control" id="parent_email" name="parent_email" value="<?= esc($profile['parent_email']) ?>">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endif ?>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="section-header">FOTO PROFIL</label>
