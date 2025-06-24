@@ -69,8 +69,7 @@ class Main extends BaseController
             if(!isset($studentTotalData[$csyId])){
                 $studentTotalData[$csyId] = [];
             }
-            
-            $studentTotalData[$csyId][] = $studentId;
+            $studentTotalData[$csyId][$studentId] = true;
         }
 
         $semesterModel = new SemesterModel();
