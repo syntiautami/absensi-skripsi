@@ -40,6 +40,20 @@ class ClassSemesterYearModel extends Model
             ->findAll();
     }
 
+    public function getInSession(){
+        return $this
+            ->select('
+                class_semester_year.id,
+                grade.name as grade_name,
+                class_semester_year.code as class_code,
+            ')
+            ->join('grade', 'grade.id = class_semester_year.grade_id', 'left')
+            ->join('academic_year', 'academic_year.id = class_semester_year.academic_year_id', 'left')
+            ->where('academic_year.in_session', 1)
+            ->orderBy('grade_name','code')
+            ->findAll();
+    }
+
     public function getById($id){
         return $this
             ->select('
