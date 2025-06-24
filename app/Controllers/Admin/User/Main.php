@@ -213,9 +213,9 @@ class Main extends BaseController
                 'gender' => $data['gender'],
                 'address' => $data['address'],
                 'religion' => $data['religion'],
-                'father_name' => $data['father_name'],
-                'mother_name' => $data['mother_name'],
-                'parent_email' => $data['parent_email'],
+                'father_name' => $data['father_name'] ?? '',
+                'mother_name' => $data['mother_name'] ?? '',
+                'parent_email' => $data['parent_email'] ?? '',
             ];
             if ($file->isValid() && !$file->hasMoved()) {
                 $folderPath = FCPATH . 'assets/img/users/' . $user['id'] . '/';

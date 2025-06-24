@@ -71,9 +71,9 @@
             searching: true
         });
 
-        $('.btn-delete-user').click(function(){
+        $('#usersTable').delegate('tbody td .btn-delete-user', 'click', function(){
             const url = $(this).data('url');
-
+    
             Swal.fire({
                 title: 'Anda yakin ingin menghapus data ini ?',
                 text: "Data yang dihapus tidak bisa dikembalikan!",
