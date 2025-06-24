@@ -50,10 +50,11 @@ class Main extends BaseController
         
         $studentAttendanceToday = [];
         $attendancePerClass = [];
+        $profileIdsPassed = [];
         foreach ($todayAttendance as $item) {
             $status = $item['attendance_type_id'];
             $profileId = $item['profile_id'];
-            $studentClass =  $studentClass[$profileId] ?? '';
+            $className =  $studentClass[$profileId] ?? '';
 
             if (!isset($studentAttendanceToday[$status])) {
                 $studentAttendanceToday[$status] = [];
@@ -65,11 +66,8 @@ class Main extends BaseController
                 $studentStatisticData[AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]]++;
             }
             
-            if (!$studentClass) {
-                continue;
-            }
-            if (!isset($attendancePerClass[$studentClass])){
-                $attendancePerClass[$studentClass] = [
+            if (!isset($attendancePerClass[$className])){
+                $attendancePerClass[$className] = [
                     'present' =>0,
                     'late' => 0,
                     'sick' => 0,
@@ -78,21 +76,21 @@ class Main extends BaseController
                 ];
             }
 
-            if (isset($attendancePerClass[$studentClass][AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]])) {
-                $attendancePerClass[$studentClass][AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]]++;
+            if (isset($attendancePerClass[$className][AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]])) {
+                $attendancePerClass[$className][AttendanceHelper::ATTENDANCE_TYPE_MAPPING[$status]]++;
             }
             
         }
         
         foreach ($todayEntries as $entry) {
             $profileId = $entry['profile_id'];
-            $studentClass =  $studentClass[$profileId] ?? '';
+            $className =  $studentClass[$profileId] ?? '';
 
             if (!isset($studentAttendance[$profileId])) {
                 $entry['status'] = 'present';
                 $studentStatisticData['present']++;
-                if (!isset($attendancePerClass[$studentClass])){
-                    $attendancePerClass[$studentClass] = [
+                if (!isset($attendancePerClass[$className])){
+                    $attendancePerClass[$className] = [
                         'present' =>0,
                         'late' => 0,
                         'sick' => 0,
@@ -100,7 +98,7 @@ class Main extends BaseController
                         'absent' => 0,
                     ];
                 }
-                $attendancePerClass[$studentClass]['present']++;
+                $attendancePerClass[$className]['present']++;
             }
         }
 
