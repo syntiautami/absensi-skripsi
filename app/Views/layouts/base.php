@@ -74,6 +74,9 @@
 <script src="<?= base_url('assets/adminlte/plugins/moment/moment.min.js') ?>"></script>
 <script src="<?= base_url('assets/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
 
   <?php if (session()->getFlashdata('success')): ?>
     <script>
