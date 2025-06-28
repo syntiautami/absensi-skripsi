@@ -34,7 +34,7 @@
                                     <?= $subject['name'] ?>
                                 </td>
                                 <td class="text-center">
-                                    <a href="<?= base_url('admin/subject/delete/'.$subject['id'].'/') ?>" class="btn btn-sm btn-danger">Hapus</a>
+                                    <a data-url="<?= base_url('admin/subject/delete/'.$subject['id'].'/') ?>" class="btn btn-sm btn-danger btn-delete-subject">Hapus</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -61,6 +61,25 @@
             "info" : false,
             "fixedHeader" : true,
         });
+
+        $('#subjectTable').delegate('tbody td .btn-delete-subject', 'click', function(){
+            const url = $(this).data('url');
+    
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini ?',
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        })
     });
 </script>
 <?= $this->endSection() ?>

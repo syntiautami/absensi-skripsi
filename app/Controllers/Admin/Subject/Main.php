@@ -44,7 +44,7 @@ class Main extends BaseController
             return redirect()->to(base_url('admin/subject/'))->with('error', 'Data tidak ditemukan.');
         }
         
-        $subject->delete($id);
+        $subjectModel->delete($id);
         return redirect()->to(base_url('admin/subject/'))->with('success', 'Data berhasil dihapus.');
     }
 }
