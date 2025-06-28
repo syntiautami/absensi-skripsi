@@ -47,4 +47,28 @@ class Main extends BaseController
         $subjectModel->delete($id);
         return redirect()->to(base_url('admin/subject/'))->with('success', 'Data berhasil dihapus.');
     }
+
+    public function edit($id)
+    {
+        $subjectModel = new SubjectModel();
+        $subject = $subjectModel->getById($id);
+        if (!$subject) {
+            return redirect()->to(base_url('admin/subject/'))->with('error', 'Data tidak ditemukan.');
+        }
+
+        if ($this->request->getMethod() == 'POST') {
+            $data = $this->request->getPost();
+            
+            $subjectModel -> update($id, [
+                'name' => $data['name'],
+                'updated_by_id' => session()->get('user')['id']
+            ]);
+            return redirect()->to(base_url('admin/subject/'))->with('success', 'Data berhasil diubah.');
+        }
+        
+        return view('admin/subject/edit', [
+            'subject' => $subject,
+            'viewing' => 'subject',
+        ]);
+    }
 }

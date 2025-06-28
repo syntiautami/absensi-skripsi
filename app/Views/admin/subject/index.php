@@ -34,7 +34,8 @@
                                     <?= $subject['name'] ?>
                                 </td>
                                 <td class="text-center">
-                                    <a data-url="<?= base_url('admin/subject/delete/'.$subject['id'].'/') ?>" class="btn btn-sm btn-danger btn-delete-subject">Hapus</a>
+                                    <a href="<?= base_url('admin/subject/'.$subject['id'].'/edit/') ?>" class="btn btn-sm btn-primary">Ubah</a>
+                                    <a data-url="<?= base_url('admin/subject/'.$subject['id'].'/delete/') ?>" class="btn btn-sm btn-danger btn-delete-subject">Hapus</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

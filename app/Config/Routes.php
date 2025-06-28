@@ -84,7 +84,8 @@ $routes->group('admin/subject', ['filter' => 'auth'], function($routes) {
     // class
     $routes->get('/', 'Admin\Subject\Main::index');
     $routes->match(['get','post'],'create/', 'Admin\Subject\Main::create');
-    $routes->match(['get','post'],'delete/(:num)/', 'Admin\Subject\Main::delete/$1');
+    $routes->match(['get','post'],'(:num)/delete', 'Admin\Subject\Main::delete/$1');
+    $routes->match(['get','post'],'(:num)/edit', 'Admin\Subject\Main::edit/$1');
 
     // class
     $routes->get('class/', 'Admin\Subject\Classes::index');
