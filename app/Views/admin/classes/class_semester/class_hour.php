@@ -40,7 +40,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="grace_period" class="col-form-label">Batas Keterlambatan</label>
+                                    <label for="grace_period" class="col-form-label">Batas Keterlambatan (Menit)</label>
                                     <input type="number" class="form-control" id="grace_period" name="grace_period[<?= $class_semester['id'] ?>]" value="<?= esc($class_semester['grace_period']) ?>">
                                 </div>
                             </div>
