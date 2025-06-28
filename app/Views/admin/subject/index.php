@@ -24,6 +24,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">Mata Pelajaran</th>
+                            <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,10 +33,18 @@
                                 <td class="text-center">
                                     <?= $subject['name'] ?>
                                 </td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('admin/subject/delete/'.$subject['id'].'/') ?>" class="btn btn-sm btn-danger">Hapus</a>
+                                </td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-end mt-3">
+                    <a href="<?= base_url('admin/subject/create/') ?>" class="btn btn-primary">
+                        Buat Mata Pelajaran
+                    </a>
+                </div>
             </div>
         </div>
     </section>

@@ -31,4 +31,11 @@ class SubjectModel extends Model
     public function getAllData(){
         return $this->orderBy('name')->findAll();
     }
+
+    public function getById($id){
+        return $this
+            ->orderBy('name')
+            ->where('id',$id)
+            ->first();
+    }
 }

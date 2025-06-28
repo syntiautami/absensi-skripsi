@@ -83,6 +83,10 @@ $routes->group('admin/classes', ['filter' => 'auth'], function($routes) {
 $routes->group('admin/subject', ['filter' => 'auth'], function($routes) {
     // class
     $routes->get('/', 'Admin\Subject\Main::index');
+    $routes->match(['get','post'],'create/', 'Admin\Subject\Main::create');
+    $routes->match(['get','post'],'delete/(:num)/', 'Admin\Subject\Main::delete/$1');
+
+    // class
     $routes->get('class/', 'Admin\Subject\Classes::index');
     $routes->get('class/academic-year/(:num)/', 'Admin\Subject\Classes::classes/$1');
     $routes->match(['get','post'],'class/academic-year/(:num)/class-semester-year/(:num)/', 'Admin\Subject\Classes::class_subjects/$1/$2');
