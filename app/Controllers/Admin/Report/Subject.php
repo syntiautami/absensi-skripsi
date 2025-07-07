@@ -23,9 +23,10 @@ class Subject extends BaseController
         ]);
     }
 
-    public function classes($id){
+    public function classes($id)
+    {
         $academicYearModel = new AcademicYearModel();
-        $academicYear = $academicYearModel ->getAcademicYearById($id);
+        $academicYear = $academicYearModel->getAcademicYearById($id);
         if (!$academicYear) {
             return redirect()->to(base_url('admin/report/attendance/subject/'))->with('error', 'Data tidak ditemukan.');
         }
@@ -36,13 +37,14 @@ class Subject extends BaseController
         return view('admin/report/subject/classes', [
             'academic_year' => $academicYear,
             'class_semester_years' => $class_semester_years,
-            'viewing' => 'report',
+            'viewing' => 'report-subject',
         ]);
     }
 
-    public function subject_list($academic_year_id, $id){
+    public function subject_list($academic_year_id, $id)
+    {
         $academicYearModel = new AcademicYearModel();
-        $academicYear = $academicYearModel ->getAcademicYearById($academic_year_id);
+        $academicYear = $academicYearModel->getAcademicYearById($academic_year_id);
         if (!$academicYear) {
             return redirect()->to(base_url('admin/report/attendance/subject/'))->with('error', 'Data tidak ditemukan.');
         }
@@ -77,7 +79,7 @@ class Subject extends BaseController
             'class_semester_subject_data' => $cssMapping,
             'class_semester_year' => $class_semester_year,
             'subjects' => $subjects,
-            'viewing' => 'report',
+            'viewing' => 'report-subject',
         ]);
     }
 }
