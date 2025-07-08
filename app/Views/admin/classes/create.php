@@ -63,7 +63,10 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/') ?>" class="btn btn-secondary mr-2">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
                 </div>
             </form>
         </div>

@@ -53,7 +53,7 @@
                                     class="form-control" />
                                 </td>
                                 <td class="text-center">
-                                    <a href="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/students/'.$key.'/delete/') ?>" class="btn btn-sm btn-danger">Hapus</a>
+                                    <a data-url="<?= base_url('admin/classes/academic-year/'.$academic_year['id'].'/class-semester-year/'.$class_semester_year['id'].'/students/'.$key.'/delete/') ?>" class="btn btn-sm btn-danger btn-delete">Hapus</a>
                                 </td>
                             </tr>
                             <?php endforeach ?>
@@ -117,9 +117,28 @@
             paging: true,
         });
         document.getElementById('checkAll').addEventListener('click', function(){
-            const checkboxes = document.querySelectorAll('input[name="siswa_ids[]"]');
+            const checkboxes = document.querySelectorAll('input[name="students[]"]');
             checkboxes.forEach((cb) => cb.checked = this.checked);
         });
+
+        $('#studentsTable').delegate('tbody td .btn-delete', 'click', function(){
+            const url = $(this).data('url');
+    
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini ?',
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        })
     });
 </script>
 <?= $this->endSection() ?>

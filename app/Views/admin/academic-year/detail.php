@@ -74,7 +74,7 @@
                         <?php $no = 1; foreach ($semesters as $item): ?>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>
+                                    <label class="text-uppercase">
                                         Semester
                                         <?php 
                                             if ($no == 1) {

@@ -29,7 +29,6 @@
                             <tr>
                                 <th class="text-center">Mata Pelajaran</th>
                                 <th class="text-center" style="width: 150px;">
-                                    Aksi <br><br>
                                     <input type="checkbox" id="select-all">
                                 </th>
                             </tr>
