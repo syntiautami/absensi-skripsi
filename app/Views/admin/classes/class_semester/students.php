@@ -117,7 +117,7 @@
             paging: true,
         });
         document.getElementById('checkAll').addEventListener('click', function(){
-            const checkboxes = document.querySelectorAll('input[name="siswa_ids[]"]');
+            const checkboxes = document.querySelectorAll('input[name="students[]"]');
             checkboxes.forEach((cb) => cb.checked = this.checked);
         });
     });
