@@ -369,3 +369,7 @@ div.col .small-box.total{
 .subjects-row .col{
     max-width: 400px;
 }
+
+.table thead th{
+    vertical-align: middle;
+}
