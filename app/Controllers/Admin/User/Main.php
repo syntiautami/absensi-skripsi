@@ -38,12 +38,30 @@ class Main extends BaseController
             $profileModel = new ProfileModel();
             $userRoleModel = new UserRoleModel();
 
+            if ($id == 4){
+                $baseUsername = strtolower(url_title($data['first_name'] . '.' . $data['last_name'], '.', true));
+                $username = $baseUsername;
+                $counter = 1;
+
+                // Cek apakah username sudah ada, kalau iya tambahkan angka
+                while ($userModel->where('username', $username)->first()) {
+                    $username = $baseUsername . $counter;
+                    $counter++;
+                }
+
+                // Set password sama dengan username
+                $password = $username;
+            }else{
+                $username = $data['username'];
+                $password = $data['password'];
+            }
+
             $userId = $userModel->insert([
                 'first_name' => $data['first_name'],
                 'last_name'  => $data['last_name'],
                 'email'      => $data['email'],
-                'username'   => $data['username'],
-                'password'   => password_hash($data['password'], PASSWORD_DEFAULT),
+                'username'   => $username,
+                'password'   => password_hash($password, PASSWORD_DEFAULT),
             ]);
             $profileId = $profileModel->insert([
                 'user_id'   => $userId,
