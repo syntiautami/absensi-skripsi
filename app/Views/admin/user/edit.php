@@ -43,7 +43,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="last_name" class="col-form-label">Nama Belakang</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" value="<?= esc($user['last_name']) ?>" required>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" value="<?= esc($user['last_name']) ?>">
                                 </div>
                             </div>
                         </div>
