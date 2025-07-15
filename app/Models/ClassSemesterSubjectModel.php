@@ -80,6 +80,7 @@ class ClassSemesterSubjectModel extends Model
             ->where('class_semester.class_semester_year_id', $csyId)
             ->where('class_semester.active', 1)
             ->where('class_semester_subject.active', 1)
+            ->orderBy('subject_name')
             ->findAll();
     }
 
