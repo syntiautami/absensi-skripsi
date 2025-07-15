@@ -115,6 +115,27 @@ class Teacher extends BaseController
             $updateBatch = [];
             $inactiveBatch = [];
             $userId = session()->get('user')['id'];
+
+            $teacher_class_semester_subjects = $teachercssModel ->getExistingAllSubjectByCsyId($id);
+            $existing_teacher_subjects = [];
+            $existing_teacher_class_semester_subjects = [];
+
+            foreach ($teacher_class_semester_subjects as $teacher_class_semester_subject) {
+                $subjectId = $teacher_class_semester_subject['subject_id'];
+                $teacherId = $teacher_class_semester_subject['teacher_id'];
+                $cssId = $teacher_class_semester_subject['css_id'];
+                $tcssId = $teacher_class_semester_subject['tcss_id'];
+
+                if(!isset($existing_teacher_subjects[$teacherId])){
+                    $existing_teacher_subjects[$teacherId] = [];
+                    $existing_teacher_class_semester_subjects[$teacherId] = [];
+                }
+
+                if (!isset($existing_teacher_class_semester_subjects[$teacherId][$cssId])){
+                    $existing_teacher_class_semester_subjects[$teacherId][$cssId] = $tcssId;
+                }
+                $existing_teacher_subjects[$teacherId][] = $subjectId;
+            }
             if (!empty($teachersSubjectData)) {
                 $checkedDataTeacherClassSemesterSubject = [];
                 foreach ($teachersSubjectData as $teacherId => $subjectIds) {
@@ -132,11 +153,11 @@ class Teacher extends BaseController
 
                                 $checkedDataTeacherClassSemesterSubject[$teacherId][] = $classSemesterSubjectId;
                                 // Cek apakah sudah ada di table
-                                $existing = in_array($classSemesterSubjectId, $existingSubjects);
+                                $existing = in_array($subjectId, $existingSubjects);
                                 if ($existing) {
                                     // Kalau ada → update
                                     $updateBatch[] = [
-                                        'id'               => $existing['id'],
+                                        'id'               => $existing_teacher_class_semester_subjects[$teacherId][$classSemesterSubjectId],
                                         'active'           => 1,
                                     ];
                                 } else {

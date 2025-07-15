@@ -19,12 +19,12 @@ class Subject extends BaseController
 
         $tcssModel = new TeacherClassSemesterSubjectModel();
         $teacher_class_semester_subjects = $tcssModel-> getInSessionTcssByTeacher($teacher['id']);
+        dd($teacher['id'], $teacher_class_semester_subjects);
         
         $ctpData = [];
         $ctpCssIds = [];
         if (!empty($teacher_class_semester_subjects)) {
             $cssIds = array_column($teacher_class_semester_subjects, 'css_id');
-            $semesterId = array_column($teacher_class_semester_subjects, 'semester_id')[0];
             $ctpModel = new ClassTimetablePeriodModel();
             $ctpList = $ctpModel-> getActiveByCssIds($cssIds);
     
@@ -55,9 +55,6 @@ class Subject extends BaseController
 
             $ctpCssIds = array_keys($ctpData);
     
-            $semesterModel = new SemesterModel();
-            $semester = $semesterModel->getSemesterById($semesterId);
-
             $teacher_class_semester_subjects = array_filter($teacher_class_semester_subjects, function ($item) use ($ctpCssIds) {
                 return in_array($item['css_id'], $ctpCssIds);
             });
