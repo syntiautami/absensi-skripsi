@@ -41,7 +41,7 @@ class Main extends BaseController
                         ])
                         -> update();
                 }
-                $model->insert([
+                $semesterYear = $model->insert([
                     'name'          => $data['name'],
                     'start_date'    => date('Y-m-d H:i:s', strtotime($data['start_date'])),
                     'end_date'      => date('Y-m-d H:i:s', strtotime($data['end_date'])),
@@ -55,12 +55,14 @@ class Main extends BaseController
                         'start_date'    => date('Y-m-d H:i:s', strtotime($data['first_semester-start_date'])),
                         'end_date'      => date('Y-m-d H:i:s', strtotime($data['first_semester-end_date'])),
                         'in_session'    => $active_semester_id == 1 ? 1 : 0,
+                        'academic_year_id' => $semesterYear
                     ],
                     [
                         'name' => $data['second_semester-name'],
                         'start_date'    => date('Y-m-d H:i:s', strtotime($data['second_semester-start_date'])),
                         'end_date'      => date('Y-m-d H:i:s', strtotime($data['second_semester-end_date'])),
                         'in_session'    => $active_semester_id == 2 ? 1 : 0,
+                        'academic_year_id' => $semesterYear
                     ],
                 ]);
 
