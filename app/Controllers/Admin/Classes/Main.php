@@ -39,7 +39,11 @@ class Main extends BaseController
 
         $csyIds = array_column($csyList, 'id');
         $tcssHomeroomModel = new TeacherClassSemesterHomeroomModel();
-        $form_teachers = $tcssHomeroomModel -> getFromCsyIds($csyIds);
+
+        $form_teachers = [];
+        if ($csyIds) {
+            $form_teachers = $tcssHomeroomModel -> getFromCsyIds($csyIds);
+        }
 
         $form_teacher_data = [];
         foreach ($form_teachers as $form_teacher) {
@@ -59,7 +63,10 @@ class Main extends BaseController
         }
 
         $scsModel = new StudentClassSemesterModel();
-        $student_class_semesters = $scsModel-> getByCsyIds($csyIds);
+        $student_class_semesters = [];
+        if ($csyIds) {
+            $student_class_semesters = $scsModel-> getByCsyIds($csyIds);
+        }
 
         $studentTotalData = [];
         foreach ($student_class_semesters as $student_class_semester) {
