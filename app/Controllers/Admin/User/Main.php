@@ -135,7 +135,6 @@ class Main extends BaseController
         if (!$user) {
             return redirect()->to(base_url('admin/users/'.$role_id.'/'))->with('error', 'Data tidak ditemukan.');
         }
-
         if ($this->request->getMethod() == 'POST') {
             $data = $this->request->getPost();
             $updateData = [
@@ -164,18 +163,21 @@ class Main extends BaseController
             $selectedRoles = $this->request->getPost('roles');
             foreach ($selectedRoles as $roleId) {
                 // cek apakah user_role sudah ada
-                $existing = $userRoleModel
-                    ->where('profile_id', $user['profile_id'])
-                    ->where('role_id', $roleId)
-                    ->first();
-
-                if (!$existing) {
+                if (!in_array($roleId, $userRoles)) {
                     // insert kalau belum ada
                     $userRoleModel->insert([
                         'profile_id' => $user['profile_id'],
                         'role_id' => $roleId,
                     ]);
                 }
+            }
+            // delete user role
+            $rolesToDelete = array_diff($userRoles, $selectedRoles);
+            if (!empty($rolesToDelete)) {
+                $userRoleModel
+                    ->where('profile_id', $user['profile_id'])
+                    ->whereIn('role_id', $rolesToDelete)
+                    ->delete();
             }
             return redirect()->to(base_url('admin/users/'.$role_id.'/edit/'.$id.'/user/'))->with('success', 'Data berhasil diupdate.');
         }
