@@ -114,6 +114,15 @@ class Classes extends BaseController
                             ->update();
                     }
                 }
+
+                // disable exclude subjects
+                $cssModel
+                    ->whereNotIn('subject_id', $data)
+                    ->set([
+                        'active' => 0,
+                        'updated_by_id' => $userId
+                    ])
+                    ->update();
             }else{
                 foreach ($class_semesters as $class_semester){
                     $cssModel
