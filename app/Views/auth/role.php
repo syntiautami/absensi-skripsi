@@ -13,7 +13,7 @@
     <?php foreach ($roles as $role): ?>
       <div class="col-md-3">
         <a href="<?= base_url('role/' . $role['name']) ?>/" class="btn btn-primary btn-lg btn-block mb-3 justify-content-center align-content-center" style="height: 100px;">
-          Pilih Modul <?= ucfirst($role['alt_name']) ?>
+          Masuk ke Modul <?= ucfirst($role['alt_name']) ?>
         </a>
       </div>
     <?php endforeach ?>
