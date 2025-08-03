@@ -147,7 +147,6 @@
                     }
                 },
                 email: {
-                    email: true,
                     remote: {
                         url: '<?= base_url('admin/users/check/email/') ?>',
                         type: "post",
@@ -165,9 +164,7 @@
                             return true
                         },
                         delay: 5000,
-                    }
-                },
-                email: {
+                    },
                     email: true
                 },
                 confirm_password: {
