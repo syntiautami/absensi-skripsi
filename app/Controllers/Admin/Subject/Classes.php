@@ -116,15 +116,22 @@ class Classes extends BaseController
                 }
 
                 // disable exclude subjects
-                $cssModel
+                $ids = $cssModel
+                    ->select('class_semester_subject.id')
                     ->join('class_semester', 'class_semester.id = class_semester_subject.class_semester_id', 'left')
                     ->where('class_semester.class_semester_year_id', $id)
                     ->whereNotIn('subject_id', $data)
-                    ->set([
-                        'active' => 0,
-                        'updated_by_id' => $userId
-                    ])
-                    ->update();
+                    ->findAll();
+                $classSemesterSubjectIds = array_column($ids, 'id');
+                if (!empty($classSemesterSubjectIds)) {
+                    $cssModel
+                        ->whereIn('id', $classSemesterSubjectIds)
+                        ->set([
+                            'active' => 0,
+                            'updated_by_id' => $userId
+                        ])
+                        ->update();
+                }
             }else{
                 foreach ($class_semesters as $class_semester){
                     $cssModel
