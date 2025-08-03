@@ -117,6 +117,8 @@ class Classes extends BaseController
 
                 // disable exclude subjects
                 $cssModel
+                    ->join('class_semester', 'class_semester.id = class_semester_subject.class_semester_id', 'left')
+                    ->where('class_semester.class_semester_year_id', $id)
                     ->whereNotIn('subject_id', $data)
                     ->set([
                         'active' => 0,
